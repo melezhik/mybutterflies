@@ -1,0 +1,6 @@
+cro: 1
+id: topsdevops
+name: TopsDevops Web
+entrypoint: app.raku
+ignore:
+  - .cache

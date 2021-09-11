@@ -1,0 +1,38 @@
+<&HTML-AND-JAVASCRIPT(.css)>
+
+    <head>
+      <title>TopsDevops - Indepenedent Reviews of Devops Software</title>
+    </head>
+    <&HTML-AND-JAVASCRIPT(.navbar)>
+    <nav class="panel is-primary">
+      <p class="panel-heading">Top Projects</p>
+      <table class="table panel-block is-fullwidth">
+        <tr>
+          <td>Project</td>
+          <td>Category</td>
+          <td>Rating</td>
+          <td>Number of reviews</td>
+          <td>Write review</td>
+        </tr>
+        <@projects: $i>
+        <tr>
+          <td>
+            <a href="/project/<$i.project>"><$i.project></a> - <i><$i.description></i>
+          </td>
+          <td>
+            <i><$i.category></i>
+          </td>
+          <td>
+            <$i.rating>
+          </td>
+          <td>
+            <$i.reviews-cnt>
+          </td>
+          <td>
+            <a href="">Write review</a>
+          </td>
+        </tr>   
+        </@>
+      </table>
+    </nav>
+
