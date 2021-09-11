@@ -17,7 +17,14 @@ my $application = route {
           project => "cro",
           description => "elegant reactive services in Raku",
           category => "web",
-          rating => "*****",
+          language => "Raku",
+          rating => %( 
+            'sssss' => 100,
+            'ssss' => 50,
+            'sss' => 0,
+            'ss' => 0,
+            's' => 0,
+          ),
           reviews-cnt => "100"
         ),
       ] 

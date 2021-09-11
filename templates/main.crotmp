@@ -10,6 +10,7 @@
         <tr>
           <td>Project</td>
           <td>Category</td>
+          <td>Language</td>
           <td>Rating</td>
           <td>Number of reviews</td>
           <td>Write review</td>
@@ -23,7 +24,19 @@
             <i><$i.category></i>
           </td>
           <td>
-            <$i.rating>
+            <i><$i.language></i>
+          </td>
+          <td>
+              <i class="fas fa-star has-text-success"></i>
+              <i class="fas fa-star has-text-success"></i>
+              <i class="fas fa-star has-text-success"></i>
+              <i class="fas fa-star has-text-success"></i>
+              <i class="fas fa-star has-text-success"></i> - <$i.rating.sssss> <br>
+
+              4 <i class="fas fa-star has-text-primary"></i> - <$i.rating.ssss> |
+              3 <i class="fas fa-star has-text-info"></i> - <$i.rating.sss> |
+              2 <i class="fas fa-star has-text-warning"></i> - <$i.rating.ss> |
+              1 <i class="fas fa-star has-text-danger"></i> - <$i.rating.s>
           </td>
           <td>
             <a href=""><$i.reviews-cnt></a>
