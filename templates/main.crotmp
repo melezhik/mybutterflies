@@ -26,7 +26,7 @@
             <$i.rating>
           </td>
           <td>
-            <$i.reviews-cnt>
+            <a href=""><$i.reviews-cnt></a>
           </td>
           <td>
             <a href="">Write review</a>
