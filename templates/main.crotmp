@@ -1,24 +1,29 @@
 <&HTML-AND-JAVASCRIPT(.css)>
 
     <head>
-      <title>TopsDevops - Indepenedent Reviews of Devops Software</title>
+      <title>TopsDevops - DevOps Tools You Love</title>
     </head>
     <&HTML-AND-JAVASCRIPT(.navbar)>
     <nav class="panel is-primary">
       <p class="panel-heading">Top Projects</p>
       <table class="table panel-block is-fullwidth">
         <tr>
+          <td>Points</td>
           <td>Project</td>
           <td>Category</td>
           <td>Language</td>
-          <td>Rating</td>
-          <td>Number of reviews</td>
-          <td>Write review</td>
+          <td>Reviews</td>
         </tr>
         <@projects: $i>
         <tr>
           <td>
-            <a href="/project/<$i.project>"><$i.project></a> - <i><$i.description></i>
+            <$i.points>
+          </td>
+          <td>
+            <span class="icon">
+              <i class="fas fa-arrow-up"></i>
+            </span>
+            <a href="<$i.url>"><$i.project></a> - <i><$i.description></i>
           </td>
           <td>
             <i><$i.category></i>
@@ -27,22 +32,7 @@
             <i><$i.language></i>
           </td>
           <td>
-              <i class="fas fa-star has-text-success"></i>
-              <i class="fas fa-star has-text-success"></i>
-              <i class="fas fa-star has-text-success"></i>
-              <i class="fas fa-star has-text-success"></i>
-              <i class="fas fa-star has-text-success"></i> - <$i.rating.sssss> <br>
-
-              4 <i class="fas fa-star has-text-primary"></i> - <$i.rating.ssss> |
-              3 <i class="fas fa-star has-text-info"></i> - <$i.rating.sss> |
-              2 <i class="fas fa-star has-text-warning"></i> - <$i.rating.ss> |
-              1 <i class="fas fa-star has-text-danger"></i> - <$i.rating.s>
-          </td>
-          <td>
-            <a href=""><$i.reviews-cnt></a>
-          </td>
-          <td>
-            <a href="">Write review</a>
+            <a href="/<$i.name>/reviews"><$i.reviews-cnt></a>
           </td>
         </tr>   
         </@>

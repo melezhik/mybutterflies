@@ -18,15 +18,19 @@ my $application = route {
           description => "elegant reactive services in Raku",
           category => "web",
           language => "Raku",
-          rating => %( 
-            'sssss' => 100,
-            'ssss' => 50,
-            'sss' => 0,
-            'ss' => 0,
-            's' => 0,
-          ),
-          reviews-cnt => "100"
+          points => "1000",
+          reviews-cnt => 10,
+          url => "http://cro.services"
         ),
+        %(
+          project => "ansible",
+          description => "Red Hat Ansible Automation Platform",
+          category => "automation",
+          language => "Python",
+          points => "100",
+          reviews-cnt => 2,
+          url => "https://github.com/ansible/ansible"
+        ),        
       ] 
     }
 
