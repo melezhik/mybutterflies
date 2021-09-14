@@ -4,35 +4,31 @@ use Cro::WebApp::Template;
 
 use TopsDevops::HTML;
 
+use JSON::Tiny;
+
 
 my $application = route { 
+
+  my @projects;
+
+  for dir("{cache-root()}/projects/") -> $p {
+
+    my %meta = from-json("$p/meta.json".IO.slurp);
+
+    %meta<points> = dir("$p/ups/").elems;
+
+    push @projects, %meta;
+
+  }
 
   get -> :$user is cookie {
 
     template 'templates/main.crotmp', {
+      http-root => http-root(),
       user => $user, 
       css => css(), 
       navbar => navbar($user),
-      projects => [
-        %(
-          project => "cro",
-          description => "elegant reactive services in Raku",
-          category => "web",
-          language => "Raku",
-          points => "1000",
-          reviews-cnt => 10,
-          url => "http://cro.services"
-        ),
-        %(
-          project => "ansible",
-          description => "Red Hat Ansible Automation Platform",
-          category => "automation",
-          language => "Python",
-          points => "100",
-          reviews-cnt => 2,
-          url => "https://github.com/ansible/ansible"
-        ),        
-      ] 
+      projects => @projects
     }
 
   }
@@ -46,6 +42,26 @@ my $application = route {
     set-cookie 'user', Nil;
     redirect :permanent, "/";
   }
+
+  get -> 'project', $project, 'up', :$user is cookie {
+
+    if $user {
+
+      unless "{cache-root()}/projects/$project/ups/$user".IO ~~ :e {
+        say "bump {cache-root()}/projects/$project/ups/$user";
+        "{cache-root()}/projects/$project/ups/$user".IO.spurt("");
+      }
+    
+      redirect :permanent, "/";
+
+    } else {
+
+      redirect :permanent, "/login";
+
+    }
+      
+  }
+
 }
 
 my Cro::Service $service = Cro::HTTP::Server.new:

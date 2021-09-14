@@ -20,9 +20,20 @@
             <$i.points>
           </td>
           <td>
-            <span class="icon">
-              <i class="fas fa-arrow-up"></i>
-            </span>
+            <?.user>
+            <a href="<.http-root>/project/<$i.project>/up">
+              <span class="icon">
+                <i class="fas fa-arrow-up"></i>
+              </span>
+            </a>
+            </?>
+            <!.user>
+              <a href="<.http-root>/login">
+                <span class="icon">
+                  <i class="fas fa-arrow-up"></i>
+                </span>
+              </a>
+            </!>
             <a href="<$i.url>"><$i.project></a> - <i><$i.description></i>
           </td>
           <td>

@@ -2,9 +2,15 @@ unit module TopsDevops::HTML;
 
 use Sparky;
 
-sub http-root {
+sub cache-root is export {
 
-  %*ENV<HTTP_ROOT> || "";
+  "{%*ENV<HOME>}/.td/";
+
+}
+
+sub http-root is export {
+
+  %*ENV<TD_HTTP_ROOT> || "";
 
 }
 
