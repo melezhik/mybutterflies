@@ -56,7 +56,7 @@ my $application = route {
     if $user {
 
       unless "{cache-root()}/projects/$project/ups/$user".IO ~~ :e {
-        say "bump {cache-root()}/projects/$project/ups/$user";
+        say "up {cache-root()}/projects/$project/ups/$user";
         "{cache-root()}/projects/$project/ups/$user".IO.spurt("");
       }
     
@@ -70,6 +70,24 @@ my $application = route {
       
   }
 
+  get -> 'project', $project, 'down', :$user is cookie {
+
+    if $user {
+
+      if "{cache-root()}/projects/$project/ups/$user".IO ~~ :e {
+        say "down {cache-root()}/projects/$project/ups/$user";
+        unlink "{cache-root()}/projects/$project/ups/$user";
+      }
+    
+      redirect :permanent, "/";
+
+    } else {
+
+      redirect :permanent, "/login";
+
+    }
+      
+  }
 }
 
 my Cro::Service $service = Cro::HTTP::Server.new:

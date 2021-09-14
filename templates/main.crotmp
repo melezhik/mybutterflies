@@ -21,7 +21,7 @@
           </td>
           <td>
             <?{.user && $i.voted == True}>
-            <a href="<.http-root>/project/<$i.project>/up">
+            <a href="<.http-root>/project/<$i.project>/down">
               <span class="icon has-text-success">
                 <i class="fas fa-arrow-up"></i>
               </span>
