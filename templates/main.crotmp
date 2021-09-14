@@ -43,7 +43,7 @@
             <i><$i.language></i>
           </td>
           <td>
-            <a href="/<$i.name>/reviews"><$i.reviews-cnt></a>
+            <a href="/<$i.project>/reviews"><$i.reviews-cnt></a>
           </td>
         </tr>   
         </@>
