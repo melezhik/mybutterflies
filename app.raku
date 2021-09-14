@@ -41,6 +41,16 @@ my $application = route {
 
   }
 
+  get -> 'login-page', :$message {
+
+    template 'templates/login-page.crotmp', {
+      http-root => http-root(),
+      message => $message,
+      css => css(), 
+      navbar => navbar(""),
+    }
+  }
+
   get -> 'login' {
     set-cookie 'user', 'melezhik';
     redirect :permanent, "/";
@@ -64,7 +74,7 @@ my $application = route {
 
     } else {
 
-      redirect :permanent, "/login";
+      redirect :permanent, "/login-page";
 
     }
       
@@ -83,10 +93,18 @@ my $application = route {
 
     } else {
 
-      redirect :permanent, "/login";
+      redirect :permanent, "/login-page";
 
     }
       
+  }
+
+  get -> 'icons', *@path {
+
+    cache-control :public, :max-age(3000);
+
+    static 'icons', @path;
+
   }
 }
 

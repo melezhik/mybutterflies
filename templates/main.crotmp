@@ -36,7 +36,7 @@
             </?>
 
             <!.user>
-              <a href="<.http-root>/login">
+              <a href="<.http-root>/login-page?message='you need to sign in to vote'">
                 <span class="icon">
                   <i class="fas fa-arrow-up"></i>
                 </span>

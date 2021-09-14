@@ -1,0 +1,16 @@
+<&HTML-AND-JAVASCRIPT(.css)>
+
+    <head>
+      <title>TopsDevops - DevOps Tools You Love</title>
+    </head>
+    <&HTML-AND-JAVASCRIPT(.navbar)>
+    <nav class="panel is-primary">
+      <p class="panel-heading">Sign In</p>
+      <p class="control">
+      <?.message>
+        <.message>
+      </?>
+      <a href="<.http-root>/login"><img src="<.http-root>/icons/GitHub-Mark-32px.png"></a>
+      </p>
+   </nav>
+

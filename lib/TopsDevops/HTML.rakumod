@@ -48,7 +48,7 @@ sub login-logout ($user) {
 
   } else {
 
-    "<a class=\"navbar-item\" href=\"{http-root()}/login\">
+    "<a class=\"navbar-item\" href=\"{http-root()}/login-page\">
       Log In
     </a>"
   }
