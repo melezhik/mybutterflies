@@ -16,6 +16,7 @@ my $application = route {
     my %meta = from-json("$p/meta.json".IO.slurp);
 
     %meta<points> = dir("$p/ups/").elems;
+
     %meta<reviews-cnt> = dir("$p/reviews/").elems;
 
     push @projects, %meta;
