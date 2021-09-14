@@ -12,7 +12,7 @@ my $application = route {
     template 'templates/main.crotmp', {
       user => $user, 
       css => css(), 
-      navbar => navbar(),
+      navbar => navbar($user),
       projects => [
         %(
           project => "cro",
@@ -42,6 +42,10 @@ my $application = route {
     redirect :permanent, "/";
   }
 
+  get -> 'logout' {
+    set-cookie 'user', Nil;
+    redirect :permanent, "/";
+  }
 }
 
 my Cro::Service $service = Cro::HTTP::Server.new:

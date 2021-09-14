@@ -32,7 +32,24 @@ sub css is export {
 
 }
 
-sub navbar is export {
+sub login-logout ($user) {
+
+  if $user {
+
+    "<a class=\"navbar-item\" href=\"{http-root()}/logout\">
+      Log out
+    </a>"
+
+  } else {
+
+    "<a class=\"navbar-item\" href=\"{http-root()}/login\">
+      Log In
+    </a>"
+  }
+
+}
+
+sub navbar ($user) is export {
 
   qq:to /HERE/
     <nav class="navbar" role="navigation" aria-label="main navigation">
@@ -51,16 +68,7 @@ sub navbar is export {
           <a class="navbar-item" href="{http-root()}/about">
             About
           </a>
-          <?.user>
-            <a class="navbar-item" href="{http-root()}/logout">
-              [<.user>] Log out
-            </a>
-          </?>
-          <!.user>
-          <a class="navbar-item" href="{http-root()}/login">
-            Sign In
-          </a>
-          </!>
+          {login-logout($user)}
         </div>
       </div>
     </nav>
