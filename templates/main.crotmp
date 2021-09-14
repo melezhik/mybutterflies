@@ -20,13 +20,21 @@
             <$i.points>
           </td>
           <td>
-            <?.user>
+            <?{.user && $i.voted == True}>
+            <a href="<.http-root>/project/<$i.project>/up">
+              <span class="icon has-text-success">
+                <i class="fas fa-arrow-up"></i>
+              </span>
+            </a>
+            </?>
+            <?{.user && $i.voted == False}>
             <a href="<.http-root>/project/<$i.project>/up">
               <span class="icon">
                 <i class="fas fa-arrow-up"></i>
               </span>
             </a>
             </?>
+
             <!.user>
               <a href="<.http-root>/login">
                 <span class="icon">

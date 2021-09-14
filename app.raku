@@ -21,6 +21,12 @@ my $application = route {
 
       %meta<reviews-cnt> = dir("$p/reviews/").elems;
 
+      if $user and "$p/ups/$user".IO ~~ :e {
+        %meta<voted> = True
+      } else {
+        %meta<voted> = False
+      }
+
       push @projects, %meta;
 
     }
