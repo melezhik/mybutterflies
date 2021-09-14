@@ -9,21 +9,21 @@ use JSON::Tiny;
 
 my $application = route { 
 
-  my @projects;
-
-  for dir("{cache-root()}/projects/") -> $p {
-
-    my %meta = from-json("$p/meta.json".IO.slurp);
-
-    %meta<points> = dir("$p/ups/").elems;
-
-    %meta<reviews-cnt> = dir("$p/reviews/").elems;
-
-    push @projects, %meta;
-
-  }
-
   get -> :$user is cookie {
+
+    my @projects;
+
+    for dir("{cache-root()}/projects/") -> $p {
+
+      my %meta = from-json("$p/meta.json".IO.slurp);
+
+      %meta<points> = dir("$p/ups/").elems;
+
+      %meta<reviews-cnt> = dir("$p/reviews/").elems;
+
+      push @projects, %meta;
+
+    }
 
     template 'templates/main.crotmp', {
       http-root => http-root(),
