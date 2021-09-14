@@ -7,9 +7,10 @@ use TopsDevops::HTML;
 
 my $application = route { 
 
-  get -> {
+  get -> :$user is cookie {
 
     template 'templates/main.crotmp', {
+      user => $user, 
       css => css(), 
       navbar => navbar(),
       projects => [
@@ -34,6 +35,11 @@ my $application = route {
       ] 
     }
 
+  }
+
+  get -> 'login' {
+    set-cookie 'user', 'melezhik';
+    redirect :permanent, "/";
   }
 
 }

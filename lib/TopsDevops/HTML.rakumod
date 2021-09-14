@@ -51,9 +51,16 @@ sub navbar is export {
           <a class="navbar-item" href="{http-root()}/about">
             About
           </a>
-          <a class="navbar-item" href="{http-root()}/sign">
+          <?.user>
+            <a class="navbar-item" href="{http-root()}/logout">
+              [<.user>] Log out
+            </a>
+          </?>
+          <!.user>
+          <a class="navbar-item" href="{http-root()}/login">
             Sign In
           </a>
+          </!>
         </div>
       </div>
     </nav>
