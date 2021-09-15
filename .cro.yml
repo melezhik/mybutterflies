@@ -1,6 +1,6 @@
 cro: 1
-id: topsdevops
-name: TopsDevops Web
+id: mbf
+name: My Butterflies Web
 entrypoint: app.raku
 ignore:
   - .cache

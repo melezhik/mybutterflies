@@ -1,6 +1,16 @@
 unit module MyButterfly::HTML;
 
-use Sparky;
+use YAMLish;
+
+sub get-web-conf is export {
+
+  my $conf-file = %*ENV<HOME> ~ '/mbf.yaml';
+
+  my %conf = $conf-file.IO ~~ :f ?? load-yaml($conf-file.IO.slurp) !! Hash.new;
+
+  %conf;
+
+}
 
 sub title is export { 
 
@@ -16,13 +26,13 @@ sub cache-root is export {
 
 sub http-root is export {
 
-  %*ENV<TD_HTTP_ROOT> || "";
+  %*ENV<MBF_HTTP_ROOT> || "";
 
 }
 
 sub css is export {
 
-  my %conf = get-sparky-conf();
+  my %conf = get-web-conf();
 
   my $theme ;
 
