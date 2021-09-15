@@ -37,9 +37,49 @@ my $application = route {
       user => $user, 
       css => css(), 
       navbar => navbar($user),
-      projects => @projects
+      projects => @projects.sort({ .<points> }).reverse
     }
 
+  }
+
+  get -> 'project', $project, 'reviews', :$user is cookie {
+
+    my @reviews;
+
+    for dir("{cache-root()}/projects/$project/reviews") -> $r {
+
+      my %meta;
+
+      %meta<data> = $r.IO.slurp;
+
+      %meta<author> = $r.IO.basename;
+
+      %meta<date> = $r.IO.modified;
+
+      %meta<date-str> = DateTime.new(
+        $r.IO.modified,
+        formatter => { sprintf "%02d:%02d %02d/%02d/%02d", .hour, .minute, .day, .month, .year }
+      );
+
+      if $user and $user eq %meta<author> {
+        %meta<edit> = True
+      } else {
+        %meta<edit> = False
+      }
+
+      push @reviews, %meta;
+
+    }
+
+    template 'templates/reviews.crotmp', {
+      title => title(),
+      http-root => http-root(),
+      user => $user, 
+      css => css(), 
+      navbar => navbar($user),
+      project => $project,
+      reviews => @reviews.sort({ .<date> }).reverse
+    }
   }
 
   get -> 'login-page', :$message {

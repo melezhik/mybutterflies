@@ -1,0 +1,18 @@
+<&HTML-AND-JAVASCRIPT(.css)>
+
+    <head>
+      <title><.main></title>
+    </head>
+    <&HTML-AND-JAVASCRIPT(.navbar)>
+    <nav class="panel is-primary">
+      <p class="panel-heading"><.project> Reviews</p>
+      <@reviews: $r>
+      <div class="panel-block">
+        <p class="control">
+            by @<$r.author> at <$r.date-str><br><br>
+            <$r.data>
+        </p>
+      </div>
+      </@>
+    </nav>
+

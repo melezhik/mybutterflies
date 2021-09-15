@@ -50,7 +50,7 @@
             <i><$i.language></i>
           </td>
           <td>
-            <a href="/<$i.project>/reviews"><$i.reviews-cnt></a>
+            <a href="<.http-root>/project/<$i.project>/reviews"><$i.reviews-cnt></a>
           </td>
         </tr>   
         </@>
