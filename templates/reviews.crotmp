@@ -18,7 +18,7 @@
         <div class="card">
           <header class="card-header">
             <p class="card-header-title">
-              by @<$r.author> at <$r.date-str>
+              <$r.points-str> | by @<$r.author> at <$r.date-str>
             </p>
           </header>
           <div class="card-content">

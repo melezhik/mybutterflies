@@ -70,6 +70,11 @@ my $application = route {
         %meta<edit> = False
       }
 
+      if "{cache-root()}/projects/$project/reviews/points/{%meta<author>}".IO ~~ :e {
+        %meta<points> = "{cache-root()}/projects/$project/reviews/points/{%meta<author>}".IO.slurp;
+        %meta<points-str> = "{uniparse 'BUTTERFLY'}" x %meta<points>;
+      }
+
       push @reviews, %meta;
 
     }
@@ -97,6 +102,10 @@ my $application = route {
         %review<data> = "{cache-root()}/projects/$project/reviews/data/$user".IO.slurp;
       } else {
         %review<data> = ""
+      }
+
+      if "{cache-root()}/projects/$project/reviews/points/$user".IO ~~ :e {
+        %review<points> = "{cache-root()}/projects/$project/reviews/points/$user".IO.slurp;
       }
 
       template 'templates/edit-review.crotmp', {
