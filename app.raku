@@ -187,6 +187,32 @@ my $application = route {
     }
   }
 
+  get -> 'oauth2', :$state, :$code {
+
+      my $resp = await Cro::HTTP::Client.get: 'https://github.com/login/oauth/access_token',
+        headers => [
+          "Accept" => "application/json"
+        ],
+        query => { 
+          redirect_uri => "http://161.35.115.119/mbf/oauth2",
+          client_id => %*ENV<OAUTH_CLIENT_ID>,
+          client_secret => %*ENV<OAUTH_CLIENT_SECRET>,
+          code => $code,
+          state => $state,    
+        };
+
+      my $data = await $resp.body-text();
+
+      my %data = from-json($data);
+
+      if %data<access_token>:exists {
+        set-cookie 'user', 'melezhik';
+      }
+
+      redirect :permanent, "{http-root()}/";
+       
+  } 
+
   get -> 'login-page', :$message {
 
     template 'templates/login-page.crotmp', {
@@ -199,12 +225,12 @@ my $application = route {
   }
 
   get -> 'login' {
-    set-cookie 'user', 'melezhik';
-    redirect :permanent, "{http-root()}/";
+    redirect :permanent,
+      "https://github.com/login/oauth/authorize?client_id={%*ENV<OAUTH_CLIENT_ID>}&state={%*ENV<OAUTH_STATE>}"
   }
 
   get -> 'logout' {
-    set-cookie 'user', Nil;
+    set-cookie 'user', "";
     redirect :permanent, "{http-root()}/";
   }
 
