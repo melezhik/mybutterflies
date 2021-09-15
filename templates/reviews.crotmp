@@ -6,6 +6,11 @@
     <&HTML-AND-JAVASCRIPT(.navbar)>
     <nav class="panel is-primary">
       <p class="panel-heading"><.project> Reviews</p>
+      <div class="panel-block">
+        <p class="control">
+          <a href="<.http-root>/project/<.project>/new-review">write review</a>
+        </p>
+      </div>
       <@reviews: $r>
       <div class="panel-block">
         <p class="control">

@@ -116,7 +116,7 @@ my $application = route {
 
     } else {
 
-      redirect :permanent, "/login-page";
+      redirect :permanent, "/login-page?message=you need to sign in to vote";
 
     }
       
