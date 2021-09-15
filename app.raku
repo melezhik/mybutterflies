@@ -122,7 +122,7 @@ my $application = route {
 
     } else {
 
-      redirect :permanent, "{http-root()}/login-page?message=you need to sign in to edit reviews";
+      redirect :permanent, "{http-root()}/login-page?message=you need to sign in to edit or write eviews";
 
     }
   }
@@ -175,6 +175,18 @@ my $application = route {
 
     }
   }
+
+  get -> 'about', :$user is cookie {
+
+    template 'templates/about.crotmp', {
+      title => title(),
+      http-root => http-root(),
+      css => css(), 
+      navbar => navbar($user),
+      butterfly => "{uniparse 'BUTTERFLY'}"
+    }
+  }
+
   get -> 'login-page', :$message {
 
     template 'templates/login-page.crotmp', {

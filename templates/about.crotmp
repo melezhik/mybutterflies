@@ -1,0 +1,35 @@
+<&HTML-AND-JAVASCRIPT(.css)>
+
+    <head>
+      <title><.title></title>
+    </head>
+    <&HTML-AND-JAVASCRIPT(.navbar)>
+    <nav class="panel is-primary">
+      <p class="panel-heading">Welcome to My Butterflies</p>
+      <div class="panel-block">
+        <div class="control">
+          <pre>
+    My Butterflies - is a place where you rate and admire the software you like. 
+
+    Found something interesting - <a href="https://github.com/melezhik/mybutterflies/issues/new">let us know</a> and we will put this on the list!
+    Please be nice and respectful when you write reviews. 
+
+    My butterfly is a safe and respectful place where everyone is entitled
+    to share their opinions, while not hurting others. 
+
+    The service administration preserves the right to remove 
+    inappropriate entries or ban users who don't respect others and don't
+    follow these simple rules.
+
+    <.butterfly> - Enjoy your butterflies!
+         </pre>
+      </div>
+      <?.message>
+      <div class="panel-block">
+        <p class="control">
+          <.message>
+        </p>
+      </div>
+      </?>
+   </nav>
+
