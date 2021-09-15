@@ -19,7 +19,7 @@ my $application = route {
 
       %meta<points> = dir("$p/ups/").elems;
 
-      %meta<reviews-cnt> = dir("$p/reviews/").elems;
+      %meta<reviews-cnt> = dir("$p/reviews/data").elems;
 
       if $user and "$p/ups/$user".IO ~~ :e {
         %meta<voted> = True
@@ -48,7 +48,7 @@ my $application = route {
 
     my $has-user-review = False;
 
-    for dir("{cache-root()}/projects/$project/reviews") -> $r {
+    for dir("{cache-root()}/projects/$project/reviews/data") -> $r {
 
       my %meta;
 
@@ -93,8 +93,8 @@ my $application = route {
 
       my %review; 
 
-      if "{cache-root()}/projects/$project/reviews/$user".IO ~~ :e {
-        %review<data> = "{cache-root()}/projects/$project/reviews/$user".IO.slurp;
+      if "{cache-root()}/projects/$project/reviews/data/$user".IO ~~ :e {
+        %review<data> = "{cache-root()}/projects/$project/reviews/data/$user".IO.slurp;
       } else {
         %review<data> = ""
       }
@@ -111,7 +111,7 @@ my $application = route {
 
     } else {
 
-      redirect :permanent, "/login-page?message=you need to sign in to edit reviews";
+      redirect :permanent, "{http-root()}/login-page?message=you need to sign in to edit reviews";
 
     }
   }
@@ -122,7 +122,7 @@ my $application = route {
 
       request-body -> (:$data) {
 
-        "{cache-root()}/projects/$project/reviews/$user".IO.spurt($data);
+        "{cache-root()}/projects/$project/reviews/data/$user".IO.spurt($data);
 
          created "/project/$project/edit-review";
 
@@ -145,7 +145,7 @@ my $application = route {
 
     } else {
 
-      redirect :permanent, "/login-page?message=you need to sign in to edit reviews";
+      redirect :permanent, "{http-root()}/login-page?message=you need to sign in to edit reviews";
 
     }
   }
@@ -162,12 +162,12 @@ my $application = route {
 
   get -> 'login' {
     set-cookie 'user', 'melezhik';
-    redirect :permanent, "/";
+    redirect :permanent, "{http-root()}/";
   }
 
   get -> 'logout' {
     set-cookie 'user', Nil;
-    redirect :permanent, "/";
+    redirect :permanent, "{http-root()}/";
   }
 
   get -> 'project', $project, 'up', :$user is cookie {
@@ -179,11 +179,11 @@ my $application = route {
         "{cache-root()}/projects/$project/ups/$user".IO.spurt("");
       }
     
-      redirect :permanent, "/";
+      redirect :permanent, "{http-root()}/";
 
     } else {
 
-      redirect :permanent, "/login-page?message=you need to sign in to vote";
+      redirect :permanent, "{http-root()}/login-page?message=you need to sign in to vote";
 
     }
       
@@ -198,11 +198,11 @@ my $application = route {
         unlink "{cache-root()}/projects/$project/ups/$user";
       }
     
-      redirect :permanent, "/";
+      redirect :permanent, "{http-root()}/";
 
     } else {
 
-      redirect :permanent, "/login-page";
+      redirect :permanent, "{http-root()}/login-page";
 
     }
       
