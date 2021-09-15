@@ -118,9 +118,8 @@ my $application = route {
 
       request-body -> (:$data) {
         "{cache-root()}/projects/$project/reviews/$user".IO.spurt($data);
+        redirect "/";
       };
-
-      redirect :temporary, "/";
 
     } else {
 
