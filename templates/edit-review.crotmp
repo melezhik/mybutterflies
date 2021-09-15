@@ -5,15 +5,29 @@
     </head>
     <&HTML-AND-JAVASCRIPT(.navbar)>
     <nav class="panel is-primary">
-      <p class="panel-heading">Edit review</p>
+      <p class="panel-heading"><.project> - Edit review</p>
       <div class="panel-block">
         <div class="control">
+          <?.message>
+          <div class="notification is-success">
+            <.message>
+          </div>
+          </?>
           <form action="<.http-root>/project/<.project>/edit-review" method="post">
              <textarea class="textarea" name="data" placeholder="Textarea"><.review.data></textarea>
             <hr>
             <button class="button is-link">Submit</button>
           </form>
         </div>
-      </div>
+        </div>
+        <div class="panel-block">
+          <p class="control">
+          <span class="icon">
+            <i class="fas fa-arrow-right"></i>
+          </span>
+          <a href="<.http-root>/project/<.project>/reviews">go to reviews</a>
+          </p>
+        </div>
+    </div>
    </nav>
 

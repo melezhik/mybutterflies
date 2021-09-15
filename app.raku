@@ -117,8 +117,26 @@ my $application = route {
     if $user {
 
       request-body -> (:$data) {
+
         "{cache-root()}/projects/$project/reviews/$user".IO.spurt($data);
-        redirect "/";
+
+         created "/project/$project/edit-review";
+
+         my %review; 
+
+         %review<data> = $data;
+
+         template 'templates/edit-review.crotmp', {
+           title => title(),
+           http-root => http-root(),
+           user => $user,
+           message => "review updated", 
+           css => css(), 
+           navbar => navbar($user),
+           project => $project,
+           review => %review
+        }
+
       };
 
     } else {
