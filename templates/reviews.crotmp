@@ -15,14 +15,22 @@
       </div>
       <@reviews: $r>
       <div class="panel-block">
-        <p class="control">
-            by @<$r.author> at <$r.date-str>
-            <?$r.edit>
-              <a href="<.http-root>/project/<.project>/edit-review">edit</a>
-            </?>
-            <br><br>
-            <$r.data>
-        </p>
+        <div class="card">
+          <header class="card-header">
+            <p class="card-header-title">
+              by @<$r.author> at <$r.date-str>
+            </p>
+          </header>
+          <div class="card-content">
+            <div class="content">
+              <$r.data>
+              <?$r.edit>
+                <hr>
+                <a href="<.http-root>/project/<.project>/edit-review">edit</a>
+              </?>
+            </div>
+          </div>
+        </div>
       </div>
       </@>
     </nav>
