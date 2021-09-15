@@ -208,8 +208,26 @@ my $application = route {
 
       my %data = from-json($data);
 
+      say "response recieved - {%data.perl} ... ";
+
       if %data<access_token>:exists {
-        set-cookie 'user', 'melezhik';
+
+        say "token recieved - {%data<access_token>} ... ";
+
+        my $resp = await Cro::HTTP::Client.get: 'https://api.github.com/user',
+          headers => [
+            "Accept" => "application/vnd.github.v3+json",
+            "Authorization" => "token {%data<access_token>}"
+          ];
+
+        my $data2 = await $resp.body-text();
+  
+        my %data2 = from-json($data2);
+
+        say "set user to {%data2<login>}";
+
+        set-cookie 'user', %data2<login>;
+
       }
 
       redirect :permanent, "{http-root()}/";
