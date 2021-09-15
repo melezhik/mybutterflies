@@ -32,6 +32,7 @@ my $application = route {
     }
 
     template 'templates/main.crotmp', {
+      title => title(),
       http-root => http-root(),
       user => $user, 
       css => css(), 
@@ -44,6 +45,7 @@ my $application = route {
   get -> 'login-page', :$message {
 
     template 'templates/login-page.crotmp', {
+      title => title(),
       http-root => http-root(),
       message => $message,
       css => css(), 

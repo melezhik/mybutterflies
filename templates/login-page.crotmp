@@ -1,16 +1,22 @@
 <&HTML-AND-JAVASCRIPT(.css)>
 
     <head>
-      <title>TopsDevops - DevOps Tools You Love</title>
+      <title><.title></title>
     </head>
     <&HTML-AND-JAVASCRIPT(.navbar)>
     <nav class="panel is-primary">
       <p class="panel-heading">Sign In</p>
-      <p class="control">
+      <div class="panel-block">
+        <p class="control">
+          <a href="<.http-root>/login"><img src="<.http-root>/icons/GitHub-Mark-32px.png"></a>
+        </p>
+      </div>
       <?.message>
-        <.message>
+      <div class="panel-block">
+        <p class="control">
+          <.message>
+        </p>
+      </div>
       </?>
-      <a href="<.http-root>/login"><img src="<.http-root>/icons/GitHub-Mark-32px.png"></a>
-      </p>
    </nav>
 

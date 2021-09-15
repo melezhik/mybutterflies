@@ -2,6 +2,12 @@ unit module TopsDevops::HTML;
 
 use Sparky;
 
+sub title is export { 
+
+  "TopsDevops - Software Tools You Love"
+
+}
+
 sub cache-root is export {
 
   "{%*ENV<HOME>}/.td/";

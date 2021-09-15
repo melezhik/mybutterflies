@@ -1,7 +1,7 @@
 <&HTML-AND-JAVASCRIPT(.css)>
 
     <head>
-      <title>TopsDevops - DevOps Tools You Love</title>
+      <title><.main></title>
     </head>
     <&HTML-AND-JAVASCRIPT(.navbar)>
     <nav class="panel is-primary">
@@ -34,9 +34,8 @@
               </span>
             </a>
             </?>
-
             <!.user>
-              <a href="<.http-root>/login-page?message='you need to sign in to vote'">
+              <a href="<.http-root>/login-page?message=you need to sign in to vote">
                 <span class="icon">
                   <i class="fas fa-arrow-up"></i>
                 </span>
