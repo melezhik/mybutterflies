@@ -100,12 +100,14 @@ my $application = route {
 
       if "{cache-root()}/projects/$project/reviews/data/$user".IO ~~ :e {
         %review<data> = "{cache-root()}/projects/$project/reviews/data/$user".IO.slurp;
+        say "read data from {cache-root()}/projects/$project/reviews/data/$user";
       } else {
         %review<data> = ""
       }
 
       if "{cache-root()}/projects/$project/reviews/points/$user".IO ~~ :e {
         %review<points> = "{cache-root()}/projects/$project/reviews/points/$user".IO.slurp;
+        say "read points from {cache-root()}/projects/$project/reviews/points/$user - {%review<points>}";
       }
 
       template 'templates/edit-review.crotmp', {
@@ -129,16 +131,31 @@ my $application = route {
 
     if $user {
 
-      request-body -> (:$data) {
+      request-body -> (:$data, :$points) {
 
         "{cache-root()}/projects/$project/reviews/data/$user".IO.spurt($data);
 
+        my %review; 
+
+        say "points - $points";
+
+        if $points {
+          say "update points {cache-root()}/projects/$project/reviews/points/$user - $points";
+          "{cache-root()}/projects/$project/reviews/points/$user".IO.spurt($points);
+          %review<points> = $points;
+        } else {
+
+          if "{cache-root()}/projects/$project/reviews/points/$user".IO ~~ :e {
+            %review<points> = "{cache-root()}/projects/$project/reviews/points/$user".IO.slurp;
+            say "read points from {cache-root()}/projects/$project/reviews/points/$user - {%review<points>}";
+          }
+
+        }
+
          created "/project/$project/edit-review";
 
-         my %review; 
-
          %review<data> = $data;
-
+         
          template 'templates/edit-review.crotmp', {
            title => title(),
            http-root => http-root(),
