@@ -1,0 +1,19 @@
+<&HTML-AND-JAVASCRIPT(.css)>
+
+    <head>
+      <title><.title></title>
+    </head>
+    <&HTML-AND-JAVASCRIPT(.navbar)>
+    <nav class="panel is-primary">
+      <p class="panel-heading">Edit review</p>
+      <div class="panel-block">
+        <div class="control">
+          <form action="<.http-root>/project/<.project>/edit-review" method="post">
+             <textarea class="textarea" name="data" placeholder="Textarea"><.review.data></textarea>
+            <hr>
+            <button class="button is-link">Submit</button>
+          </form>
+        </div>
+      </div>
+   </nav>
+

@@ -86,6 +86,48 @@ my $application = route {
     }
   }
 
+
+  get -> 'project', $project, 'edit-review', :$user is cookie {
+
+    if $user {
+
+      my %review; 
+
+      %review<data> = "{cache-root()}/projects/$project/reviews/$user".IO.slurp;
+
+      template 'templates/edit-review.crotmp', {
+        title => title(),
+        http-root => http-root(),
+        user => $user, 
+        css => css(), 
+        navbar => navbar($user),
+        project => $project,
+        review => %review
+      }
+
+    } else {
+
+      redirect :permanent, "/login-page?message=you need to sign in to edit reviews";
+
+    }
+  }
+
+  post -> 'project', $project, 'edit-review', :$user is cookie {
+
+    if $user {
+
+      request-body -> (:$data) {
+        "{cache-root()}/projects/$project/reviews/$user".IO.spurt($data);
+      };
+
+      redirect :temporary, "/";
+
+    } else {
+
+      redirect :permanent, "/login-page?message=you need to sign in to edit reviews";
+
+    }
+  }
   get -> 'login-page', :$message {
 
     template 'templates/login-page.crotmp', {
