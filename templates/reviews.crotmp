@@ -9,7 +9,7 @@
       <div class="panel-block">
         <p class="control">
           <!.has-user-review>
-            <a href="<.http-root>/project/<.project>/new-review">write review</a>
+            <a href="<.http-root>/project/<.project>/edit-review">write review</a>
           </!>
         </p>
       </div>

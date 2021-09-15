@@ -93,7 +93,11 @@ my $application = route {
 
       my %review; 
 
-      %review<data> = "{cache-root()}/projects/$project/reviews/$user".IO.slurp;
+      if "{cache-root()}/projects/$project/reviews/$user".IO ~~ :e {
+        %review<data> = "{cache-root()}/projects/$project/reviews/$user".IO.slurp;
+      } else {
+        %review<data> = ""
+      }
 
       template 'templates/edit-review.crotmp', {
         title => title(),
