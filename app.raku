@@ -46,6 +46,8 @@ my $application = route {
 
     my @reviews;
 
+    my $has-user-review = False;
+
     for dir("{cache-root()}/projects/$project/reviews") -> $r {
 
       my %meta;
@@ -62,7 +64,8 @@ my $application = route {
       );
 
       if $user and $user eq %meta<author> {
-        %meta<edit> = True
+        %meta<edit> = True;
+        $has-user-review = True;
       } else {
         %meta<edit> = False
       }
@@ -78,6 +81,7 @@ my $application = route {
       css => css(), 
       navbar => navbar($user),
       project => $project,
+      has-user-review => $has-user-review,
       reviews => @reviews.sort({ .<date> }).reverse
     }
   }
@@ -87,7 +91,7 @@ my $application = route {
     template 'templates/login-page.crotmp', {
       title => title(),
       http-root => http-root(),
-      message => $message,
+      message => $message || "sign in using your github account",
       css => css(), 
       navbar => navbar(""),
     }

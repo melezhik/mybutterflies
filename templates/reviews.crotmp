@@ -8,13 +8,19 @@
       <p class="panel-heading"><.project> Reviews</p>
       <div class="panel-block">
         <p class="control">
-          <a href="<.http-root>/project/<.project>/new-review">write review</a>
+          <!.has-user-review>
+            <a href="<.http-root>/project/<.project>/new-review">write review</a>
+          </!>
         </p>
       </div>
       <@reviews: $r>
       <div class="panel-block">
         <p class="control">
-            by @<$r.author> at <$r.date-str><br><br>
+            by @<$r.author> at <$r.date-str>
+            <?$r.edit>
+              <a href="<.http-root>/project/<.project>/edit-review">edit</a>
+            </?>
+            <br><br>
             <$r.data>
         </p>
       </div>
