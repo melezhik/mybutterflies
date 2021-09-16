@@ -4,13 +4,14 @@ use Cro::WebApp::Template;
 use Cro::HTTP::Client;
 
 use MyButterfly::HTML;
+use MyButterfly::User;
 
 use JSON::Tiny;
 
 
 my $application = route { 
 
-  get -> :$user is cookie {
+  get -> :$user is cookie, :$token is cookie {
 
     my @projects;
 
@@ -43,7 +44,7 @@ my $application = route {
 
   }
 
-  get -> 'project', $project, 'reviews', :$user is cookie {
+  get -> 'project', $project, 'reviews', :$user is cookie, :$token is cookie {
 
     my @reviews;
 
@@ -93,7 +94,7 @@ my $application = route {
   }
 
 
-  get -> 'project', $project, 'edit-review', :$user is cookie {
+  get -> 'project', $project, 'edit-review', :$user is cookie, :$token is cookie {
 
     if $user {
 
@@ -128,7 +129,7 @@ my $application = route {
     }
   }
 
-  post -> 'project', $project, 'edit-review', :$user is cookie {
+  post -> 'project', $project, 'edit-review', :$user is cookie, :$token is cookie {
 
     if $user {
 
@@ -177,7 +178,7 @@ my $application = route {
     }
   }
 
-  get -> 'about', :$user is cookie {
+  get -> 'about', :$user is cookie, :$token is cookie {
 
     template 'templates/about.crotmp', {
       title => title(),
@@ -224,10 +225,25 @@ my $application = route {
   
         my %data2 = from-json($data2);
 
-        say "set user to {%data2<login>}";
+        say "set user login to {%data2<login>}";
 
         set-cookie 'user', %data2<login>;
 
+        mkdir "{cache-root()}/users";
+
+        mkdir "{cache-root()}/users/{%data2<login>}";
+
+        mkdir "{cache-root()}/users/{%data2<login>}/tokens";
+
+        "{cache-root()}/users/{%data2<login>}/meta.json".IO.spurt($data2);
+
+        my $tk = gen-token();
+
+        "{cache-root()}/users/{%data2<login>}/tokens/{$tk}".IO.spurt("");
+
+        say "set user token to {$tk}";
+
+        set-cookie 'token', $tk;
       }
 
       redirect :permanent, "{http-root()}/";
@@ -250,12 +266,22 @@ my $application = route {
       "https://github.com/login/oauth/authorize?client_id={%*ENV<OAUTH_CLIENT_ID>}&state={%*ENV<OAUTH_STATE>}"
   }
 
-  get -> 'logout' {
+  get -> 'logout', :$user is cookie, :$token is cookie {
+
     set-cookie 'user', "";
+    set-cookie 'token', "";
+
+    if ( $user && $token && "{cache-root()}/users/{$user}/tokens/{$token}".IO ~~ :e ) {
+
+      unlink "{cache-root()}/users/{$user}/tokens/{$token}";
+      say "unlink user token - {cache-root()}/users/{$user}/tokens/{$token}";
+
+    }
+
     redirect :permanent, "{http-root()}/";
   }
 
-  get -> 'project', $project, 'up', :$user is cookie {
+  get -> 'project', $project, 'up', :$user is cookie, :$token is cookie {
 
     if $user {
 
@@ -274,7 +300,7 @@ my $application = route {
       
   }
 
-  get -> 'project', $project, 'down', :$user is cookie {
+  get -> 'project', $project, 'down', :$user is cookie, :$token is cookie {
 
     if $user {
 
