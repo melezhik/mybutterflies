@@ -268,8 +268,36 @@ my $application = route {
   }
 
   get -> 'login' {
-    redirect :permanent,
-      "https://github.com/login/oauth/authorize?client_id={%*ENV<OAUTH_CLIENT_ID>}&state={%*ENV<OAUTH_STATE>}"
+
+    if %*ENV<MB_DEBUG_MODE> {
+
+        say "set user login to melezhik";
+
+        set-cookie 'user', "melezhik";
+
+        mkdir "{cache-root()}/users";
+
+        mkdir "{cache-root()}/users/melezhik";
+
+        mkdir "{cache-root()}/users/melezhik/tokens";
+
+        "{cache-root()}/users/melezhik/meta.json".IO.spurt('{}');
+
+        my $tk = gen-token();
+
+        "{cache-root()}/users/melezhik/tokens/{$tk}".IO.spurt("");
+
+        say "set user token to {$tk}";
+
+        set-cookie 'token', $tk;
+
+        redirect :permanent, "{http-root()}/?message=user logged in";
+
+    } else  {
+
+      redirect :permanent,
+        "https://github.com/login/oauth/authorize?client_id={%*ENV<OAUTH_CLIENT_ID>}&state={%*ENV<OAUTH_STATE>}"
+    }
   }
 
   get -> 'logout', :$user is cookie, :$token is cookie {
@@ -335,7 +363,7 @@ my $application = route {
 }
 
 my Cro::Service $service = Cro::HTTP::Server.new:
-    :host<0.0.0.0>, :port<6000>, :$application;
+    :host<0.0.0.0>, :port<5000>, :$application;
 
 $service.start;
 

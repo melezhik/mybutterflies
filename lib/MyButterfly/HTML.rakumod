@@ -4,7 +4,7 @@ use YAMLish;
 
 sub gen-token is export {
 
-  now.Int ~ ("a".."z","A".."Z",0..9).flat.roll(8).join
+  ("a".."z","A".."Z",0..9).flat.roll(8).join
 
 }
 
