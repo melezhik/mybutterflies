@@ -244,9 +244,15 @@ my $application = route {
         say "set user token to {$tk}";
 
         set-cookie 'token', $tk;
+
+        redirect :permanent, "{http-root()}/?message=user logged in";
+
+      } else {
+
+        redirect :permanent, "{http-root()}/?message=issues with login";
+
       }
 
-      redirect :permanent, "{http-root()}/";
        
   } 
 
@@ -278,7 +284,7 @@ my $application = route {
 
     }
 
-    redirect :permanent, "{http-root()}/";
+    redirect :permanent, "{http-root()}/?message=user logged out";
   }
 
   get -> 'project', $project, 'up', :$user is cookie, :$token is cookie {
