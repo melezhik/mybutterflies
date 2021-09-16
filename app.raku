@@ -365,7 +365,7 @@ my $application = route {
 }
 
 my Cro::Service $service = Cro::HTTP::Server.new:
-    :host<0.0.0.0>, :port<5000>, :$application;
+    :host<0.0.0.0>, :port<6000>, :$application;
 
 $service.start;
 
