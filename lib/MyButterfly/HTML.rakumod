@@ -9,7 +9,7 @@ sub gen-token is export {
 }
 
 
-sub check-user ($user, $token) is export {
+sub check-user (Mu $user, Mu $token) is export {
 
   return False unless $user;
 
