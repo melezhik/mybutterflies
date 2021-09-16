@@ -54,7 +54,7 @@ sub css is export {
 
 }
 
-sub login-logout ($user) {
+sub login-logout (Mu $user) {
 
   if $user {
 
@@ -71,7 +71,7 @@ sub login-logout ($user) {
 
 }
 
-sub navbar ($user) is export {
+sub navbar (Mu $user) is export {
 
   qq:to /HERE/
     <nav class="navbar" role="navigation" aria-label="main navigation">

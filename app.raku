@@ -38,7 +38,7 @@ my $application = route {
       http-root => http-root(),
       user => $user, 
       css => css(), 
-      navbar => navbar($user||""),
+      navbar => navbar($user),
       projects => @projects.sort({ .<points> }).reverse
     }
 
@@ -86,7 +86,7 @@ my $application = route {
       http-root => http-root(),
       user => $user, 
       css => css(), 
-      navbar => navbar($user||""),
+      navbar => navbar($user),
       project => $project,
       has-user-review => $has-user-review,
       reviews => @reviews.sort({ .<date> }).reverse
@@ -117,7 +117,7 @@ my $application = route {
         http-root => http-root(),
         user => $user, 
         css => css(), 
-        navbar => navbar($user||""),
+        navbar => navbar($user),
         project => $project,
         review => %review
       }
@@ -164,7 +164,7 @@ my $application = route {
            user => $user,
            message => "review updated", 
            css => css(), 
-           navbar => navbar($user||""),
+           navbar => navbar($user),
            project => $project,
            review => %review
         }
@@ -184,7 +184,7 @@ my $application = route {
       title => title(),
       http-root => http-root(),
       css => css(), 
-      navbar => navbar($user||""),
+      navbar => navbar($user),
       butterfly => "{uniparse 'BUTTERFLY'}"
     }
   }
