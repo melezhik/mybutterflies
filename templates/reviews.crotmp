@@ -9,8 +9,15 @@
       <div class="panel-block">
         <p class="control">
           <!.has-user-review>
-            <a href="<.http-root>/project/<.project>/edit-review">write review</a>
+            <span class="icon">
+              <i class="fas fa-arrow-right"></i>
+            </span>
+             <a href="<.http-root>/project/<.project>/edit-review">write review</a>
           </!>
+            <span class="icon">
+              <i class="fas fa-arrow-right"></i>
+            </span>
+            <a href="<.http-root>/">go to ratings</a>
         </p>
       </div>
       <@reviews: $r>
