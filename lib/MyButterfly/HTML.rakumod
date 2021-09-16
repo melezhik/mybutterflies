@@ -58,13 +58,13 @@ sub login-logout (Mu $user) {
 
   if $user {
 
-    "<a class=\"navbar-item\" href=\"{http-root()}/logout\">
+    "<a href=\"{http-root()}/logout\">
       Log out
     </a>"
 
   } else {
 
-    "<a class=\"navbar-item\" href=\"{http-root()}/login-page\">
+    "<a href=\"{http-root()}/login-page\">
       Log In
     </a>"
   }
@@ -72,28 +72,14 @@ sub login-logout (Mu $user) {
 }
 
 sub navbar (Mu $user) is export {
-
   qq:to /HERE/
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
-        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
+      <div class="panel-block">
+        <p class="control">
+            {uniparse 'BUTTERFLY'} <a href="{http-root()}/">Ratings</a> |
+            <a href="{http-root()}/about">About</a> |
+            {login-logout($user)} |
+        </p>
       </div>
-      <div id="navbarBasicExample" class="navbar-menu">
-        <div class="navbar-start">
-          <a class="navbar-item" href="{http-root()}/">
-            Home
-          </a>
-          <a class="navbar-item" href="{http-root()}/about">
-            About
-          </a>
-          {login-logout($user)}
-        </div>
-      </div>
-    </nav>
   HERE
 
 }

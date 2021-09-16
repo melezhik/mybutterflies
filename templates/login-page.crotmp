@@ -3,9 +3,8 @@
     <head>
       <title><.title></title>
     </head>
-    <&HTML-AND-JAVASCRIPT(.navbar)>
-    <nav class="panel is-primary">
       <p class="panel-heading">Sign In</p>
+      <&HTML-AND-JAVASCRIPT(.navbar)>
       <div class="panel-block">
         <p class="control">
           <a href="<.http-root>/login"><img src="<.http-root>/icons/GitHub-Mark-32px.png"></a>

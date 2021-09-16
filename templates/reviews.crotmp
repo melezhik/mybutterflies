@@ -3,9 +3,8 @@
     <head>
       <title><.main></title>
     </head>
-    <&HTML-AND-JAVASCRIPT(.navbar)>
-    <nav class="panel is-primary">
       <p class="panel-heading"><.project> Reviews</p>
+      <&HTML-AND-JAVASCRIPT(.navbar)>
       <div class="panel-block">
         <p class="control">
           <!.has-user-review>
