@@ -76,6 +76,7 @@ sub navbar (Mu $user) is export {
       <div class="panel-block">
         <p class="control">
             {uniparse 'BUTTERFLY'} <a href="{http-root()}/">Ratings</a> |
+            <a href="https://github.com/melezhik/mybutterflies/issues/new?assignees=&labels=&template=add-project-to-the-list.md&title=Please+add+%5BNew+project%5D+to+the+list"> Add to the list </a> |
             <a href="{http-root()}/about">About</a> |
             {login-logout($user)} |
         </p>

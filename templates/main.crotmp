@@ -1,7 +1,7 @@
 <&HTML-AND-JAVASCRIPT(.css)>
 
     <head>
-      <title><.main></title>
+      <title><.title></title>
     </head>
     <nav class="panel is-primary">
       <p class="panel-heading">My Butterflies</p>
