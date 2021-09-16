@@ -23,7 +23,7 @@ my $application = route {
 
       %meta<reviews-cnt> = dir("$p/reviews/data").elems;
 
-      if $user and "$p/ups/$user".IO ~~ :e {
+      if check-user($user, $token) and "$p/ups/$user".IO ~~ :e {
         %meta<voted> = True
       } else {
         %meta<voted> = False
@@ -65,7 +65,7 @@ my $application = route {
         formatter => { sprintf "%02d:%02d %02d/%02d/%02d", .hour, .minute, .day, .month, .year }
       );
 
-      if $user and $user eq %meta<author> {
+      if check-user($user, $token) and $user eq %meta<author> {
         %meta<edit> = True;
         $has-user-review = True;
       } else {
@@ -96,7 +96,7 @@ my $application = route {
 
   get -> 'project', $project, 'edit-review', :$user is cookie, :$token is cookie {
 
-    if $user {
+    if check-user($user, $token) {
 
       my %review; 
 
@@ -131,7 +131,7 @@ my $application = route {
 
   post -> 'project', $project, 'edit-review', :$user is cookie, :$token is cookie {
 
-    if $user {
+    if check-user($user, $token) {
 
       request-body -> (:$data, :$points) {
 
@@ -283,7 +283,7 @@ my $application = route {
 
   get -> 'project', $project, 'up', :$user is cookie, :$token is cookie {
 
-    if $user {
+    if check-user($user, $token) {
 
       unless "{cache-root()}/projects/$project/ups/$user".IO ~~ :e {
         say "up {cache-root()}/projects/$project/ups/$user";
@@ -302,7 +302,7 @@ my $application = route {
 
   get -> 'project', $project, 'down', :$user is cookie, :$token is cookie {
 
-    if $user {
+    if check-user($user, $token) {
 
       if "{cache-root()}/projects/$project/ups/$user".IO ~~ :e {
         say "down {cache-root()}/projects/$project/ups/$user";
