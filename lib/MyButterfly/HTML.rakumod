@@ -2,6 +2,29 @@ unit module MyButterfly::HTML;
 
 use YAMLish;
 
+sub gen-token is export {
+
+  now.Int ~ ("a".."z","A".."Z",0..9).flat.roll(8).join
+
+}
+
+
+sub check-user (Mu $user, Mu $token) is export {
+
+  return False unless $user;
+
+  return False unless $token;
+
+  if "{cache-root()}/users/{$user}/tokens/{$token}".IO ~ :f {
+    say "user $user, token - $token - validation passed";
+    return True
+  } else {
+    say "user $user, token - $token - validation failed";
+    return False
+  }
+
+}
+
 sub get-web-conf is export {
 
   my $conf-file = %*ENV<HOME> ~ '/mbf.yaml';
@@ -54,9 +77,9 @@ sub css is export {
 
 }
 
-sub login-logout (Mu $user) {
+sub login-logout (Mu $user, Mu $token) {
 
-  if $user {
+  if check-user($user,$token) {
 
     "<a href=\"{http-root()}/logout\">
       Log out
@@ -71,14 +94,14 @@ sub login-logout (Mu $user) {
 
 }
 
-sub navbar (Mu $user) is export {
+sub navbar (Mu $user, Mu $token) is export {
   qq:to /HERE/
       <div class="panel-block">
         <p class="control">
             {uniparse 'BUTTERFLY'} <a href="{http-root()}/">Ratings</a> |
             <a href="https://github.com/melezhik/mybutterflies/issues/new?assignees=&labels=&template=add-project-to-the-list.md&title=Please+add+%5BNew+project%5D+to+the+list"> Add to the list </a> |
             <a href="{http-root()}/about">About</a> |
-            {login-logout($user)} |
+            {login-logout($user, $token)} |
         </p>
       </div>
   HERE

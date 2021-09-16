@@ -4,7 +4,6 @@ use Cro::WebApp::Template;
 use Cro::HTTP::Client;
 
 use MyButterfly::HTML;
-use MyButterfly::User;
 
 use JSON::Tiny;
 
@@ -38,7 +37,7 @@ my $application = route {
       http-root => http-root(),
       user => $user, 
       css => css(), 
-      navbar => navbar($user),
+      navbar => navbar($user, $token),
       projects => @projects.sort({ .<points> }).reverse
     }
 
@@ -86,7 +85,7 @@ my $application = route {
       http-root => http-root(),
       user => $user, 
       css => css(), 
-      navbar => navbar($user),
+      navbar => navbar($user, $token),
       project => $project,
       has-user-review => $has-user-review,
       reviews => @reviews.sort({ .<date> }).reverse
@@ -117,7 +116,7 @@ my $application = route {
         http-root => http-root(),
         user => $user, 
         css => css(), 
-        navbar => navbar($user),
+        navbar => navbar($user, $token),
         project => $project,
         review => %review
       }
@@ -164,7 +163,7 @@ my $application = route {
            user => $user,
            message => "review updated", 
            css => css(), 
-           navbar => navbar($user),
+           navbar => navbar($user, $token),
            project => $project,
            review => %review
         }
@@ -184,7 +183,7 @@ my $application = route {
       title => title(),
       http-root => http-root(),
       css => css(), 
-      navbar => navbar($user),
+      navbar => navbar($user, $token),
       butterfly => "{uniparse 'BUTTERFLY'}"
     }
   }
@@ -250,14 +249,14 @@ my $application = route {
        
   } 
 
-  get -> 'login-page', :$message {
+  get -> 'login-page', :$message, :$user is cookie, :$token is cookie {
 
     template 'templates/login-page.crotmp', {
       title => title(),
       http-root => http-root(),
       message => $message || "sign in using your github account",
       css => css(), 
-      navbar => navbar(""),
+      navbar => navbar($user, $token),
     }
   }
 
@@ -283,7 +282,7 @@ my $application = route {
 
   get -> 'project', $project, 'up', :$user is cookie, :$token is cookie {
 
-    if check-user($user, $token) {
+    if check-user($user, $token) == True {
 
       unless "{cache-root()}/projects/$project/ups/$user".IO ~~ :e {
         say "up {cache-root()}/projects/$project/ups/$user";
@@ -294,7 +293,7 @@ my $application = route {
 
     } else {
 
-      redirect :permanent, "{http-root()}/login-page?message=you need to sign in to vote";
+      redirect :permanent, "{http-root()}/login-page?message=you need to sign in to up";
 
     }
       
