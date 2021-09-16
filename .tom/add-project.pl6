@@ -31,6 +31,14 @@ task-run ".tom/tasks/add-project", %(
 );
 
 task-run ".tom/tasks/add-project", %(
+  project => "ansible2",
+  url => "https://github.com/ansible/ansible",
+  language => "Python",
+  description => "Ansible is a radically simple IT automation system",
+  category => "tools",
+);
+
+task-run ".tom/tasks/add-project", %(
   project => "fez",
   url => "https://github.com/tony-o/raku-fez",
   language => "Raku",
