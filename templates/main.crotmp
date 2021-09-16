@@ -6,6 +6,15 @@
     <nav class="panel is-primary">
       <p class="panel-heading">My Butterflies</p>
       <&HTML-AND-JAVASCRIPT(.navbar)>
+
+      <?.message>
+      <div class="notification is-success">
+        <p class="control">
+          <.message>
+        </p>
+      </div>
+      </?>
+
       <table class="table panel-block">
         <tr>
           <td>Points</td>

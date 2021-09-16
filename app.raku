@@ -10,7 +10,7 @@ use JSON::Tiny;
 
 my $application = route { 
 
-  get -> :$user is cookie, :$token is cookie {
+  get -> :$message, :$user is cookie, :$token is cookie {
 
     my @projects;
 
@@ -34,6 +34,7 @@ my $application = route {
 
     template 'templates/main.crotmp', {
       title => title(),
+      message => $message,
       http-root => http-root(),
       user => $user, 
       css => css(), 
@@ -289,11 +290,11 @@ my $application = route {
         "{cache-root()}/projects/$project/ups/$user".IO.spurt("");
       }
     
-      redirect :permanent, "{http-root()}/";
+      redirect :permanent, "{http-root()}/?message=project upvoted";
 
     } else {
 
-      redirect :permanent, "{http-root()}/login-page?message=you need to sign in to up";
+      redirect :permanent, "{http-root()}/login-page?message=you need to sign in to upvote";
 
     }
       
@@ -308,7 +309,7 @@ my $application = route {
         unlink "{cache-root()}/projects/$project/ups/$user";
       }
     
-      redirect :permanent, "{http-root()}/";
+      redirect :permanent, "{http-root()}/?message=project downvoted";
 
     } else {
 
