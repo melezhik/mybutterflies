@@ -227,7 +227,9 @@ my $application = route {
 
         say "set user login to {%data2<login>}";
 
-        set-cookie 'user', %data2<login>;
+        my $date = DateTime.now.later(hours => 1);
+
+        set-cookie 'user', %data2<login>, http-only => True, max-age => Duration.new(3600), expires => $date;
 
         mkdir "{cache-root()}/users";
 
@@ -243,7 +245,7 @@ my $application = route {
 
         say "set user token to {$tk}";
 
-        set-cookie 'token', $tk;
+        set-cookie 'token', $tk, http-only => True, max-age => Duration.new(3600), expires => $date;
 
         redirect :permanent, "{http-root()}/?message=user logged in";
 
