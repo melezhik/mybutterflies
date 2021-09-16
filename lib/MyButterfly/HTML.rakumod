@@ -9,7 +9,7 @@ sub gen-token is export {
 }
 
 
-sub check-user (Mu $user, Mu $token) is export {
+sub check-user ($user, $token) is export {
 
   return False unless $user;
 
@@ -79,7 +79,7 @@ sub css is export {
 
 sub login-logout (Mu $user, Mu $token) {
 
-  if check-user($user,$token) {
+  if check-user($user,$token) == True {
 
     "<a href=\"{http-root()}/logout\">
       Log out
