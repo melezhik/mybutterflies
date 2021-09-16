@@ -274,8 +274,8 @@ my $application = route {
 
   get -> 'logout', :$user is cookie, :$token is cookie {
 
-    set-cookie 'user', "";
-    set-cookie 'token', "";
+    set-cookie 'user', Nil;
+    set-cookie 'token', Nil;
 
     if ( $user && $token && "{cache-root()}/users/{$user}/tokens/{$token}".IO ~~ :e ) {
 
