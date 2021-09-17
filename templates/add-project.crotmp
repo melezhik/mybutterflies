@@ -26,6 +26,8 @@
                <option value=Perl>Perl</option>
                <option value=Python>Python</option>
                <option value=Golang>Golang</option>
+               <option value=Ruby>Ruby</option>
+               <option value=Powershell>Powershell</option>
                <option value=Shell>Shell</option>
                <option value=Javascript>Javascript</option>
              </select>
