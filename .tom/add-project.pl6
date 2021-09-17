@@ -1,4 +1,14 @@
 task-run ".tom/tasks/add-project", %(
+  project => "goss",
+  url => "https://github.com/aelsabbahy/goss",
+  language => "Golang",
+  description => "Goss - Quick and Easy server validation",
+  category => "tools",
+);
+
+=begin comment
+
+task-run ".tom/tasks/add-project", %(
   project => "Red",
   url => "https://github.com/FCO/Red",
   language => "Raku",
@@ -53,3 +63,6 @@ task-run ".tom/tasks/add-project", %(
   description => "A Raku / Perl 6 module manager",
   category => "package manager",
 );
+
+=end comment
+

@@ -4,3 +4,4 @@ name: My Butterflies Web
 entrypoint: app.raku
 ignore:
   - .cache
+  - .tom
