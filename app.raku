@@ -317,7 +317,7 @@ my $application = route {
     redirect :see-other, "{http-root()}/?message=user logged out";
   }
 
-  post -> 'project', $project, 'up', :$user is cookie, :$token is cookie {
+  get -> 'project', $project, 'up', :$user is cookie, :$token is cookie {
 
     cache-control :no-store, :no-cache;
 
@@ -338,7 +338,7 @@ my $application = route {
       
   }
 
-  post -> 'project', $project, 'down', :$user is cookie, :$token is cookie {
+  get -> 'project', $project, 'down', :$user is cookie, :$token is cookie {
 
     if check-user($user, $token) {
 

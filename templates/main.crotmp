@@ -54,14 +54,14 @@
           </td>
           <td>
             <?{$i.voted == True}>
-            <a onclick="down('<$i.project>')">
+            <a href="<.http-root>/project/<$i.project>/down?q=123">
               <span class="icon has-text-success">
                 <i class="fas fa-arrow-up"></i>
               </span>
             </a>
             </?>
             <?{$i.voted == False}>
-            <a onclick="up('<$i.project>')">
+            <a href="<.http-root>/project/<$i.project>/up?q=123">
               <span class="icon">
                 <i class="fas fa-arrow-up"></i>
               </span>
