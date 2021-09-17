@@ -124,7 +124,7 @@ my $application = route {
 
     } else {
 
-      redirect :permanent, "{http-root()}/login-page?message=you need to sign in to edit or write eviews";
+      redirect :see-other, "{http-root()}/login-page?message=you need to sign in to edit or write eviews";
 
     }
   }
@@ -173,7 +173,7 @@ my $application = route {
 
     } else {
 
-      redirect :permanent, "{http-root()}/login-page?message=you need to sign in to edit reviews";
+      redirect :see-other, "{http-root()}/login-page?message=you need to sign in to edit reviews";
 
     }
   }
@@ -247,11 +247,11 @@ my $application = route {
 
         set-cookie 'token', $tk, http-only => True, max-age => Duration.new(3600), expires => $date;
 
-        redirect :permanent, "{http-root()}/?message=user logged in";
+        redirect :see-other, "{http-root()}/?message=user logged in";
 
       } else {
 
-        redirect :permanent, "{http-root()}/?message=issues with login";
+        redirect :see-other, "{http-root()}/?message=issues with login";
 
       }
 
@@ -293,11 +293,11 @@ my $application = route {
 
         set-cookie 'token', $tk;
 
-        redirect :permanent, "{http-root()}/?message=user logged in";
+        redirect :see-other, "{http-root()}/?message=user logged in";
 
     } else  {
 
-      redirect :permanent,
+      redirect :see-other,
         "https://github.com/login/oauth/authorize?client_id={%*ENV<OAUTH_CLIENT_ID>}&state={%*ENV<OAUTH_STATE>}"
     }
   }
@@ -314,10 +314,12 @@ my $application = route {
 
     }
 
-    redirect :permanent, "{http-root()}/?message=user logged out";
+    redirect :see-other, "{http-root()}/?message=user logged out";
   }
 
-  get -> 'project', $project, 'up', :$user is cookie, :$token is cookie {
+  post -> 'project', $project, 'up', :$user is cookie, :$token is cookie {
+
+    cache-control :no-store, :no-cache;
 
     if check-user($user, $token) == True {
 
@@ -326,17 +328,17 @@ my $application = route {
         "{cache-root()}/projects/$project/ups/$user".IO.spurt("");
       }
     
-      redirect :permanent, "{http-root()}/?message=project upvoted";
+      redirect :see-other, "{http-root()}/?message=project upvoted";
 
     } else {
 
-      redirect :permanent, "{http-root()}/login-page?message=you need to sign in to upvote";
+      redirect :see-other, "{http-root()}/login-page?message=you need to sign in to upvote";
 
     }
       
   }
 
-  get -> 'project', $project, 'down', :$user is cookie, :$token is cookie {
+  post -> 'project', $project, 'down', :$user is cookie, :$token is cookie {
 
     if check-user($user, $token) {
 
@@ -345,11 +347,11 @@ my $application = route {
         unlink "{cache-root()}/projects/$project/ups/$user";
       }
     
-      redirect :permanent, "{http-root()}/?message=project downvoted";
+      redirect :see-other, "{http-root()}/?message=project downvoted";
 
     } else {
 
-      redirect :permanent, "{http-root()}/login-page";
+      redirect :see-other, "{http-root()}/login-page";
 
     }
       

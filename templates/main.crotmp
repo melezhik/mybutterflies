@@ -1,5 +1,29 @@
 <&HTML-AND-JAVASCRIPT(.css)>
 
+<script>
+
+  function up( project ){
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "<.http-root>/project/" + project + '/up' , true );
+    xhr.send("");
+
+    setTimeout(() => {  window.location.reload(true); }, 1000);
+
+  }
+
+  function down( project ){
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "<.http-root>/project/" + project + '/down' , true );
+    xhr.send("");
+
+    setTimeout(() => {  window.location.reload(true); }, 1000);
+
+  }
+
+</script>
+
     <head>
       <title><.title></title>
     </head>
@@ -30,14 +54,14 @@
           </td>
           <td>
             <?{$i.voted == True}>
-            <a href="<.http-root>/project/<$i.project>/down">
+            <a onclick="down('<$i.project>')">
               <span class="icon has-text-success">
                 <i class="fas fa-arrow-up"></i>
               </span>
             </a>
             </?>
             <?{$i.voted == False}>
-            <a href="<.http-root>/project/<$i.project>/up">
+            <a onclick="up('<$i.project>')">
               <span class="icon">
                 <i class="fas fa-arrow-up"></i>
               </span>
