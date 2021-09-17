@@ -81,13 +81,13 @@ sub login-logout (Mu $user, Mu $token) {
 
   if check-user($user,$token) == True {
 
-    "<a href=\"{http-root()}/logout\">
+    "<a href=\"{http-root()}/logout?q=123\">
       Log out
     </a>"
 
   } else {
 
-    "<a href=\"{http-root()}/login-page\">
+    "<a href=\"{http-root()}/login-page?q=123\">
       Log In
     </a>"
   }
