@@ -1,27 +1,5 @@
 <&HTML-AND-JAVASCRIPT(.css)>
 
-<script>
-
-  function up( project ){
-
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "<.http-root>/project/" + project + '/up' , true );
-    xhr.send("");
-
-    setTimeout(() => {  window.location.reload(true); }, 1000);
-
-  }
-
-  function down( project ){
-
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "<.http-root>/project/" + project + '/down' , true );
-    xhr.send("");
-
-    setTimeout(() => {  window.location.reload(true); }, 1000);
-
-  }
-
 </script>
 
     <head>

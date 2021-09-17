@@ -319,8 +319,6 @@ my $application = route {
 
   get -> 'project', $project, 'up', :$user is cookie, :$token is cookie {
 
-    cache-control :no-store, :no-cache;
-
     if check-user($user, $token) == True {
 
       unless "{cache-root()}/projects/$project/ups/$user".IO ~~ :e {

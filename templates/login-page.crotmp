@@ -7,7 +7,7 @@
       <&HTML-AND-JAVASCRIPT(.navbar)>
       <div class="panel-block">
         <p class="control">
-          <a href="<.http-root>/login"><img src="<.http-root>/icons/GitHub-Mark-32px.png"></a>
+          <a href="<.http-root>/login?q=123"><img src="<.http-root>/icons/GitHub-Mark-32px.png"></a>
         </p>
       </div>
       <?.message>
