@@ -178,6 +178,50 @@ my $application = route {
     }
   }
 
+  get -> 'add-project', :$user is cookie, :$token is cookie {
+    template 'templates/add-project.crotmp', {
+      title => title(),
+      http-root => http-root(),
+      user => $user,
+      css => css(), 
+      navbar => navbar($user, $token),
+    }
+  }
+
+  post -> 'add-project', :$user is cookie, :$token is cookie {
+
+      request-body -> (:$project, :$description, :$url, :$language, :$category) {
+
+        mkdir "{cache-root}/projects/$project";
+        mkdir "{cache-root}/projects/$project/reviews";
+        mkdir "{cache-root}/projects/$project/reviews/data";
+        mkdir "{cache-root}/projects/$project/reviews/points";
+        mkdir "{cache-root}/projects/$project/ups";
+
+        unless "{cache-root}/projects/$project/meta.json".IO ~~ :e {
+          "{cache-root}/projects/$project/meta.json".IO.spurt(qq:to/END/);
+          \{
+            \"project\" : \"$project\",
+            \"description\" : \"$description\",
+            \"category\" : \"$category\",
+            \"language\" : \"$language\",
+            \"url\" : "$url\"
+          \}
+        END
+        }
+      }
+
+      template 'templates/add-project.crotmp', {
+        title => title(),
+        http-root => http-root(),
+        message => "project added",
+        user => $user,
+        css => css(), 
+        navbar => navbar($user, $token),
+      }
+
+  }
+
   get -> 'about', :$user is cookie, :$token is cookie {
 
     template 'templates/about.crotmp', {
