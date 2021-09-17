@@ -190,31 +190,47 @@ my $application = route {
 
   post -> 'add-project', :$user is cookie, :$token is cookie {
 
+      my $msg;
+
       request-body -> (:$project, :$description, :$url, :$language, :$category) {
 
-        mkdir "{cache-root}/projects/$project";
-        mkdir "{cache-root}/projects/$project/reviews";
-        mkdir "{cache-root}/projects/$project/reviews/data";
-        mkdir "{cache-root}/projects/$project/reviews/points";
-        mkdir "{cache-root}/projects/$project/ups";
+        if $project ~~ /^^ \w+ $$ / 
+          and $description ~~ /^^ <[ \w \. \s \d ]>+ $$/ 
+          and $url ~~ /^^ <[ \w \. \/ \d :]>+ $$/
+          and $language ~~ /^^ <[ \w \d ]>+ $$/ 
+          and $category ~~ /^^ <[ \w \d ]>+ $$/ 
+        {
 
-        unless "{cache-root}/projects/$project/meta.json".IO ~~ :e {
-          "{cache-root}/projects/$project/meta.json".IO.spurt(qq:to/END/);
-          \{
-            \"project\" : \"$project\",
-            \"description\" : \"$description\",
-            \"category\" : \"$category\",
-            \"language\" : \"$language\",
-            \"url\" : "$url\"
-          \}
-        END
+          mkdir "{cache-root}/projects/$project";
+          mkdir "{cache-root}/projects/$project/reviews";
+          mkdir "{cache-root}/projects/$project/reviews/data";
+          mkdir "{cache-root}/projects/$project/reviews/points";
+          mkdir "{cache-root}/projects/$project/ups";
+
+          if "{cache-root}/projects/$project/meta.json".IO ~~ :e {
+            $msg = "project already exits";
+          } else {
+            "{cache-root}/projects/$project/meta.json".IO.spurt(qq:to/END/);
+            \{
+              \"project\" : \"$project\",
+              \"description\" : \"$description\",
+              \"category\" : \"$category\",
+              \"language\" : \"$language\",
+              \"url\" : "$url\"
+            \}
+            END
+            $msg = "project added"
+          }
+        } else {
+          $msg = "incorrect input data"
         }
+
       }
 
       template 'templates/add-project.crotmp', {
         title => title(),
         http-root => http-root(),
-        message => "project added",
+        message => $msg,
         user => $user,
         css => css(), 
         navbar => navbar($user, $token),
