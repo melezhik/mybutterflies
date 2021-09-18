@@ -38,15 +38,16 @@
             <span class="tag">category</span><br>
             <div class="select">
              <select name="category">
-               <option value=package manager selected>package manager</option>
-               <option value=cicd>cicd</option>
-               <option value=cloud>cloud</option>
-               <option value=tools>tools</option>
-               <option value=databases>databases</option>
-               <option value=web>web</option>
-               <option value=testing>testing</option>
-               <option value=iac>infrastructure as a code</option>
-               <option value=configuration management>configuration management</option>
+               <option value="package manager" selected>package manager</option>
+               <option value="cicd">cicd</option>
+               <option value="cloud">cloud</option>
+               <option value="tools">tools</option>
+               <option value="databases">databases</option>
+               <option value="web">web</option>
+               <option value="testing">testing</option>
+               <option value="infrastructure as a code">infrastructure as a code</option>
+               <option value="configuration management">configuration management</option>
+               <option value="task runner">task runner</option>
              </select>
             </div>
             <br>

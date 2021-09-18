@@ -195,10 +195,10 @@ my $application = route {
       request-body -> (:$project, :$description, :$url, :$language, :$category) {
 
         if $project ~~ /^^ \w+ $$ / 
-          and $description ~~ /^^ <[ \w \. \s \d ]>+ $$/ 
+          and $description ~~ /^^ <[ \w \. \s \d \/ \\ \, ]>+ $$/ 
           and $url ~~ /^^ <[ \w \. \/ \d :]>+ $$/
           and $language ~~ /^^ <[ \w \d \+ ]>+ $$/ 
-          and $category ~~ /^^ <[ \w \d ]>+ $$/ 
+          and $category ~~ /^^ <[ \w \d \s]>+ $$/ 
         {
 
           mkdir "{cache-root}/projects/$project";
