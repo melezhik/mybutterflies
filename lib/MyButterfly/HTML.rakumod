@@ -37,7 +37,7 @@ sub get-web-conf is export {
 
 sub title is export { 
 
-  "My Butterflies - Admire Your Software"
+  "My Butterflies - Independent Software Reviews"
 
 }
 
