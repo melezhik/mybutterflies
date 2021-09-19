@@ -42,6 +42,7 @@
             <div class="select">
              <select name="category">
                <option value="package manager" selected>package manager</option>
+               <option value="libraries">libraries</option>
                <option value="cicd">cicd</option>
                <option value="cloud">cloud</option>
                <option value="tools">tools</option>
