@@ -29,6 +29,9 @@
                <option value=Python>Python</option>
                <option value=Golang>Golang</option>
                <option value=Ruby>Ruby</option>
+               <option value=Rust>Rust</option>
+               <option value=Lua>Lua</option>
+               <option value=Java>Java</option>
                <option value=Powershell>Powershell</option>
                <option value=Shell>Shell</option>
                <option value=Javascript>Javascript</option>
@@ -44,6 +47,7 @@
                <option value="tools">tools</option>
                <option value="databases">databases</option>
                <option value="web">web</option>
+               <option value="automation">automation</option>
                <option value="testing">testing</option>
                <option value="infrastructure as a code">infrastructure as a code</option>
                <option value="configuration management">configuration management</option>
