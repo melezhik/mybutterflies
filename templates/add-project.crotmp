@@ -24,7 +24,7 @@
              <select name="language">
                <option value=Raku selected>Raku</option>
                <option value=Perl>Perl</option>
-               <option value="C++">C</option>
+               <option value="C">C</option>
                <option value="C++">C++</option>
                <option value=Python>Python</option>
                <option value=Golang>Golang</option>
