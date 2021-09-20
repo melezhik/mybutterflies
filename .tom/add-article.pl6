@@ -1,5 +1,15 @@
 
 task-run ".tom/tasks/add-article", %(
+  id => "Ain",
+  author => "melezhik",
+  title => "Simple, but flexible http request command line client",
+  short => "An author of ain represents the tool as console alternative to postman.",
+  tags => "Cli, http, golang",
+);
+
+=begin comment
+
+task-run ".tom/tasks/add-article", %(
   id => "Hello",
   author => "melezhik",
   title => "Hello from My Butterflies maintainer",
@@ -7,7 +17,6 @@ task-run ".tom/tasks/add-article", %(
   tags => "Intro, names",
 );
 
-=begin comment
 
 task-run ".tom/tasks/add-article", %(
   id => "Rex",
