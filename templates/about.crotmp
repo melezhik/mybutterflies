@@ -3,28 +3,34 @@
     <head>
       <title><.title></title>
     </head>
+    <nav class="panel is-primary">
       <p class="panel-heading">Welcome to My Butterflies</p>
       <&HTML-AND-JAVASCRIPT(.navbar)>
       <div class="panel-block">
-        <div class="control">
-          <pre>
+          <pre class="control">
 
-    My Butterflies - is a place where you rate and admire the software you like. 
+    Hi! My Butterflies - is a place where engineers write reviews 
+    on software they like (or dislike). 
 
-    Found something interesting? - <strong><a href="<.http-root>/add-project">fill</a></strong> a short form and we will add your project to the list!
-    
-    Please be nice and respectful when you write reviews. 
+    No marketing stuff, just your honest opinions.
+    
+    Sometimes we randomly take interesting tools and review them in more details, 
+    check the <a href="<.http-root>/articles" >editor's reviews</a> section.
 
-    My butterfly is a safe and respectful place where everyone is entitled
-    to share their opinions, while not hurting others. 
+    Found something interesting? - <strong><a href="<.http-root>/add-project">fill</a></strong> a short form 
+    and we will add your project to the list!
 
-    The service administration preserves the right to remove 
-    inappropriate entries or ban users who don't respect others and don't
-    follow these simple rules.
+    There is no formal code of conduct for site users, however we expect that 
+    all the users are being respectful when they express opinions.
 
-    <.butterfly> - Enjoy your butterflies!
+    Service administration preserves right to disable user's account 
+    and remove entries for those who don't follow this simple rule.
+
+    <.butterfly><.butterfly><.butterfly>
+
+    Best regards. My Butterflies.
+
          </pre>
-      </div>
       <?.message>
       <div class="panel-block">
         <p class="control">

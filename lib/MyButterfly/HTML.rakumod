@@ -100,6 +100,7 @@ sub navbar (Mu $user, Mu $token) is export {
         <p class="control">
             {uniparse 'BUTTERFLY'} <a href="{http-root()}/">Ratings</a> |
             <a href="{http-root()}/add-project"> Add project </a> |
+            <a href="{http-root()}/articles">Editor's articles</a> |
             <a href="{http-root()}/about">About</a> |
             {login-logout($user, $token)} |
         </p>

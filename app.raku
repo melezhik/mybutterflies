@@ -44,6 +44,132 @@ my $application = route {
 
   }
 
+  get -> 'articles', :$user is cookie, :$token is cookie {
+
+      my @articles;
+
+      for dir("{cache-root()}/articles/") -> $i {
+
+        my %meta = from-json("{$i}/meta.json".IO.slurp);
+
+        %meta<id> = $i.IO.basename;
+
+        %meta<data> = "{$i}/data.md".IO.slurp;
+
+        %meta<date> = "{$i}/data.md".IO.modified;
+
+        %meta<date-str> = DateTime.new(
+          "{$i}/data.md".IO.modified,
+          formatter => { sprintf "%02d/%02d/%02d", .day, .month, .year }
+        );
+
+        my $ups = 0;
+
+        for dir("{$i}/ups") -> $p {
+          $ups++;        
+        }
+
+        %meta<points> = $ups;
+
+        %meta<points-str> = "{uniparse 'TWO HEARTS'}: {%meta<points>}";
+
+        push @articles, %meta;
+
+    }
+
+    template 'templates/articles.crotmp', {
+      title => title(),
+      http-root => http-root(),
+      user => $user, 
+      css => css(), 
+      navbar => navbar($user, $token),
+      articles => @articles.sort({ .<date> }).reverse
+    }
+  }
+
+  get -> 'article', $article-id, :$message, :$user is cookie, :$token is cookie {
+
+    my %meta = from-json("{cache-root()}/articles/{$article-id}/meta.json".IO.slurp);
+
+    %meta<id> = $article-id;
+
+    %meta<data> = "{cache-root()}/articles/{$article-id}/data.md".IO.slurp;
+
+    %meta<data-short> = %meta<data>.split("\n")[0..5];
+
+    %meta<date> = "{cache-root()}/articles/{$article-id}/data.md".IO.modified;
+
+    %meta<date-str> = DateTime.new(
+       "{cache-root()}/articles/{$article-id}/data.md".IO.modified,
+       formatter => { sprintf "%02d/%02d/%02d", .day, .month, .year }
+    );
+
+    my $ups = 0;
+
+    for dir("{cache-root()}/articles/{$article-id}/ups") -> $p {
+       $ups++;        
+    }
+
+    %meta<points> = $ups;
+
+    %meta<points-str> = "{uniparse 'TWO HEARTS'}: {%meta<points>}";
+
+    if check-user($user, $token) and "{cache-root()}/articles/{$article-id}/ups/$user".IO ~~ :e {
+      %meta<voted> = True
+    } else {
+      %meta<voted> = False
+    }
+
+    template 'templates/article.crotmp', {
+      title => title(),
+      http-root => http-root(),
+      user => $user, 
+      css => css(),
+      message => $message, 
+      navbar => navbar($user, $token),
+      article => %meta
+    }
+
+  }
+
+
+  get -> 'article', $article-id, 'up', :$user is cookie, :$token is cookie {
+
+    if check-user($user, $token) == True {
+
+      unless "{cache-root()}/articles/{$article-id}/ups/$user".IO ~~ :e {
+        say "up {cache-root()}/articles/{$article-id}/ups/$user";
+        "{cache-root()}/articles/{$article-id}/ups/$user".IO.spurt("");
+      }
+    
+      redirect :see-other, "{http-root()}/article/{$article-id}?message=article upvoted";
+
+    } else {
+
+      redirect :see-other, "{http-root()}/login-page?message=you need to sign in to upvote article";
+
+    }
+      
+  }
+
+  get -> 'article', $article-id, 'down', :$user is cookie, :$token is cookie {
+
+    if check-user($user, $token) == True {
+
+      if "{cache-root()}/articles/{$article-id}/ups/$user".IO ~~ :e {
+        say "down {cache-root()}/articles/{$article-id}/ups/$user";
+        unlink "{cache-root()}/articles/{$article-id}/ups/$user".IO;
+      }
+    
+      redirect :see-other, "{http-root()}/article/{$article-id}?message=article downvoted";
+
+    } else {
+
+      redirect :see-other, "{http-root()}/login-page";
+
+    }
+      
+  }
   get -> 'project', $project, 'reviews', :$user is cookie, :$token is cookie {
 
     my @reviews;
@@ -390,7 +516,7 @@ my $application = route {
 
     } else {
 
-      redirect :see-other, "{http-root()}/login-page?message=you need to sign in to upvote";
+      redirect :see-other, "{http-root()}/login-page?message=you need to sign in to upvote projects";
 
     }
       
@@ -420,6 +546,14 @@ my $application = route {
     cache-control :public, :max-age(3000);
 
     static 'icons', @path;
+
+  }
+
+  get -> 'js', *@path {
+
+    cache-control :public, :max-age(3000);
+
+    static 'js', @path;
 
   }
 }

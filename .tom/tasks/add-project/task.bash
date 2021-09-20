@@ -6,7 +6,7 @@ url=$(config url)
 language=$(config language)
 category=$(config category)
 
-echo "add [$project] to mbf"
+echo "add project [$project] to mbf"
 
 mkdir -p ~/.mbf/projects/$project
 

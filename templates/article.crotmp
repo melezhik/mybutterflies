@@ -1,0 +1,58 @@
+<&HTML-AND-JAVASCRIPT(.css)>
+<script type="text/javascript" src="/js/markdown-to-html.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/12.2.0/markdown-it.min.js" integrity="sha512-cTQeM/op796Fp1ZUxfech8gSMLT/HvrXMkRGdGZGQnbwuq/obG0UtcL04eByVa99qJik7WlnlQOr5/Fw5B36aw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
+
+    <head>
+      <title><.title></title>
+    </head>
+      <nav class="panel is-primary">
+      <&HTML-AND-JAVASCRIPT(.navbar)>
+
+      <p class="panel-heading">
+        My Butterflies. Article id: <.article.id>
+      </p>
+      <div class="panel-block">
+        <div class="control">
+          <?.message>
+          <p class="notification is-success">
+            <.message>
+          </p>
+          </?>
+        </div>
+      </div>
+      <div class="panel-block">
+         <div class="card">
+          <header class="card-header">
+            <p class="card-header-title">
+              [<.article.title>] by @<.article.author> | <.article.date-str> | <.article.points-str>
+            <?{.article.voted == True}>
+            <a href="<.http-root>/article/<.article.id>/down?q=123">
+              <span class="icon has-text-success">
+                <i class="fas fa-arrow-up"></i>
+              </span>
+            </a>
+            </?>
+            <?{.article.voted == False}>
+            <a href="<.http-root>/article/<.article.id>/up?q=123">
+              <span class="icon">
+                <i class="fas fa-arrow-up"></i>
+              </span>
+            </a>
+            </?>
+            </p>
+          </header>
+          <div class="card-content">
+            <div class="content" id="doc">
+              <pre id="markdown"><.article.data></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+   </nav>
+
+<script>parse_markdown()</script>

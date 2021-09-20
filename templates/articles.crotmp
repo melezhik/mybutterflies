@@ -1,44 +1,49 @@
 <&HTML-AND-JAVASCRIPT(.css)>
 
+</script>
+
     <head>
-      <title><.main></title>
+      <title><.title></title>
     </head>
     <nav class="panel is-primary">
-      <p class="panel-heading"><.project> Reviews</p>
+      <p class="panel-heading">My Butterflies Articles</p>
       <&HTML-AND-JAVASCRIPT(.navbar)>
       <div class="panel-block">
         <p class="control">
-          <!.has-user-review>
-            <span class="icon">
-              <i class="fas fa-arrow-right"></i>
-            </span>
-             <a href="<.http-root>/project/<.project>/edit-review">write review</a>
-          </!>
             <span class="icon">
               <i class="fas fa-arrow-right"></i>
             </span>
             <a href="<.http-root>/">go to ratings</a>
         </p>
       </div>
-      <@reviews: $r>
+      <div class="panel-block">
+        <pre class="control">
+  Hi! I am @Alexey - chief editor of "My Butteflies". I randomly pick
+  tools I like and express my opinions on them.
+
+  Don't judge me, I am just a devops guy with some experience, 
+  which I hope makes a sense.
+
+  Upvote articles if you like them.
+        </pre>
+      </div>
+      <@articles: $i>
       <div class="panel-block">
         <div class="card">
           <header class="card-header">
             <p class="card-header-title">
-              <$r.points-str> | by @<$r.author> at <$r.date-str>
+              [<$i.title>] by @<$i.author> <$i.date-str> | <$i.points-str>
             </p>
           </header>
           <div class="card-content">
             <div class="content">
-              <$r.data>
-              <?$r.edit>
-                <hr>
-                <a href="<.http-root>/project/<.project>/edit-review">edit</a>
-              </?>
+              <$i.short>
+              <a href="<.http-root>/article/<$i.id>">read more</a>
             </div>
           </div>
         </div>
       </div>
       </@>
+
     </nav>
 
