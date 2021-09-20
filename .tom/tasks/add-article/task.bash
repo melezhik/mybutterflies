@@ -1,6 +1,7 @@
 #!bash
 
 id=$(config id)
+author=$(config author)
 short=$(config short)
 title=$(config title)
 tags=$(config tags)
@@ -14,6 +15,7 @@ mkdir -p ~/.mbf/articles/$id/ups
 cat << HERE > ~/.mbf/articles/$id/meta.json
 {
   "id" : "$id",
+  "author" : "$author",
   "title" : "$title",
   "short" : "$short",
   "tags" : "$tags"
