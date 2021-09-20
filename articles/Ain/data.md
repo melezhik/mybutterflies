@@ -1,6 +1,6 @@
 # Ain
 
-Recently I've came across an interesting tool called [ain](/project/sparky/reviews). 
+Recently I've came across an interesting tool called [ain](https://github.com/jonaslu/ain). 
 
 I knew about it from hacker news, which I use quite often to pass my time.
 
