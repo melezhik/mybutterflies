@@ -1,5 +1,5 @@
 <&HTML-AND-JAVASCRIPT(.css)>
-<script type="text/javascript" src="/js/markdown-to-html.js"></script>
+<script type="text/javascript" src="<.http-root>/js/markdown-to-html.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/12.2.0/markdown-it.min.js" integrity="sha512-cTQeM/op796Fp1ZUxfech8gSMLT/HvrXMkRGdGZGQnbwuq/obG0UtcL04eByVa99qJik7WlnlQOr5/Fw5B36aw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
