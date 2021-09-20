@@ -32,7 +32,7 @@
         <div class="card">
           <header class="card-header">
             <p class="card-header-title">
-              [<$i.title>] by @<$i.author> <$i.date-str> | <$i.points-str>
+              [<$i.title>] by @<$i.author> <$i.date-str> | <$i.points-str> | tags: <$i.tags>
             </p>
           </header>
           <div class="card-content">

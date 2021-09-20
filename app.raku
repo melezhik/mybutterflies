@@ -176,6 +176,12 @@ my $application = route {
 
     my $has-user-review = False;
 
+    my %project-meta;
+
+    %project-meta<points> = dir("{cache-root()}/projects/$project/ups/").elems;
+
+    %project-meta<reviews-cnt> = dir("{cache-root()}/projects/$project/reviews/data").elems;
+
     for dir("{cache-root()}/projects/$project/reviews/data") -> $r {
 
       my %meta;
@@ -214,6 +220,7 @@ my $application = route {
       css => css(), 
       navbar => navbar($user, $token),
       project => $project,
+      project-meta => %project-meta,
       has-user-review => $has-user-review,
       reviews => @reviews.sort({ .<date> }).reverse
     }

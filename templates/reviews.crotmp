@@ -20,6 +20,11 @@
             <a href="<.http-root>/">go to ratings</a>
         </p>
       </div>
+      <div class="panel-block">
+        <p class="control">
+          project: <.project> | points: <.project-meta.points> | reviews cnt: <.project-meta.reviews-cnt>
+        </p>
+      </div>
       <@reviews: $r>
       <div class="panel-block">
         <div class="card">
