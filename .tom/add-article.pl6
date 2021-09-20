@@ -7,7 +7,7 @@ task-run ".tom/tasks/add-article", %(
   tags => "Intro, names",
 );
 
-#=begin comment
+=begin comment
 
 task-run ".tom/tasks/add-article", %(
   id => "Rex",
@@ -17,5 +17,5 @@ task-run ".tom/tasks/add-article", %(
   tags => "Perl, Configuration Management",
 );
 
-#=end comment
+=end comment
 
