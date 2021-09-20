@@ -1,6 +1,7 @@
 
 task-run ".tom/tasks/add-article", %(
   id => "Hello",
+  author => "melezhik",
   title => "Hello from My Butterflies maintainer",
   short => "Hello and which name should I choose?",
   tags => "Intro, names",

@@ -250,7 +250,7 @@ my $application = route {
 
     } else {
 
-      redirect :see-other, "{http-root()}/login-page?message=you need to sign in to edit or write eviews";
+      redirect :see-other, "{http-root()}/login-page?message=you need to sign in to edit or write reviews";
 
     }
   }
