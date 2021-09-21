@@ -1,6 +1,6 @@
 # Ain
 
-Recently I've came across an interesting tool called [ain](https://github.com/jonaslu/ain). 
+Recently I've come across an interesting tool called [ain](https://github.com/jonaslu/ain). 
 
 I knew about it from hacker news, which I use quite often to pass my time.
 
@@ -82,14 +82,14 @@ ain basic_template.ain project.ain
 ```
 
 
-All this allow project modularization architecture.
+All this allows a project module architecture.
 
 
 # Parametrization
 
-Of course this is something one can expect from tools like that. 
+Of course, this is something one expect from tools like that. 
 
-Ability to parameterize requests. Ain has an idea of variables:
+Ability to parameterize requests. Ain has an idea of variables for this:
 
 
 `cat project.ain`:
