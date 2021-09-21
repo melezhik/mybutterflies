@@ -87,7 +87,8 @@ All this allow project modularization architecture.
 
 # Parametrization
 
-Of course this is something one can expects from tools like that. 
+Of course this is something one can expect from tools like that. 
+
 Ability to parameterize requests. Ain has an idea of variables:
 
 
