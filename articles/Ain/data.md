@@ -7,7 +7,7 @@ I knew about it from hacker news, which I use quite often to pass my time.
 It allows one to make http calls using simple DSL. 
 
 
-An author of ain represents the tool as console alternative to postman.
+The author of ain represents the tool as a console alternative to postman.
 
 The tool is written in go which simplifies an installation process:
 
