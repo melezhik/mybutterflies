@@ -48,7 +48,9 @@
                </!>
              </select>
             </div>
-             <textarea class="textarea" name="data" placeholder="Textarea"><.review.data></textarea>
+            <br><br>
+            <textarea class="textarea" name="data" placeholder="Textarea"><.review.data></textarea>
+            <br>
             <button class="button is-link">Submit</button>
           </form>
         </div>
