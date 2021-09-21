@@ -3,6 +3,7 @@
     <head>
       <title><.title></title>
     </head>
+      <nav class="panel is-primary">
       <p class="panel-heading"><.project> - Edit review</p>
       <&HTML-AND-JAVASCRIPT(.navbar)>
       <div class="panel-block">
