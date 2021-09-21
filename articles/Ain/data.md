@@ -43,7 +43,7 @@ ain basic_template.ain
 Output:
 
 ```html
-...output truncated
+... output truncated
       <div class="panel-block">
         <p class="control">
           project: ain | points: 0 | reviews cnt: 0
