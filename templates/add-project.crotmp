@@ -55,6 +55,7 @@
                <option value="configuration management">configuration management</option>
                <option value="task runner">task runner</option>
                <option value="build tool">build tool</option>
+               <option value="applications">applications</option>
              </select>
             </div>
             <br><br>

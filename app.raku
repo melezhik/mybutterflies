@@ -328,8 +328,8 @@ my $application = route {
       request-body -> (:$project, :$description, :$url, :$language, :$category) {
 
         if $project ~~ /^^ <[ \w \. \d : ]>+ $$/ 
-          and $description ~~ /^^ <[ \w \. \s \d \/ \\ \, \- \# ]>+ $$/ 
-          and $url ~~ /^^ <[ \w \. \/ \d : \. \-]>+ $$/
+          and $description ~~ /^^ <[ \w \. \s \d \/ \\ \, \- \# ~ ]>+ $$/ 
+          and $url ~~ /^^ <[ \w \. \/ \d : \. \- ~]>+ $$/
           and $language ~~ /^^ <[ \w \d \+ ]>+ $$/ 
           and $category ~~ /^^ <[ \w \d \s]>+ $$/ 
         {
