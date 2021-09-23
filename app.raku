@@ -391,7 +391,7 @@ my $application = route {
           "Accept" => "application/json"
         ],
         query => { 
-          redirect_uri => "http://161.35.115.119/mbf/oauth2",
+          redirect_uri => "https://mybf.io/oauth2",
           client_id => %*ENV<OAUTH_CLIENT_ID>,
           client_secret => %*ENV<OAUTH_CLIENT_SECRET>,
           code => $code,
