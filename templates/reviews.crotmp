@@ -42,9 +42,19 @@
             <div class="content">
               <$r.data>
               <?$r.edit>
-                <hr>
-                <a href="<.http-root>/project/<.project>/edit-review">edit</a>
+                <br><br><a href="<.http-root>/project/<.project>/edit-review">edit</a>
               </?>
+              <!$r.replied>
+              <hr>
+              <a href="<.http-root>/project/<.project>/edit-reply/<$r.author>">reply</a>
+              </!>
+              <@$r.replies: $rp>
+                <hr>
+                reply by @<$rp.author> at <$rp.date-str><p class="is-half"><$rp.data></p>
+                <?$rp.edit>
+                <a href="<.http-root>/project/<.project>/edit-reply/<$r.author>">edit</a>
+                </?>
+              </@>
             </div>
           </div>
         </div>

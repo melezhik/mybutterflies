@@ -1,0 +1,33 @@
+<&HTML-AND-JAVASCRIPT(.css)>
+
+    <head>
+      <title><.title></title>
+    </head>
+      <nav class="panel is-primary">
+      <p class="panel-heading"><.project> - Edit reply</p>
+      <&HTML-AND-JAVASCRIPT(.navbar)>
+      <div class="panel-block">
+        <div class="control">
+          <?.message>
+          <div class="notification is-success">
+            <.message>
+          </div>
+          </?>
+          <form action="<.http-root>/project/<.project>/edit-reply/<.review-author>" method="post">
+            <textarea class="textarea" name="data" placeholder="Textarea"><.reply.data></textarea>
+            <hr>
+            <button class="button is-link">Submit</button>
+          </form>
+        </div>
+        </div>
+        <div class="panel-block">
+          <p class="control">
+          <span class="icon">
+            <i class="fas fa-arrow-right"></i>
+          </span>
+          <a href="<.http-root>/project/<.project>/reviews">go to project badge</a>
+          </p>
+        </div>
+    </div>
+   </nav>
+

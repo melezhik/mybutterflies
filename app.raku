@@ -209,6 +209,41 @@ my $application = route {
         %meta<points-str> = "{uniparse 'BUTTERFLY'}" x %meta<points>;
       }
 
+      %meta<replies> = [];
+
+      if "{cache-root()}/projects/$project/reviews/replies/{%meta<author>}".IO ~~ :d {
+
+        for dir("{cache-root()}/projects/$project/reviews/replies/{%meta<author>}") -> $rp {
+
+          my %reply;
+
+          %reply<data> = $rp.IO.slurp;
+
+          %reply<author> = $rp.IO.basename;
+
+          %reply<date> = $rp.IO.modified;
+
+          %reply<date-str> = DateTime.new(
+            $rp.IO.modified,
+            formatter => { sprintf "%02d:%02d %02d/%02d/%02d", .hour, .minute, .day, .month, .year }
+          );
+
+          if check-user($user, $token) and $user eq %reply<author> {
+            %reply<edit> = True;
+          } else {
+            %reply<edit> = False
+          }
+
+          push %meta<replies>, %reply;
+
+        }
+
+        %meta<replies> = %meta<replies>.sort({.<date>}).reverse;
+
+      }
+
+      %meta<replied> = %meta<replies>.elems > 0;
+
       push @reviews, %meta;
 
     }
@@ -309,6 +344,78 @@ my $application = route {
       redirect :see-other, "{http-root()}/login-page?message=you need to sign in to edit reviews";
 
     }
+  }
+
+  get -> 'project', $project, 'edit-reply', $review-author, :$user is cookie, :$token is cookie {
+
+    if check-user($user, $token) {
+
+      my %reply; 
+
+      if "{cache-root()}/projects/$project/reviews/replies/$review-author/$user".IO ~~ :e {
+        %reply<data> = "{cache-root()}/projects/$project/reviews/replies/$review-author/$user".IO.slurp;
+        say "read data from {cache-root()}/projects/$project/reviews/replies/$review-author/$user";
+      } else {
+        %reply<data> = ""
+      }
+
+      template 'templates/edit-reply.crotmp', {
+        title => title(),
+        http-root => http-root(),
+        user => $user, 
+        css => css(), 
+        navbar => navbar($user, $token),
+        review-author => $review-author,
+        project => $project,
+        reply => %reply
+      }
+
+    } else {
+
+      redirect :see-other, "{http-root()}/login-page?message=you need to sign in to edit replies";
+
+    }
+  }
+
+  post -> 'project', $project, 'edit-reply', $review-author, :$user is cookie, :$token is cookie {
+
+    if check-user($user, $token) {
+
+       request-body -> (:$data) {
+
+        mkdir "{cache-root()}/projects/$project/reviews/replies/";
+
+        mkdir "{cache-root()}/projects/$project/reviews/replies/$review-author";
+
+        "{cache-root()}/projects/$project/reviews/replies/$review-author/$user".IO.spurt($data);
+
+        my %reply =  %( data => $data ) ; 
+
+        created "/project/$project/edit-reply";
+
+        template 'templates/edit-reply.crotmp', {
+          title => title(),
+          http-root => http-root(),
+          user => $user, 
+          css => css(), 
+          navbar => navbar($user, $token),
+          project => $project,
+          review-author => $review-author,
+          message => "reply updated", 
+          reply => %reply
+
+        }
+
+      };
+
+      #redirect :see-other, "{http-root()}/login-page?message=OK";
+
+    } else {
+
+      redirect :see-other, "{http-root()}/login-page?message=you need to sign in to edit replies";
+
+    }
+
   }
 
   get -> 'add-project', :$user is cookie, :$token is cookie {
