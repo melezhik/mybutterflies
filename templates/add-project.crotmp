@@ -17,9 +17,9 @@
             <span class="tag">project</span>
             <input class="input" type="text" name="project" placeholder="project name">
             <span class="tag">url</span>
-            <input class="input" type="text" name="url" placeholder="url">
-            <span class="tag">descriptiont</span>
-            <input class="input" type="text" name="description" placeholder="description">
+            <input class="input" type="text" name="url" placeholder="project url">
+            <span class="tag">description</span>
+            <input class="input" type="text" name="description" placeholder="project description">
             <span class="tag">language</span><br>
             <div class="select">
              <select name="language">
