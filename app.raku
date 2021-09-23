@@ -230,6 +230,7 @@ my $application = route {
 
           if check-user($user, $token) and $user eq %reply<author> {
             %reply<edit> = True;
+            %meta<replied> = True;
           } else {
             %reply<edit> = False
           }
@@ -241,8 +242,6 @@ my $application = route {
         %meta<replies> = %meta<replies>.sort({.<date>}).reverse;
 
       }
-
-      %meta<replied> = %meta<replies>.elems > 0;
 
       push @reviews, %meta;
 
