@@ -45,7 +45,7 @@
               </span>
             </a>
             </?>
-            <a href="<$i.url>"><$i.project></a> - <i><$i.description></i>
+            <a href="<.http-root>/project/<$i.project>/reviews"><$i.project></a> - <i><$i.description></i>
           </td>
           <td>
             <i><$i.category></i>

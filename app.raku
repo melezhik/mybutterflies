@@ -176,7 +176,7 @@ my $application = route {
 
     my $has-user-review = False;
 
-    my %project-meta;
+    my %project-meta = from-json("{cache-root()}/projects/$project/meta.json".IO.slurp);
 
     %project-meta<points> = dir("{cache-root()}/projects/$project/ups/").elems;
 
