@@ -60,7 +60,7 @@
           <span class="icon">
             <i class="fas fa-arrow-right"></i>
           </span>
-          <a href="<.http-root>/project/<.project>/reviews">go to reviews</a>
+          <a href="<.http-root>/project/<.project>/reviews">go to project badge</a>
           </p>
         </div>
     </div>
