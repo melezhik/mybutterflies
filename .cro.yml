@@ -6,3 +6,4 @@ ignore:
   - .cache
   - .tom
   - articles
+  - cro.log
