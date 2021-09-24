@@ -36,6 +36,7 @@
                <option value=Powershell>Powershell</option>
                <option value=Shell>Shell</option>
                <option value=Javascript>Javascript</option>
+               <option value=Design>Design</option>
              </select>
             </div>
             <br>
@@ -56,6 +57,7 @@
                <option value="task runner">task runner</option>
                <option value="build tool">build tool</option>
                <option value="applications">applications</option>
+               <option value="design">design</option>
              </select>
             </div>
             <br><br>
