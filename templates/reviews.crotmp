@@ -26,6 +26,7 @@
           category: <.project-meta.category><br>
           language: <.project-meta.language><br>
           url: <a href="<.project-meta.url>" target="_blank"><.project-meta.url></a><br>
+          requested by: <.project-meta.add_by><br>
           points: <.project-meta.points><br>
           reviews: <.project-meta.reviews-cnt>
         </p>
