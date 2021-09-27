@@ -1,6 +1,6 @@
 # Ain
 
-Recently I've come across an interesting tool called [ain](/article/Ain). 
+Recently I've come across an interesting tool called [ain](/project/ain/reviews). 
 
 I knew about it from hacker news, which I use quite often to pass my time.
 
