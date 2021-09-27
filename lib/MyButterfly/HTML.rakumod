@@ -37,7 +37,7 @@ sub get-web-conf is export {
 
 sub title is export { 
 
-  "My Butterflies - Independent Software Reviews"
+  "My Butterflies - Independent Reviews of Sortware Projects"
 
 }
 
@@ -53,21 +53,38 @@ sub http-root is export {
 
 }
 
-sub css is export {
+sub css (Mu $theme) is export {
 
   my %conf = get-web-conf();
 
-  my $theme ;
+  my $bulma-theme ;
 
-  if %conf<ui> && %conf<ui><theme> {
-    $theme = %conf<ui><theme>
+  if $theme eq "dark" {
+
+    if %conf<ui> && %conf<ui><theme><dark> {
+      $bulma-theme = %conf<ui><theme><dark>
+    } else {
+      $bulma-theme = "nuclear";
+    }
+
+  } elsif $theme eq "light" {
+
+    if %conf<ui> && %conf<ui><theme><light> {
+      $bulma-theme = %conf<ui><theme><light>
+    } else {
+      $bulma-theme = "sandstone";
+    }
+
   } else {
-    $theme = "sandstone";
+
+    $bulma-theme = "nuclear";
+
   }
+
 
   qq:to /HERE/
   <meta charset="utf-8">
-  <link rel="stylesheet" href="https://unpkg.com/bulmaswatch/$theme/bulmaswatch.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/bulmaswatch/$bulma-theme/bulmaswatch.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/12.0.4/markdown-it.min.js" integrity="sha512-0DkA2RqFvfXBVeti0R1l0E8oMkmY0X+bAA2i02Ld8xhpjpvqORUcE/UBe+0KOPzi5iNah0aBpW6uaNNrqCk73Q==" crossorigin="anonymous"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.1/styles/default.min.css">
@@ -94,7 +111,24 @@ sub login-logout (Mu $user, Mu $token) {
 
 }
 
-sub navbar (Mu $user, Mu $token) is export {
+sub theme-link (Mu $theme) {
+
+  if $theme eq "light" {
+
+    "<a href=\"{http-root()}/set-theme?theme=dark\">
+      Dark theme
+    </a>"
+
+  } else {
+
+    "<a href=\"{http-root()}/set-theme?theme=light\">
+      Light theme
+    </a>"
+
+  }
+
+}
+sub navbar (Mu $user, Mu $token, Mu $theme) is export {
   qq:to /HERE/
       <div class="panel-block">
         <p class="control">
@@ -103,6 +137,7 @@ sub navbar (Mu $user, Mu $token) is export {
             <a href="{http-root()}/articles">Editor's articles</a> |
             <a href="{http-root()}/about">About</a> |
             {login-logout($user, $token)} |
+            {theme-link($theme)}
         </p>
       </div>
   HERE

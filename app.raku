@@ -10,7 +10,7 @@ use JSON::Tiny;
 
 my $application = route { 
 
-  get -> :$message, :$user is cookie, :$token is cookie {
+  get -> :$message, :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
 
     my @projects;
 
@@ -37,14 +37,14 @@ my $application = route {
       message => $message,
       http-root => http-root(),
       user => $user, 
-      css => css(), 
-      navbar => navbar($user, $token),
+      css => css($theme), 
+      navbar => navbar($user, $token, $theme),
       projects => @projects.sort({ .<points> }).reverse
     }
 
   }
 
-  get -> 'articles', :$user is cookie, :$token is cookie {
+  get -> 'articles', :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
 
       my @articles;
 
@@ -81,13 +81,13 @@ my $application = route {
       title => title(),
       http-root => http-root(),
       user => $user, 
-      css => css(), 
-      navbar => navbar($user, $token),
+      css => css($theme), 
+      navbar => navbar($user, $token, $theme),
       articles => @articles.sort({ .<date> }).reverse
     }
   }
 
-  get -> 'article', $article-id, :$message, :$user is cookie, :$token is cookie {
+  get -> 'article', $article-id, :$message, :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
 
     my %meta = from-json("{cache-root()}/articles/{$article-id}/meta.json".IO.slurp);
 
@@ -124,16 +124,16 @@ my $application = route {
       title => title(),
       http-root => http-root(),
       user => $user, 
-      css => css(),
+      css => css($theme),
       message => $message, 
-      navbar => navbar($user, $token),
+      navbar => navbar($user, $token, $theme),
       article => %meta
     }
 
   }
 
 
-  get -> 'article', $article-id, 'up', :$user is cookie, :$token is cookie {
+  get -> 'article', $article-id, 'up', :$user is cookie, :$token is cookie  {
 
     if check-user($user, $token) == True {
 
@@ -170,7 +170,7 @@ my $application = route {
     }
       
   }
-  get -> 'project', $project, 'reviews', :$user is cookie, :$token is cookie {
+  get -> 'project', $project, 'reviews', :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
 
     my @reviews;
 
@@ -183,6 +183,12 @@ my $application = route {
     %project-meta<points> = dir("{cache-root()}/projects/$project/ups/").elems;
 
     %project-meta<reviews-cnt> = dir("{cache-root()}/projects/$project/reviews/data").elems;
+
+    if check-user($user, $token) and "{cache-root()}/projects/$project/ups/$user".IO ~~ :e {
+      %project-meta<voted> = True
+    } else {
+      %project-meta<voted> = False
+    }
 
     for dir("{cache-root()}/projects/$project/reviews/data") -> $r {
 
@@ -253,8 +259,8 @@ my $application = route {
       title => title(),
       http-root => http-root(),
       user => $user, 
-      css => css(), 
-      navbar => navbar($user, $token),
+      css => css($theme), 
+      navbar => navbar($user, $token, $theme),
       project => $project,
       project-meta => %project-meta,
       has-user-review => $has-user-review,
@@ -263,7 +269,7 @@ my $application = route {
   }
 
 
-  get -> 'project', $project, 'edit-review', :$user is cookie, :$token is cookie {
+  get -> 'project', $project, 'edit-review', :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
 
     if check-user($user, $token) {
 
@@ -285,8 +291,8 @@ my $application = route {
         title => title(),
         http-root => http-root(),
         user => $user, 
-        css => css(), 
-        navbar => navbar($user, $token),
+        css => css($theme), 
+        navbar => navbar($user, $token, $theme),
         project => $project,
         review => %review
       }
@@ -298,7 +304,7 @@ my $application = route {
     }
   }
 
-  post -> 'project', $project, 'edit-review', :$user is cookie, :$token is cookie {
+  post -> 'project', $project, 'edit-review', :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
 
     if check-user($user, $token) {
 
@@ -332,8 +338,8 @@ my $application = route {
            http-root => http-root(),
            user => $user,
            message => "review updated", 
-           css => css(), 
-           navbar => navbar($user, $token),
+           css => css($theme), 
+           navbar => navbar($user, $token, $theme),
            project => $project,
            review => %review
         }
@@ -347,7 +353,7 @@ my $application = route {
     }
   }
 
-  get -> 'project', $project, 'edit-reply', $review-author, :$user is cookie, :$token is cookie {
+  get -> 'project', $project, 'edit-reply', $review-author, :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
 
     if check-user($user, $token) {
 
@@ -364,8 +370,8 @@ my $application = route {
         title => title(),
         http-root => http-root(),
         user => $user, 
-        css => css(), 
-        navbar => navbar($user, $token),
+        css => css($theme), 
+        navbar => navbar($user, $token, $theme),
         review-author => $review-author,
         project => $project,
         reply => %reply
@@ -378,7 +384,7 @@ my $application = route {
     }
   }
 
-  post -> 'project', $project, 'edit-reply', $review-author, :$user is cookie, :$token is cookie {
+  post -> 'project', $project, 'edit-reply', $review-author, :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
 
     if check-user($user, $token) {
 
@@ -398,8 +404,8 @@ my $application = route {
           title => title(),
           http-root => http-root(),
           user => $user, 
-          css => css(), 
-          navbar => navbar($user, $token),
+          css => css($theme), 
+          navbar => navbar($user, $token, $theme),
           project => $project,
           review-author => $review-author,
           message => "reply updated", 
@@ -419,7 +425,7 @@ my $application = route {
 
   }
 
-  get -> 'add-project', :$user is cookie, :$token is cookie {
+  get -> 'add-project', :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
 
     if check-user($user, $token) {
 
@@ -427,8 +433,8 @@ my $application = route {
         title => title(),
         http-root => http-root(),
         user => $user,
-        css => css(), 
-        navbar => navbar($user, $token),
+        css => css($theme), 
+        navbar => navbar($user, $token, $theme),
       }
 
     } else {
@@ -439,7 +445,7 @@ my $application = route {
 
   }
 
-  post -> 'add-project', :$user is cookie, :$token is cookie {
+  post -> 'add-project', :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
 
       my $msg;
 
@@ -490,19 +496,19 @@ my $application = route {
         http-root => http-root(),
         message => $msg,
         user => $user,
-        css => css(), 
-        navbar => navbar($user, $token),
+        css => css($theme), 
+        navbar => navbar($user, $token, $theme),
       }
 
   }
 
-  get -> 'about', :$user is cookie, :$token is cookie {
+  get -> 'about', :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
 
     template 'templates/about.crotmp', {
       title => title(),
       http-root => http-root(),
-      css => css(), 
-      navbar => navbar($user, $token),
+      css => css($theme), 
+      navbar => navbar($user, $token, $theme),
       butterfly => "{uniparse 'BUTTERFLY'}"
     }
   }
@@ -522,6 +528,7 @@ my $application = route {
           code => $code,
           state => $state,    
         };
+
 
       my $data = await $resp.body-text();
 
@@ -545,9 +552,9 @@ my $application = route {
 
         say "set user login to {%data2<login>}";
 
-        my $date = DateTime.now.later(hours => 1);
+        my $date = DateTime.now.later(hours => 10);
 
-        set-cookie 'user', %data2<login>, http-only => True, max-age => Duration.new(3600), expires => $date;
+        set-cookie 'user', %data2<login>, http-only => True, expires => $date;
 
         mkdir "{cache-root()}/users";
 
@@ -563,7 +570,7 @@ my $application = route {
 
         say "set user token to {$tk}";
 
-        set-cookie 'token', $tk, http-only => True, max-age => Duration.new(3600), expires => $date;
+        set-cookie 'token', $tk, http-only => True, expires => $date;
 
         redirect :see-other, "{http-root()}/?message=user logged in";
 
@@ -576,14 +583,23 @@ my $application = route {
        
   } 
 
-  get -> 'login-page', :$message, :$user is cookie, :$token is cookie {
+  get -> 'set-theme', :$message, :$theme, :$user is cookie, :$token is cookie {
+
+    set-cookie 'theme', $theme, http-only => True;
+
+    redirect :see-other, "{http-root()}/?message=theme set to {$theme}";
+
+  }
+
+  get -> 'login-page', :$message, :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
 
     template 'templates/login-page.crotmp', {
       title => title(),
       http-root => http-root(),
       message => $message || "sign in using your github account",
-      css => css(), 
-      navbar => navbar($user, $token),
+      css => css($theme),
+      theme => $theme,
+      navbar => navbar($user, $token, $theme),
     }
   }
 
@@ -635,7 +651,7 @@ my $application = route {
     redirect :see-other, "{http-root()}/?message=user logged out";
   }
 
-  get -> 'project', $project, 'up', :$user is cookie, :$token is cookie {
+  get -> 'project', $project, 'up', :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
 
     if check-user($user, $token) == True {
 
