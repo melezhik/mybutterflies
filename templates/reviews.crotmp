@@ -26,6 +26,7 @@
           category: <.project-meta.category><br>
           language: <.project-meta.language><br>
           url: <a href="<.project-meta.url>" target="_blank"><.project-meta.url></a><br>
+<<<<<<< HEAD
           requested by: <.project-meta.add_by><br>
           points: <.project-meta.points>
           <?{.project-meta.voted == True}>
@@ -43,6 +44,11 @@
           </a>
           </?>
           <br>reviews: <.project-meta.reviews-cnt>
+=======
+          requested by: @<.project-meta.add_by><br>
+          points: <.project-meta.points><br>
+          reviews: <.project-meta.reviews-cnt>
+>>>>>>> a8d9c2474fa6e3b111e96c2da808930376f4b495
         </p>
       </div>
       <@reviews: $r>

@@ -1,11 +1,10 @@
 # Ain
 
-Recently I've come across an interesting tool called [ain](https://github.com/jonaslu/ain). 
+Recently I've come across an interesting tool called [ain](/project/ain/reviews). 
 
 I knew about it from hacker news, which I use quite often to pass my time.
 
 It allows one to make http calls using simple DSL. 
-
 
 The author of ain represents the tool as a console alternative to postman.
 
@@ -22,7 +21,7 @@ Now all you need to do is define some template to implement request logic:
 
 ```ini
 [Host]
-http://161.35.115.119/mbf/project/ain/reviews
+https://mybf.io/project/ain/reviews
 
 [Headers]
 Content-Type: text/plain
@@ -65,14 +64,14 @@ have more then one configs:
 
 ```ini
 [Host]
-http://161.35.115.119/mbf
+https://mybf.io
 ```
 
 `cat project.ain`:
 
 ```ini
 [Host]
-/mbf/project/ain/reviews
+/project/ain/reviews
 ```
 
 And then successfully create a request:
