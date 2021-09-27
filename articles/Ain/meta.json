@@ -1,0 +1,7 @@
+{
+  "id" : "Ain",
+  "author" : "melezhik",
+  "title" : "Ain - simple, but flexible http request command line client",
+  "short" : "The author of ain represents the tool as a console alternative to postman.",
+  "tags" : "Cli, http, golang"
+}
