@@ -13,7 +13,7 @@
             <.message>
           </div>
           </?>
-          <form action="<.http-root>/project/<.project>/edit-review" method="post">
+          <form action="<.http-root>/project/<.project>/edit-review/<.review-id>" method="post">
             <div class="select">
              <select name="points">
                <?{.review.points == 5}>

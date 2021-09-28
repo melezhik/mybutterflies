@@ -8,12 +8,10 @@
       <&HTML-AND-JAVASCRIPT(.navbar)>
       <div class="panel-block">
         <p class="control">
-          <!.has-user-review>
             <span class="icon">
               <i class="fas fa-arrow-right"></i>
             </span>
              <a href="<.http-root>/project/<.project>/edit-review">write review</a>
-          </!>
             <span class="icon">
               <i class="fas fa-arrow-right"></i>
             </span>
@@ -57,17 +55,17 @@
             <div class="content">
               <$r.data>
               <?$r.edit>
-                <br><br><a href="<.http-root>/project/<.project>/edit-review">edit review</a>
+                <br><br><a href="<.http-root>/project/<.project>/edit-review/<$r.id>">edit review</a>
               </?>
               <!$r.replied>
               <hr>
-              <a href="<.http-root>/project/<.project>/edit-reply/<$r.author>">reply</a>
+              <a href="<.http-root>/project/<.project>/edit-reply/<$r.review-id>">reply</a>
               </!>
               <@$r.replies: $rp>
                 <hr>
                 reply by @<$rp.author> at <$rp.date-str><p class="is-half"><$rp.data></p>
                 <?$rp.edit>
-                <a href="<.http-root>/project/<.project>/edit-reply/<$r.author>">edit reply</a>
+                <a href="<.http-root>/project/<.project>/edit-reply/<$r.review-id>">edit reply</a>
                 </?>
               </@>
             </div>

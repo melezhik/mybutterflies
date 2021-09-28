@@ -4,7 +4,7 @@ use Cro::WebApp::Template;
 use Cro::HTTP::Client;
 
 use MyButterfly::HTML;
-
+use MyButterfly::Utils;
 use JSON::Tiny;
 
 
@@ -174,8 +174,6 @@ my $application = route {
 
     my @reviews;
 
-    my $has-user-review = False;
-
     my %project-meta = from-json("{cache-root()}/projects/$project/meta.json".IO.slurp);
 
     %project-meta<add_by> ||= "melezhik";
@@ -196,32 +194,34 @@ my $application = route {
 
       %meta<data> = $r.IO.slurp;
 
-      %meta<author> = $r.IO.basename;
+      my %rd = review-from-file($r);
 
-      %meta<date> = $r.IO.modified;
+      %meta<review-id> = %rd<basename>;
 
-      %meta<date-str> = DateTime.new(
-        $r.IO.modified,
-        formatter => { sprintf "%02d:%02d %02d/%02d/%02d", .hour, .minute, .day, .month, .year }
-      );
+      %meta<author> = %rd<author>;
+
+      %meta<date> = %rd<date>;
+
+      %meta<id> = %rd<id>;
+
+      %meta<date-str> = "{%rd<date>}";
 
       if check-user($user, $token) and $user eq %meta<author> {
         %meta<edit> = True;
-        $has-user-review = True;
       } else {
         %meta<edit> = False
       }
 
-      if "{cache-root()}/projects/$project/reviews/points/{%meta<author>}".IO ~~ :e {
-        %meta<points> = "{cache-root()}/projects/$project/reviews/points/{%meta<author>}".IO.slurp;
+      if "{cache-root()}/projects/$project/reviews/points/{%rd<basename>}".IO ~~ :e {
+        %meta<points> = "{cache-root()}/projects/$project/reviews/points/{%rd<basename>}".IO.slurp;
         %meta<points-str> = "{uniparse 'BUTTERFLY'}" x %meta<points>;
       }
 
       %meta<replies> = [];
 
-      if "{cache-root()}/projects/$project/reviews/replies/{%meta<author>}".IO ~~ :d {
+      if "{cache-root()}/projects/$project/reviews/replies/{%rd<basename>}".IO ~~ :d {
 
-        for dir("{cache-root()}/projects/$project/reviews/replies/{%meta<author>}") -> $rp {
+        for dir("{cache-root()}/projects/$project/reviews/replies/{%rd<basename>}") -> $rp {
 
           my %reply;
 
@@ -263,28 +263,27 @@ my $application = route {
       navbar => navbar($user, $token, $theme),
       project => $project,
       project-meta => %project-meta,
-      has-user-review => $has-user-review,
       reviews => @reviews.sort({ .<date> }).reverse
     }
   }
 
 
-  get -> 'project', $project, 'edit-review', :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
+  get -> 'project', $project, 'edit-review', $review-id = time, :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
 
     if check-user($user, $token) {
 
       my %review; 
 
-      if "{cache-root()}/projects/$project/reviews/data/$user".IO ~~ :e {
-        %review<data> = "{cache-root()}/projects/$project/reviews/data/$user".IO.slurp;
-        say "read data from {cache-root()}/projects/$project/reviews/data/$user";
+      if $review-id ~~ /^^ \d+ $$/ and "{cache-root()}/projects/$project/reviews/data/{$user}_{$review-id}".IO ~~ :e {
+        %review<data> = "{cache-root()}/projects/$project/reviews/data/{$user}_{$review-id}".IO.slurp;
+        say "read data from {cache-root()}/projects/$project/reviews/data/{$user}_{$review-id}";
       } else {
         %review<data> = ""
       }
 
-      if "{cache-root()}/projects/$project/reviews/points/$user".IO ~~ :e {
-        %review<points> = "{cache-root()}/projects/$project/reviews/points/$user".IO.slurp;
-        say "read points from {cache-root()}/projects/$project/reviews/points/$user - {%review<points>}";
+      if $review-id ~~ /^^ \d+ $$/ and "{cache-root()}/projects/$project/reviews/points/{$user}_{$review-id}".IO ~~ :e {
+        %review<points> = "{cache-root()}/projects/$project/reviews/points/{$user}_{$review-id}".IO.slurp;
+        say "read points from {cache-root()}/projects/$project/reviews/points/{$user}_{$review-id} - {%review<points>}";
       }
 
       template 'templates/edit-review.crotmp', {
@@ -294,7 +293,8 @@ my $application = route {
         css => css($theme), 
         navbar => navbar($user, $token, $theme),
         project => $project,
-        review => %review
+        review => %review,
+        review-id => $review-id,
       }
 
     } else {
@@ -304,32 +304,30 @@ my $application = route {
     }
   }
 
-  post -> 'project', $project, 'edit-review', :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
+  post -> 'project', $project, 'edit-review', $review-id, :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
 
     if check-user($user, $token) {
 
       request-body -> (:$data, :$points) {
 
-        "{cache-root()}/projects/$project/reviews/data/$user".IO.spurt($data);
+        "{cache-root()}/projects/$project/reviews/data/{$user}_{$review-id}".IO.spurt($data);
 
         my %review; 
 
         say "points - $points";
 
         if $points {
-          say "update points {cache-root()}/projects/$project/reviews/points/$user - $points";
-          "{cache-root()}/projects/$project/reviews/points/$user".IO.spurt($points);
+          say "update points {cache-root()}/projects/$project/reviews/points/{$user}_{$review-id} - $points";
+          "{cache-root()}/projects/$project/reviews/points/{$user}_{$review-id}".IO.spurt($points);
           %review<points> = $points;
         } else {
-
-          if "{cache-root()}/projects/$project/reviews/points/$user".IO ~~ :e {
-            %review<points> = "{cache-root()}/projects/$project/reviews/points/$user".IO.slurp;
-            say "read points from {cache-root()}/projects/$project/reviews/points/$user - {%review<points>}";
+          if "{cache-root()}/projects/$project/reviews/points/{$user}_{$review-id}".IO ~~ :e {
+            %review<points> = "{cache-root()}/projects/$project/reviews/points/{$user}_{$review-id}".IO.slurp;
+            say "read points from {cache-root()}/projects/$project/reviews/points/{$user}_{$review-id} - {%review<points>}";
           }
-
         }
 
-         created "/project/$project/edit-review";
+         created "/project/$project/edit-review/{$review-id}";
 
          %review<data> = $data;
          
@@ -341,7 +339,8 @@ my $application = route {
            css => css($theme), 
            navbar => navbar($user, $token, $theme),
            project => $project,
-           review => %review
+           review => %review,
+           review-id => "$review-id", 
         }
 
       };
@@ -607,21 +606,26 @@ my $application = route {
 
     if %*ENV<MB_DEBUG_MODE> {
 
-        say "set user login to melezhik";
+        say "MB_DEBUG_MODE is set, you need to set MB_DEBUG_USER var as well"
+          unless %*ENV<MB_DEBUG_USER>;
 
-        set-cookie 'user', "melezhik";
+        my $user = %*ENV<MB_DEBUG_USER>;
+
+        say "set user login to {$user}";
+
+        set-cookie 'user', $user;
 
         mkdir "{cache-root()}/users";
 
-        mkdir "{cache-root()}/users/melezhik";
+        mkdir "{cache-root()}/users/{$user}";
 
-        mkdir "{cache-root()}/users/melezhik/tokens";
+        mkdir "{cache-root()}/users/{$user}/tokens";
 
-        "{cache-root()}/users/melezhik/meta.json".IO.spurt('{}');
+        "{cache-root()}/users/{$user}/meta.json".IO.spurt('{}');
 
         my $tk = gen-token();
 
-        "{cache-root()}/users/melezhik/tokens/{$tk}".IO.spurt("");
+        "{cache-root()}/users/$user/tokens/{$tk}".IO.spurt("");
 
         say "set user token to {$tk}";
 
