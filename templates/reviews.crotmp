@@ -53,7 +53,7 @@
           </header>
           <div class="card-content">
             <div class="content">
-              <$r.data>
+              <pre><$r.data></pre>
               <?$r.edit>
                 <br><br><a href="<.http-root>/project/<.project>/edit-review/<$r.id>">edit review</a>
               </?>
