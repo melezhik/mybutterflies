@@ -55,7 +55,7 @@
             <div class="content">
               <pre><$r.data></pre>
               <?$r.edit>
-                <br><br><a href="<.http-root>/project/<.project>/edit-review/<$r.id>">edit review</a>
+                <a href="<.http-root>/project/<.project>/edit-review/<$r.id>">edit review</a>
               </?>
               <!$r.replied>
               <hr>
@@ -63,7 +63,7 @@
               </!>
               <@$r.replies: $rp>
                 <hr>
-                reply by @<$rp.author> at <$rp.date-str><p class="is-half"><$rp.data></p>
+                reply by @<$rp.author> at <$rp.date-str><pre><$rp.data></pre>
                 <?$rp.edit>
                 <a href="<.http-root>/project/<.project>/edit-reply/<$r.review-id>">edit reply</a>
                 </?>
