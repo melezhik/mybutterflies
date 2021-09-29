@@ -37,6 +37,7 @@
                <option value=Shell>Shell</option>
                <option value=Javascript>Javascript</option>
                <option value=Design>Design</option>
+               <option value=Unknown>Unknown</option>
              </select>
             </div>
             <br>
