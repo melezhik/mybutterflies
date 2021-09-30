@@ -1,5 +1,16 @@
 
 task-run ".tom/tasks/add-article", %(
+  id => "Mage",
+  author => "melezhik",
+  title => "Mage - an implementation of task runner / makefile written on Go",
+  short => "The author aims to make it with minimal dependencies ( pure go ) and concise and clear syntax",
+  tags => "Cli, make, tools, golang, task-runner",
+);
+
+
+=begin comment
+
+task-run ".tom/tasks/add-article", %(
   id => "Ain",
   author => "melezhik",
   title => "Simple, but flexible http request command line client",
@@ -7,7 +18,6 @@ task-run ".tom/tasks/add-article", %(
   tags => "Cli, http, golang",
 );
 
-=begin comment
 
 task-run ".tom/tasks/add-article", %(
   id => "Hello",
