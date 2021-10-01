@@ -1,5 +1,4 @@
 ui:
   theme: 
-    dark: nuclear
-    light: lux
-
+    dark: cyborg
+    light: flatly
