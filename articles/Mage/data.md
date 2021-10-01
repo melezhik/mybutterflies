@@ -79,7 +79,7 @@ output:
 
 # Dependencies
 
-Mag allows to declare dependencies for targets. So to say, target `build` might require 
+Mage allows to declare dependencies for targets. So to say, target `build` might require 
 2 targets `prepare` and `config`  to be executed first:
 
 ```go
