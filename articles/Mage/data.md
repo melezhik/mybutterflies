@@ -1,8 +1,10 @@
 [Mage](/project/mage/reviews) is an implementation of task runner / makefile written on Go. 
 
-The author aims to make it with minimal dependencies ( pure go )
+The author aims to make it with minimal dependencies ( pure go ) and concise and clear syntax. 
 
-and concise and clear syntax. Let's get started.
+---
+
+Let's get started.
 
 # Installation
 
@@ -33,9 +35,11 @@ I get the following error:
 Error determining list of magefiles: failed to list non-mage gofiles: exit status 1: go: go.mod file not found in current directory or any parent directory; see 'go help modules' 
 ```
 
-After some consideration of the problem, I finally realize that mage require some 
+After some consideration of the problem, I finally realize that mage require some
+
 go module structure in the current directory, which is a bit weird, because it was not
-the case when I did the same on another machine withing Linux docker container.
+
+the case when I did the same on another Linux machine.
 
 So I do this to fix the problem:
 
@@ -57,7 +61,7 @@ mage -l
 output:
 
     Targets:
-      build    Runs go mod download and then installs the binary.
+      build   My build target.
 
 So, mage works fine, it's listing our only target called `build` which is _just_ a
 go function.
@@ -75,7 +79,7 @@ output:
 
 # Dependencies
 
-Mag allows to declare dependencies for targets. So to say, target `build` might require 
+Mage allows to declare dependencies for targets. So to say, target `build` might require 
 2 targets `prepare` and `config`  to be executed first:
 
 ```go
@@ -142,10 +146,10 @@ go only dependency.
 As we could see It has some glitches for the first time user, but they are 
 not significant and could be easily overcome.
 
-I wrote in go I would definitely give it a try. 
+If I wrote in go I would definitely give it a try. 
 
-4 solid butterflies from me. ( I would give it a 5 if I could run a task we named 
-named parameters, see one of my first reviews on mybfio).
+4 solid butterflies from me. ( I would give it a 5 if I could run a task with named 
+named parameters, see my first review on mybfio).
 
 Decent work!
 
