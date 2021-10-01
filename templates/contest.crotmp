@@ -73,6 +73,14 @@
       For sure, we will. We have just started this contest feature,
       and we decided to see how it goes on one chosen language.
 
+      | Why do you count a number of reviews without counting an average reviews score (stars)?
+
+      Reviews show that there are people that use your project somehow.
+      They might not completely satisfied with it, but the fact they write reviews
+      means they use it ( or at least in the most case this is true ). So this metric
+      evaluates your current user base. The more reviews a project has the more
+      popular it is.
+
       | Where can I put my requests, suggestion on #mybfio contest?
 
       Use this <a href="https://github.com/melezhik/mybfio/issues/new?assignees=&labels=&template=feature_request.md&title=Feature+request">GH issue link</a>
