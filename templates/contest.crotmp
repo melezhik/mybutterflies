@@ -35,7 +35,10 @@
 
       * Number of upvotes
 
-      * Number of reviews ( we only count the number of rewiews, not an average review score )
+      * Number of reviews ( we only count the number of reviews, not an average review score )
+
+      Scores are counted for the period of contest, so upvotes and reviews 
+      made not in the contest time period are not counted
 
   [Winners]
 
