@@ -525,7 +525,7 @@ my $application = route {
 
   get -> 'contest-list', :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
 
-    #my %list = form-json("{cache-root()}"/contest/list.json".IO.slurp);
+    my %list = from-json("{cache-root()}/contest/list.json".IO.slurp);
 
     template 'templates/contest-list.crotmp', {
       title => title(),
@@ -533,7 +533,7 @@ my $application = route {
       css => css($theme), 
       navbar => navbar($user, $token, $theme),
       butterfly => "{uniparse 'BUTTERFLY'}",
-      #list => %list<go>
+      list => %list
     }
   }
   get -> 'oauth2', :$state, :$code {
