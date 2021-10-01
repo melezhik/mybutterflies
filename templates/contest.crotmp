@@ -17,7 +17,7 @@
 
   [Contest Rules]
 
-    Rules are very simple. Just follow these next simple steps.
+    Rules are very simple. Just follow few simple steps.
 
   [How to participate]
 
@@ -29,7 +29,24 @@
 
     The score calculation rule is simple. 
 
-      * Projects compete in categories
+      * Projects compete in categories (
+
+           package manage
+           libraries
+           cicd
+           cloud
+           tools
+           databases
+           web
+           automation
+           testing
+           infrastructure as a code
+           configuration management
+           task runner
+           build tool
+           applications
+           design
+    )
 
     In every category there is 2 nominations:
 
