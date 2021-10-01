@@ -61,7 +61,7 @@ mage -l
 output:
 
     Targets:
-      build    Runs go mod download and then installs the binary.
+      build   My build target.
 
 So, mage works fine, it's listing our only target called `build` which is _just_ a
 go function.
