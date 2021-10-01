@@ -146,7 +146,7 @@ go only dependency.
 As we could see It has some glitches for the first time user, but they are 
 not significant and could be easily overcome.
 
-I wrote in go I would definitely give it a try. 
+If I wrote in go I would definitely give it a try. 
 
 4 solid butterflies from me. ( I would give it a 5 if I could run a task with named 
 named parameters, see my first review on mybfio).
