@@ -135,7 +135,7 @@ sub navbar (Mu $user, Mu $token, Mu $theme) is export {
             {uniparse 'BUTTERFLY'} <a href="{http-root()}/">Ratings</a> |
             <a href="{http-root()}/add-project"> Add Project </a> |
             <a href="{http-root()}/about">About \#mybfio</a> |
-            <a href="{http-root()}/contest">About Contest</a> |
+            <a href="{http-root()}/contest">Contest</a> |
             <a href="{http-root()}/contest-list">Contest List</a> |
             <a href="{http-root()}/articles">Editor's Articles</a> |
             {login-logout($user, $token)} |
