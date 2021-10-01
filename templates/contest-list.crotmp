@@ -1,0 +1,30 @@
+<&HTML-AND-JAVASCRIPT(.css)>
+
+    <head>
+      <title><.title></title>
+    </head>
+    <nav class="panel is-primary">
+      <p class="panel-heading">My Butterflies Current Contest List</p>
+      <&HTML-AND-JAVASCRIPT(.navbar)>
+      <div class="panel-block">
+        <pre class="control">
+    Following is the list of current #mybfio contest. Contest rules are
+    described at <a href="<.http-root>/contest">#mybfio contest</a> page.</pre>
+      </div>
+      <div class="panel-block">
+          <pre class="control">
+
+    [Contest List]
+
+      Golang
+  
+        Start date - 10.15.2021. 
+        End date - 11.01.2021
+        Criteria - any project written on golang
+        Contest participation <a href="https://github.com/melezhik/mybfio/issues/new?assignees=melezhik&labels=&template=participation-in--mybfio-contest.md&title=Participation+in+%23mybfio+contest">link</a>  
+        Participants list - in progress
+
+          </pre>
+      </div>
+   </nav>
+

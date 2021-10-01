@@ -512,6 +512,27 @@ my $application = route {
     }
   }
 
+  get -> 'contest', :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
+
+    template 'templates/contest.crotmp', {
+      title => title(),
+      http-root => http-root(),
+      css => css($theme), 
+      navbar => navbar($user, $token, $theme),
+      butterfly => "{uniparse 'BUTTERFLY'}"
+    }
+  }
+
+  get -> 'contest-list', :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
+
+    template 'templates/contest-list.crotmp', {
+      title => title(),
+      http-root => http-root(),
+      css => css($theme), 
+      navbar => navbar($user, $token, $theme),
+      butterfly => "{uniparse 'BUTTERFLY'}"
+    }
+  }
   get -> 'oauth2', :$state, :$code {
 
       say "request token from https://github.com/login/oauth/access_token";

@@ -1,0 +1,79 @@
+<&HTML-AND-JAVASCRIPT(.css)>
+
+    <head>
+      <title><.title></title>
+    </head>
+    <nav class="panel is-primary">
+      <p class="panel-heading">My Butterflies Contest</p>
+      <&HTML-AND-JAVASCRIPT(.navbar)>
+      <div class="panel-block">
+          <pre class="control">
+
+  Welcome to #mybfio contest! We love to organize open source projects
+  contests because they are fun and also help open source authors 
+  to get a recognition they deserve. We know it's hard job to build up
+  a community against one's project. And we want to help.
+
+  [Contest Rules]
+
+    Rules are very simple. Just follow these next simple steps.
+
+  [How to participate]
+
+    1. Add a project to the #mybfio rating list, using <a href="<.http-root>/add-project">add project link</a>
+
+    2. Register a project as a participant on the page of <a href="<.http-root>/contest-list">current contests</a>
+
+  [How a score is counted]
+
+    The score calculation rule is simple. 
+
+      * Projects compete in categories
+
+    In every category there is 2 nominations:
+
+      * Number of upvotes
+
+      * Number of reviews ( we only count the number not average review score )
+
+  [Winners]
+
+      After a contest ends for every category we select:
+
+      * first 3 winners with highest upvotes
+
+      * first 3 winners with highest reviews number
+
+  [Prizes]
+
+      We are on tight budget right now. So no prizes so far, but we promise to keep
+      a winners page so you could proudly reference to it from your project page.
+
+  [Sponsors]
+
+      Yeah, we need them to make the contest more fun. Please create a <a href="https://github.com/melezhik/mybfio/issues/new?assignees=&labels=&template=i-want-to-be-a-sponsor-of--mybfio-contest.md&title=I+want+to+be+a+sponsor+of+%23mybfio+contest">GH issue</a>
+      if you want to become a #mybfio contest sponsor.
+
+
+  [FAQ]
+
+      | Can I add a project that I am not an author/maintainer of?
+
+      Yes you can, however we always contact a project author first
+      so they would be aware of inclusion into a #mybfio contest
+      and we don't include without their consent. 
+
+      | So far #mybfio contest seems only have a one contest for Golang projects.
+      | Will you include more languages?
+
+      For sure, we will. We have just started this contest feature,
+      and we decided to see how it goes on one chosen language.
+
+      | Where can I put my requests, suggestion on #mybfio contest?
+
+      Use this <a href="https://github.com/melezhik/mybfio/issues/new?assignees=&labels=&template=feature_request.md&title=Feature+request">GH issue link</a>
+
+          </pre>
+      </div>
+   </nav>
+

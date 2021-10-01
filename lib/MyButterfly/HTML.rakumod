@@ -133,9 +133,11 @@ sub navbar (Mu $user, Mu $token, Mu $theme) is export {
       <div class="panel-block">
         <p class="control">
             {uniparse 'BUTTERFLY'} <a href="{http-root()}/">Ratings</a> |
-            <a href="{http-root()}/add-project"> Add project </a> |
-            <a href="{http-root()}/articles">Editor's articles</a> |
-            <a href="{http-root()}/about">About</a> |
+            <a href="{http-root()}/add-project"> Add Project </a> |
+            <a href="{http-root()}/about">About \#mybfio</a> |
+            <a href="{http-root()}/contest">About Contest</a> |
+            <a href="{http-root()}/contest-list">Contest List</a> |
+            <a href="{http-root()}/articles">Editor's Articles</a> |
             {login-logout($user, $token)} |
             {theme-link($theme)}
         </p>
