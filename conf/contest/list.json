@@ -1,7 +1,7 @@
 {
-  "list" : [
-    {
-      "id" : "GitDrops"
-    }
-  ]
+    "go" : [
+      {
+        "id" : "GitDrops"
+      }
+    ]
 }
