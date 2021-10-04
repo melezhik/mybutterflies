@@ -446,19 +446,26 @@ my $application = route {
 
   post -> 'add-project', :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
 
-      my $msg;
+      my $msg; my %project-data;
 
       if check-user($user, $token) {
 
         request-body -> (:$project, :$description, :$url, :$language, :$category) {
 
-          if $project ~~ /^^ <[ \w \. \d : \- ]>+ $$/ 
-            and $description ~~ /^^ <[ \w \. \s \d \/ \\ \, \- \# ~ \' ]>+ $$/ 
-            and $url ~~ /^^ <[ \w \. \/ \d : \. \- ~]>+ $$/
-            and $language ~~ /^^ <[ \w \d \+ ]>+ $$/ 
-            and $category ~~ /^^ <[ \w \d \s]>+ $$/ 
-          {
+          %project-data =  %(           
+              project => $project,
+              description => $description,
+              url => $url,
+              language => $language,
+              category => $category
+          );
 
+          my %status = validate-project-data %project-data;
+
+          if %status<status>  eq True {
+
+            %project-data<add_by> = $user;
+  
             mkdir "{cache-root}/projects/$project";
             mkdir "{cache-root}/projects/$project/reviews";
             mkdir "{cache-root}/projects/$project/reviews/data";
@@ -466,39 +473,32 @@ my $application = route {
             mkdir "{cache-root}/projects/$project/ups";
 
             if "{cache-root}/projects/$project/meta.json".IO ~~ :e {
-              $msg = "project already exits";
+              $msg = "project already exists";
             } else {
-              "{cache-root}/projects/$project/meta.json".IO.spurt(qq:to/END/);
-            \{
-              \"project\" : \"$project\",
-              \"description\" : \"$description\",
-              \"category\" : \"$category\",
-              \"language\" : \"$language\",
-              \"url\" : "$url\",
-              \"add_by\" : \"$user\"
-            \}
-            END
-            $msg = "project added"
+              "{cache-root}/projects/$project/meta.json".IO.spurt(to-json(%project-data));
+              $msg = "project added"
           }
         } else {
-          $msg = "incorrect input data"
+          $msg = %status<message>
         }
 
       }
 
     } else {
-      $msg = "you need to sign in to add projects"
+
+      $msg = "you need to sign in to add projects";
+
     }
 
-      template 'templates/add-project.crotmp', {
-        title => title(),
-        http-root => http-root(),
-        message => $msg,
-        user => $user,
-        css => css($theme), 
-        navbar => navbar($user, $token, $theme),
-      }
-
+    template 'templates/add-project.crotmp', {
+      title => title(),
+      http-root => http-root(),
+      message => $msg,
+      user => $user,
+      css => css($theme), 
+      navbar => navbar($user, $token, $theme),
+      %project-data,
+    }
   }
 
   get -> 'about', :$user is cookie, :$token is cookie, :$theme is cookie = "light" {

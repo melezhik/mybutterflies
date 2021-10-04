@@ -15,11 +15,11 @@
           </?>
           <form action="<.http-root>/add-project" method="post">
             <span class="tag">project</span>
-            <input class="input" type="text" name="project" placeholder="project name">
+            <input class="input" type="text" name="project" placeholder="project name" value="<.project>">
             <span class="tag">url</span>
-            <input class="input" type="text" name="url" placeholder="project url">
+            <input class="input" type="text" name="url" placeholder="project url" value="<.url>">
             <span class="tag">description</span>
-            <input class="input" type="text" name="description" placeholder="project description">
+            <input class="input" type="text" name="description" placeholder="project description" value="<.description>">
             <span class="tag">language</span><br>
             <div class="select">
              <select name="language">
