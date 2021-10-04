@@ -72,12 +72,12 @@ sub css (Mu $theme) is export {
     if %conf<ui> && %conf<ui><theme><light> {
       $bulma-theme = %conf<ui><theme><light>
     } else {
-      $bulma-theme = "sandstone";
+      $bulma-theme = "cerulean";
     }
 
   } else {
 
-    $bulma-theme = "nuclear";
+    $bulma-theme = "cerulean";
 
   }
 
@@ -116,13 +116,13 @@ sub theme-link (Mu $theme) {
   if $theme eq "light" {
 
     "<a href=\"{http-root()}/set-theme?theme=dark\">
-      Dark theme
+      Dark Theme
     </a>"
 
   } else {
 
     "<a href=\"{http-root()}/set-theme?theme=light\">
-      Light theme
+      Light Theme
     </a>"
 
   }
@@ -135,8 +135,8 @@ sub navbar (Mu $user, Mu $token, Mu $theme) is export {
             {uniparse 'BUTTERFLY'} <a href="{http-root()}/">Ratings</a> |
             <a href="{http-root()}/add-project"> Add Project </a> |
             <a href="{http-root()}/about">About \#mybfio</a> |
-            <a href="{http-root()}/contest">Contest</a> |
-            <a href="{http-root()}/contest-list">Contest List</a> |
+            <a href="{http-root()}/contest-list">Contest</a> |
+            <a href="{http-root()}/contest">Contest Rules</a> |
             <a href="{http-root()}/articles">Editor's Articles</a> |
             {login-logout($user, $token)} |
             {theme-link($theme)}
