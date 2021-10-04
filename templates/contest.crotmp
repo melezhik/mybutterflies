@@ -11,7 +11,8 @@
 
   Welcome to #mybfio contest! We love to organize open source projects
   contests because they are fun and also help open source authors 
-  to get a recognition they deserve and attract more users. 
+  to get a recognition they deserve and attract more users.
+
   We know it's hard job to build up a community around one's project. 
   And we want to help.
 
@@ -33,7 +34,7 @@
 
       * Number of reviews ( we only count the number of reviews, not an average review score )
 
-      Scores are counted within a period of contest time, so upvotes and reviews 
+      <strong>Scores are counted within a period of contest time</strong>, so upvotes and reviews 
       made before a contest has started or after a contest has ended are not counted
 
   [Winners]
@@ -62,6 +63,11 @@
       Yes you can, however we always contact a project author first
       so they would be aware of inclusion into a #mybfio contest
       and we don't include without their consent. 
+
+      | Can I add more then one project?
+
+      Yes, you can add as many project as you want, just remember that
+      scores are calculated on per project, not per author basis
 
       | So far #mybfio contest seems only have a one contest for Golang projects.
       | Will you include more languages?
