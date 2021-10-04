@@ -30,7 +30,7 @@ sub validate-project-data (%data) is export {
     message => 'project should only consists of: [\w . digits - :]',
   );
 
-  %data<description> ~~ /^^ <[ \w \. \s \d \/ \\ \, \- \# ~ \' \) \)]>+ $$/
+  %data<description> ~~ /^^ <[ \w \. \s \d \/ \\ \, \- \# ~ \' \) \(]>+ $$/
     or return %(
       status => False,
       message => q{description should only consist of: [\w . spaces digits / \ , ~ # ' ) (]}
