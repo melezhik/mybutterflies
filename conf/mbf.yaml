@@ -1,4 +1,4 @@
 ui:
   theme: 
-    dark: cyborg
-    light: flatly
+    dark: nuclear
+    light: cerulean
