@@ -25,29 +25,9 @@
 
     2. Register a project as a participant on the page of <a href="<.http-root>/contest-list">current contests</a>
 
-  [How a score is counted]
+  [How a score is calculated]
 
-    The score calculation rule is simple. 
-
-      * Projects compete in categories:
-
-         package managers
-         libraries
-         cicd
-         cloud
-         tools
-         databases
-         web
-         automation
-         testing
-         infrastructure as a code
-         configuration management
-         task runner
-         build tool
-         applications
-         design
-
-    In every category there is 2 nominations:
+    Every project competes in 2 nominations:
 
       * Number of upvotes
 
@@ -58,11 +38,11 @@
 
   [Winners]
 
-      After a contest ends for every category we select:
+      After a contest ends we select 2 winners:
 
-      * first 3 winners with highest upvotes number
+      * A project with a highest number of upvotes
 
-      * first 3 winners with highest reviews number
+      * A project with a highest number of reviews
 
   [Prizes]
 
