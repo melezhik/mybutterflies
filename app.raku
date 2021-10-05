@@ -548,12 +548,21 @@ my $application = route {
 
     my %list = from-json("{cache-root()}/contest/list.json".IO.slurp);
 
+    for %list.keys -> $cnt {
+      for %list{$cnt}<> -> $p {
+          my %meta = from-json("{cache-root()}/projects/{$p<id>}/meta.json".IO.slurp);
+          $p<meta> = %meta;
+          $p<meta><add_by> ||= "melezhik";
+      }
+    }
+
     template 'templates/contest-list.crotmp', {
       title => title(),
       http-root => http-root(),
       css => css($theme), 
       navbar => navbar($user, $token, $theme),
       butterfly => "{uniparse 'BUTTERFLY'}",
+      star => "{uniparse 'BLACK STAR'}",
       list => %list
     }
   }

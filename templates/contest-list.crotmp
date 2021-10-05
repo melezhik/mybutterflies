@@ -7,26 +7,56 @@
       <p class="panel-heading">My Butterflies Current Contest List</p>
       <&HTML-AND-JAVASCRIPT(.navbar)>
       <div class="panel-block">
-        <pre class="control">
-    Following is the list of current #mybfio contest. Contest rules are
-    described at <a href="<.http-root>/contest">#mybfio contest</a> page.</pre>
+        <p class="control">
+            <span class="icon">
+              <.star>
+            </span>
+              <a href="<.http-root>/?filter=new">new projects</a>
+        </p>
       </div>
+
       <div class="panel-block">
-          <pre class="control">
+        <div class="card">
+          <header class="card-header">
+            <p class="card-header-title">
+               Title: #mybfio golang contest | Start date: 10.15.2021 | End date: 11.01.2021 | <br>
+            </p>
+          </header>
+          <div class="card-content">
+            <div class="content">
+            <p class="control">
+               Criteria: any project written on golang<br>
+               Contest participation <a href="https://github.com/melezhik/mybfio/issues/new?assignees=melezhik&labels=&template=participation-in--mybfio-golang-contest.md&title=Participation+in+%23mybfio+contest">link</a>
+            </p>
+              <table class="table panel-block">
+                <tr>
+                  <td>Project</td>
+                  <td>Category</td>
+                  <td>Description</td>
+                  <td>Added by</td>
+                </tr>
+                <@.list.go: $i>
+                <tr>
+                  <td>
+                    <a href=<.http-root>/project/<$i.id>/reviews><$i.id></a>
+                  </td>
+                  <td>
+                    <$i.meta.category>
+                  </td>
+                  <td>
+                    <$i.meta.description>
+                  </td>
+                  <td>
+                    <$i.meta.add_by>
+                  </td>
+                </tr>
+                </@>
+              </table>
+            </div>
+          <div>
+        </div>
+      </div>
 
-    [Contest List]
-
-      Golang
-  
-        Start date - 10.15.2021. 
-        End date - 11.01.2021
-        Criteria - any project written on golang
-        Contest participation <a href="https://github.com/melezhik/mybfio/issues/new?assignees=melezhik&labels=&template=participation-in--mybfio-golang-contest.md&title=Participation+in+%23mybfio+contest">link</a>  
-        Participants list:
-          <@.list.go: $i>
-          <a href=<.http-root>/project/<$i.id>/reviews><$i.id></a>
-          </@>
-          </pre>
       </div>
    </nav>
 
