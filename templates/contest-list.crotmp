@@ -24,7 +24,7 @@
         Contest participation <a href="https://github.com/melezhik/mybfio/issues/new?assignees=melezhik&labels=&template=participation-in--mybfio-golang-contest.md&title=Participation+in+%23mybfio+contest">link</a>  
         Participants list:
           <@.list.go: $i>
-          <a href=<.http-root>/project/<$i.id>/reviews>GitDrops</a><br>
+          <a href=<.http-root>/project/<$i.id>/reviews><$i.id></a>
           </@>
           </pre>
       </div>
