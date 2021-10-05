@@ -1,4 +1,4 @@
 ui:
   theme: 
     dark: nuclear
-    light: cerulean
+    light: flatly
