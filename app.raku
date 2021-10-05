@@ -44,7 +44,7 @@ my $application = route {
 
       @selected-projects = @projects.grep({
         .<date>.DateTime >= $week-ago
-      }).sort({ .<points>, .<reviews-cnt>, .<date> }).reverse
+      }).sort({ .<date> }).reverse
 
     } else {
 
