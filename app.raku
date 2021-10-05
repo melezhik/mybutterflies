@@ -10,7 +10,7 @@ use JSON::Tiny;
 
 my $application = route { 
 
-  get -> :$message, :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
+  get -> :$message, :$filter?, :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
 
     my @projects;
 
@@ -28,9 +28,29 @@ my $application = route {
         %meta<voted> = False
       }
 
+      %meta<date> = "$p/meta.json".IO.modified;
+
       push @projects, %meta;
 
     }
+
+    my @selected-projects;
+
+    if $filter and $filter eq "new" {
+
+      # week ago
+
+      my $week-ago = DateTime.now() - Duration.new(3600*7);
+
+      @selected-projects = @projects.grep({
+        .<date>.DateTime >= $week-ago
+      }).sort({ .<points>, .<reviews-cnt>, .<data> }).reverse
+
+    } else {
+
+      @selected-projects = @projects.sort({ .<points>, .<reviews-cnt>, .<data> }).reverse
+
+    } 
 
     template 'templates/main.crotmp', {
       title => title(),
@@ -39,7 +59,8 @@ my $application = route {
       user => $user, 
       css => css($theme), 
       navbar => navbar($user, $token, $theme),
-      projects => @projects.sort({ .<points> }).reverse
+      projects => @selected-projects,
+      star => "{uniparse 'BLACK STAR'}"
     }
 
   }

@@ -17,6 +17,15 @@
       </div>
       </?>
 
+      <div class="panel-block">
+        <p class="control">
+            <span class="icon">
+              <.star>
+            </span>
+              <a href="<.http-root>/?filter=new">new projects</a>
+        </p>
+      </div>
+
       <table class="table panel-block">
         <tr>
           <td>Points</td>
