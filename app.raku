@@ -46,6 +46,14 @@ my $application = route {
         .<date>.DateTime >= $week-ago
       }).sort({ .<date> }).reverse
 
+    } elsif $filter and $filter eq "top" {
+
+      my $week-ago = DateTime.now() - Duration.new(86400*7);
+
+      @selected-projects = @projects.grep({
+        .<date>.DateTime >= $week-ago and .<points> >= 1
+      }).sort({ .<date> }).reverse
+
     } else {
 
       @selected-projects = @projects.sort({ .<points>, .<reviews-cnt>, .<date> }).reverse
@@ -60,7 +68,8 @@ my $application = route {
       css => css($theme), 
       navbar => navbar($user, $token, $theme),
       projects => @selected-projects,
-      star => "{uniparse 'BLACK STAR'}"
+      top => "{uniparse 'ROCKET' }",
+      recent => "{uniparse 'HOURGLASS'}",
     }
 
   }

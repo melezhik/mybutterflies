@@ -20,9 +20,13 @@
       <div class="panel-block">
         <p class="control">
             <span class="icon">
-              <.star>
+              <.top>
             </span>
-              <a href="<.http-root>/?filter=new">new projects</a>
+              <a href="<.http-root>/?filter=top">recently upvoted</a> | 
+            <span class="icon">
+              <.recent>
+            </span>
+              <a href="<.http-root>/?filter=new">recent added</a>
         </p>
       </div>
 
