@@ -41,7 +41,7 @@
           </header>
           <div class="card-content">
             <div class="content" id="doc">
-              <p id="markdown"><.article.data></p>
+              <p id="markdown"><&HTML(.article.data)></p>
             </div>
           </div>
         </div>
