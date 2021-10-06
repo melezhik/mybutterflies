@@ -25,7 +25,7 @@
              <select name="language">
                <option value=Raku selected>Raku</option>
                <option value=Perl>Perl</option>
-               <option value="C">C</option>
+               <option value=Perl>Perl</option>
                <option value="C++">C++</option>
                <option value=Python>Python</option>
                <option value=Golang>Golang</option>
@@ -36,8 +36,10 @@
                <option value=Powershell>Powershell</option>
                <option value=Shell>Shell</option>
                <option value=Javascript>Javascript</option>
+               <option value=Typescript>Typescript</option>
                <option value=Design>Design</option>
                <option value=Unknown>Unknown</option>
+               <option value=NotApplicable>NotApplicable</option>
              </select>
             </div>
             <br>
@@ -58,6 +60,7 @@
                <option value="task runner">task runner</option>
                <option value="build tool">build tool</option>
                <option value="applications">applications</option>
+               <option value="service">service</option>
                <option value="design">design</option>
              </select>
             </div>
