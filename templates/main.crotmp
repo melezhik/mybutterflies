@@ -26,7 +26,7 @@
             <span class="icon">
               <.recent>
             </span>
-              <a href="<.http-root>/?filter=new">recent added</a>
+              <a href="<.http-root>/?filter=new">recently added</a>
         </p>
       </div>
 
