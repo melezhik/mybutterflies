@@ -1,10 +1,9 @@
 <&HTML-AND-JAVASCRIPT(.css)>
-<script type="text/javascript" src="<.http-root>/js/markdown-to-html.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/12.2.0/markdown-it.min.js" integrity="sha512-cTQeM/op796Fp1ZUxfech8gSMLT/HvrXMkRGdGZGQnbwuq/obG0UtcL04eByVa99qJik7WlnlQOr5/Fw5B36aw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script type="text/javascript" src="<.http-root>/js/markdown.js"></script>
 
-<link rel="stylesheet"
-      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
 
     <head>
@@ -49,8 +48,8 @@
             </p>
           </header>
           <div class="card-content">
-            <div class="content" id="doc">
-              <pre id="markdown"><.article.data></pre>
+            <div class="content" id="data">
+              <pre id="markdown"><&HTML(.article.data)></pre>
             </div>
           </div>
         </div>

@@ -8,3 +8,4 @@ ignore:
   - articles
   - conf
   - cro.log
+  - js
