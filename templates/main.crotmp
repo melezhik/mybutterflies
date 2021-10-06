@@ -5,7 +5,7 @@
     <head>
       <title><.title></title>
     </head>
-    <nav class="panel is-primary">
+    <nav class="container is-fluid panel is-primary">
       <p class="panel-heading">My Butterflies - Independent Software Reviews</p>
       <&HTML-AND-JAVASCRIPT(.navbar)>
 

@@ -3,7 +3,7 @@
     <head>
       <title><.title></title>
     </head>
-    <nav class="panel is-primary">
+    <nav class="panel container is-fluid is-primary">
       <p class="panel-heading">Add new project</p>
       <&HTML-AND-JAVASCRIPT(.navbar)>
       <div class="panel-block">
