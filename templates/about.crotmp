@@ -6,6 +6,16 @@
     <nav class="panel container is-fluid is-primary">
       <p class="panel-heading">Welcome to My Butterflies</p>
       <&HTML-AND-JAVASCRIPT(.navbar)>
+      <?.message>
+        <div class="panel-block">
+          <p class="control">
+            <span class="icon has-text-info">
+              <i class="fas fa-info-circle"></i>
+            </span>
+            <span><.message></span>
+          </p>
+        </div>
+      </?>
       <div class="panel-block">
           <pre class="control">
 
@@ -31,12 +41,5 @@
     Best regards. My Butterflies.
 
          </pre>
-      <?.message>
-      <div class="panel-block">
-        <p class="control">
-          <.message>
-        </p>
-      </div>
-      </?>
    </nav>
 

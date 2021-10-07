@@ -6,13 +6,18 @@
     <nav class="panel container is-fluid is-primary">
       <p class="panel-heading">Add new project</p>
       <&HTML-AND-JAVASCRIPT(.navbar)>
+      <?.message>
+        <div class="panel-block">
+          <p class="control">
+            <span class="icon has-text-info">
+              <i class="fas fa-info-circle"></i>
+            </span> 
+            <span><.message></span>
+          </p>
+        </div>
+      </?>
       <div class="panel-block">
         <div class="control">
-          <?.message>
-          <div class="notification is-success">
-            <.message>
-          </div>
-          </?>
           <form action="<.http-root>/add-project" method="post">
             <span class="tag">project</span>
             <input class="input" type="text" name="project" placeholder="project name" value="<.project>">

@@ -6,13 +6,18 @@
       <nav class="panel container is-fluid is-primary">
       <p class="panel-heading"><.project> - Edit reply</p>
       <&HTML-AND-JAVASCRIPT(.navbar)>
+      <?.message>
+        <div class="panel-block">
+          <p class="control">
+            <span class="icon has-text-info">
+              <i class="fas fa-info-circle"></i>
+            </span> 
+            <span><.message></span>
+          </p>
+        </div>
+      </?>
       <div class="panel-block">
         <div class="control">
-          <?.message>
-          <div class="notification is-success">
-            <.message>
-          </div>
-          </?>
           <form action="<.http-root>/project/<.project>/edit-reply/<.review-author>" method="post">
             <textarea class="textarea" name="data" placeholder="Textarea"><.reply.data></textarea>
             <hr>

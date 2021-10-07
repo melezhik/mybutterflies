@@ -6,13 +6,17 @@
       <nav class="panel container is-fluid is-primary">
       <p class="panel-heading"><.project> - Edit review</p>
       <&HTML-AND-JAVASCRIPT(.navbar)>
+      <?.message>
+        <div class="panel-block">
+          <p class="control">
+            <span class="icon has-text-info">
+              <i class="fas fa-info-circle"></i>
+            </span>
+            <span><.message></span>
+          </p>
+        </div>
+      </?>
       <div class="panel-block">
-        <div class="control">
-          <?.message>
-          <div class="notification is-success">
-            <.message>
-          </div>
-          </?>
           <form action="<.http-root>/project/<.project>/edit-review/<.review-id>" method="post">
             <div class="select">
              <select name="points">

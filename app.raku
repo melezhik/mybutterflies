@@ -531,13 +531,14 @@ my $application = route {
     }
   }
 
-  get -> 'about', :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
+  get -> 'about', :$message?, :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
 
     template 'templates/about.crotmp', {
       title => title(),
       http-root => http-root(),
       css => css($theme), 
       navbar => navbar($user, $token, $theme),
+      message => $message,
       butterfly => "{uniparse 'BUTTERFLY'}"
     }
   }
