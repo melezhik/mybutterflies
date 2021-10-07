@@ -123,7 +123,7 @@ my $application = route {
 
     %meta<id> = $article-id;
 
-    %meta<data> = "{cache-root()}/articles/{$article-id}/data.md".IO.slurp;
+    %meta<data> = "{cache-root()}/articles/{$article-id}/data.html".IO.slurp;
 
     %meta<data-short> = %meta<data>.split("\n")[0..5];
 
