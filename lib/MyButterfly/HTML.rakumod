@@ -130,12 +130,13 @@ sub navbar (Mu $user, Mu $token, Mu $theme) is export {
         <p class="control">
             {uniparse 'BUTTERFLY'} <a href="{http-root()}/">Ratings</a> |
             <a href="{http-root()}/add-project"> Add Project </a> |
-            <a href="{http-root()}/about">About \#mybfio</a> |
+            <a href="{http-root()}/about">About</a> |
             <a href="{http-root()}/contest-list">Contest</a> |
             <a href="{http-root()}/contest">Contest Rules</a> |
-            <a href="{http-root()}/articles">Editor's Articles</a> |
+            <a href="{http-root()}/articles">Articles</a> |
             {login-logout($user, $token)} |
-            {theme-link($theme)}
+            {theme-link($theme)} |
+            <a href="https://github.com/melezhik/mybfio/issues/new/choose" target="_blank">Support</a> |
         </p>
       </div>
   HERE

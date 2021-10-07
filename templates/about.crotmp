@@ -19,22 +19,32 @@
       <div class="panel-block">
           <pre class="control">
 
-    Hi! #mybfio - is a place where engineers write reviews 
+    [Idea]
+
+    #mybfio is a place where people write reviews 
     on software they like (or dislike). 
 
     No marketing stuff, just your honest opinions.
     
-    Sometimes we pick some interesting software projects and review them here, 
-    check the <a href="<.http-root>/articles" >editor's reviews</a> section.
+    Found an interesting project? - <strong><a href="<.http-root>/add-project">add it</a></strong>,
+    upvote and write your review. 
 
-    Found something interesting? - <strong><a href="<.http-root>/add-project">fill</a></strong> a short form 
-    and we will add your project to the list!
+    The recently upvoted will appear in the <a href="<.http-root>/?filter=top">top list</a>!
+
+    [Rules]
 
     There is no formal code of conduct for site users, however we expect that 
     all the users are being respectful when they express opinions.
 
     Service administration preserves right to disable user's account 
     and remove entries for those who don't follow this simple rule.
+
+    [Articles]
+
+    Sometimes we pick interesting projects and write detailed reviews on them,
+    check out the <a href="<.http-root>/articles" >editor's reviews</a> section.
+
+    For reasonable reward we can write an article about your project.
 
     <.butterfly><.butterfly><.butterfly>
 
