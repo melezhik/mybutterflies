@@ -30,10 +30,22 @@ sub validate-project-data (%data) is export {
     message => 'project should only consists of: [\w . digits - :]',
   );
 
+  %data<project> ~~ /\S/
+    or return %(
+      status => False,
+      message => q{project can't be empty}
+    );
+
   %data<description> ~~ /^^ <[ \w \. \s \d \/ \\ \, \- \# ~ \' \) \( & : ]>+ $$/
     or return %(
       status => False,
       message => q{description should only consist of: [\w . spaces digits / \ , ~ # ' ) ( & :]}
+    );
+
+  %data<description> ~~ /\S/
+    or return %(
+      status => False,
+      message => q{description can't be empty}
     );
 
   %data<url> ~~ /^^ <[ \w \. \/ \d : \. \- ~]>+ $$/
@@ -42,10 +54,22 @@ sub validate-project-data (%data) is export {
       message => q{url should only consist of: [\w . / digits : . - ~]}
     );
 
+  %data<url> ~~ /\S/
+    or return %(
+      status => False,
+      message => q{url can't be empty}
+    );
+
   %data<language> ~~ /^^ <[ \w \d \+ ]>+ $$/
     or return %(
       status => False,
       message => q{language should only consist of: [\w digits +]}
+    );
+
+  %data<language> ~~ /\S/
+    or return %(
+      status => False,
+      message => q{language can't be empty}
     );
   
   %data<category> ~~ /^^ <[ \w \d \s]>+ $$/
@@ -53,6 +77,13 @@ sub validate-project-data (%data) is export {
       status => False,
       message => q{category should only consist of: [\w digits spaces]}
     );
+
+  %data<category> ~~ /\S/
+    or return %(
+      status => False,
+      message => q{category can't be empty}
+    );
+
 
   return %( status => True );
 }

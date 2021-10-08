@@ -28,7 +28,7 @@
             <span class="tag">language</span><br>
             <div class="select">
              <select name="language">
-               <option value=Raku selected>Raku</option>
+               <option value=Raku>Raku</option>
                <option value=Perl>Perl</option>
                <option value=Perl>Perl</option>
                <option value="C++">C++</option>
@@ -51,7 +51,7 @@
             <span class="tag">category</span><br>
             <div class="select">
              <select name="category">
-               <option value="package manager" selected>package manager</option>
+               <option value="package manager">package manager</option>
                <option value="libraries">libraries</option>
                <option value="cicd">cicd</option>
                <option value="cloud">cloud</option>
