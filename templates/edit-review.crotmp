@@ -20,6 +20,12 @@
           <form action="<.http-root>/project/<.project>/edit-review/<.review-id>" method="post">
             <div class="select">
              <select name="points">
+               <?{.review.points == 0}>
+               <option value=0 selected>not sure</option>
+               </?> 
+               <!{.review.points == 0}>
+               <option value=0>not sure</option>
+               </!> 
                <?{.review.points == 5}>
                <option value=5 selected>5 butterflies</option>
                </?> 
