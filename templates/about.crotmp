@@ -31,14 +31,6 @@
 
     The recently upvoted will appear in the <a href="<.http-root>/?filter=top">top list</a>!
 
-    [Rules]
-
-    There is no formal code of conduct for site users, however we expect that 
-    all the users are being respectful when they express opinions.
-
-    Service administration preserves right to disable user's account 
-    and remove entries for those who don't follow this simple rule.
-
     [Reviews]
 
     - Review is just your opinion about a project at a _certain time_
@@ -53,6 +45,23 @@
       documentation or clarity of an idea, however try not criticize 
       just because you feel like that, try to be specific in your
       statements.
+
+    - Reviews without scores. Not ready to put a score for your review? 
+      Only want to make a comment? Not a problem - choose "not sure" score.
+      "Not sure" - means you only want to express your opinion without
+      a final rating for a given project.
+
+    [Rules]
+
+    There is no formal code of conduct for site users, however we expect that 
+    everyone is being respectful when they express opinions and write reviews.
+
+    Honest opinions are OK, personal attacks and offensive language
+    is not allowed.
+
+    Service administration preserves right to disable user's account 
+    and remove entries for those who don't follow this simple rule.
+
 
     [Articles]
 
