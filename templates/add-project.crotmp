@@ -54,6 +54,7 @@
                <option value="package manager">package manager</option>
                <option value="libraries">libraries</option>
                <option value="cicd">cicd</option>
+               <option value="data engineering">data engineering</option>
                <option value="cloud">cloud</option>
                <option value="tools">tools</option>
                <option value="databases">databases</option>
