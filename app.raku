@@ -101,7 +101,7 @@ my $application = route {
 
         %meta<points> = $ups;
 
-        %meta<points-str> = %meta<points> == 0 ?? "not sure" !! "{uniparse 'TWO HEARTS'}: {%meta<points>}";
+        %meta<points-str> = %meta<points> == 0 ?? "comment" !! "{uniparse 'TWO HEARTS'}: {%meta<points>}";
 
         push @articles, %meta;
 
@@ -244,7 +244,7 @@ my $application = route {
 
       if "{cache-root()}/projects/$project/reviews/points/{%rd<basename>}".IO ~~ :e {
         %meta<points> = "{cache-root()}/projects/$project/reviews/points/{%rd<basename>}".IO.slurp;
-        %meta<points-str> = %meta<points> == 0 ?? "not sure" !! "{uniparse 'BUTTERFLY'}" x %meta<points>;
+        %meta<points-str> = %meta<points> == 0 ?? "comment" !! "{uniparse 'BUTTERFLY'}" x %meta<points>;
       }
 
       %meta<replies> = [];

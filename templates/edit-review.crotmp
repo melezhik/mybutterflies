@@ -21,10 +21,10 @@
             <div class="select">
              <select name="points">
                <?{.review.points == 0}>
-               <option value=0 selected>not sure</option>
+               <option value=0 selected>comment</option>
                </?> 
                <!{.review.points == 0}>
-               <option value=0>not sure</option>
+               <option value=0>comment</option>
                </!> 
                <?{.review.points == 5}>
                <option value=5 selected>5 butterflies</option>
