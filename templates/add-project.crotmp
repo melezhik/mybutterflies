@@ -61,7 +61,7 @@
                <option value="web">web</option>
                <option value="automation">automation</option>
                <option value="testing">testing</option>
-               <option value="infrastructure as a code">infrastructure as a code</option>
+               <option value="infrastructure as a code">infrastructure as code</option>
                <option value="configuration management">configuration management</option>
                <option value="task runner">task runner</option>
                <option value="build tool">build tool</option>
