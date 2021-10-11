@@ -774,6 +774,8 @@ my $application = route {
   }
 }
 
+(.out-buffer = False for $*OUT, $*ERR;);
+
 my Cro::Service $service = Cro::HTTP::Server.new:
     :host<0.0.0.0>, :port<2000>, :$application;
 
