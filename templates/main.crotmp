@@ -34,6 +34,7 @@
       <table class="table panel-block">
         <tr>
           <td>Points</td>
+          <td>Time</td>
           <td>Project</td>
           <td>Category</td>
           <td>Language</td>
@@ -43,6 +44,9 @@
         <tr>
           <td>
             <$i.points>
+          </td>
+          <td>
+            <small><$i.date-str></small>
           </td>
           <td>
             <?{$i.voted == True}>

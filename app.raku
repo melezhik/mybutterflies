@@ -41,6 +41,8 @@ my $application = route {
 
       }
 
+      %meta<date-str> = project-date-str(%meta);
+
       push @projects, %meta;
 
     }

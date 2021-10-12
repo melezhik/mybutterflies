@@ -24,6 +24,17 @@ sub review-from-file ($path) is export {
   }
 }
 
+sub project-date-str (%meta) is export {
+
+  DateTime.new(
+    %meta<update-date>,
+    formatter => {
+      sprintf '%02d.%02d.%04d, %02d:%02d', 
+        .day, .month, .year, .hour, .minute
+      }
+  )
+
+}
 
 sub touch-project ($project, %event) is export {
 
