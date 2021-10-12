@@ -24,17 +24,39 @@ sub review-from-file ($path) is export {
   }
 }
 
-sub project-date-str (%meta) is export {
+sub date-to-x-ago ($date) is export {
 
-  DateTime.new(
-    %meta<update-date>,
-    formatter => {
-      sprintf '%02d.%02d.%04d, %02d:%02d', 
-        .day, .month, .year, .hour, .minute
-      }
-  )
+  #DateTime.new(
+  #  %meta<update-date>,
+  #  formatter => {
+  #    sprintf '%02d.%02d.%04d, %02d:%02d', 
+  #      .day, .month, .year, .hour, .minute
+  #    }
+  #)
 
+
+ my @int = [
+
+  %( label => "> 1 year ago", date => DateTime.now() - Duration.new(60*60*24*7*30*12) ),
+  %( label => "> 1 month ago", date => DateTime.now() - Duration.new(60*60*24*7*30) ),
+  %( label => "> 1 week ago", date => DateTime.now() - Duration.new(60*60*24*7) ),
+  %( label => "> 1 day ago", date => DateTime.now() - Duration.new(60*60*24) ),
+  %( label => "> 1 hour ago", date => DateTime.now() - Duration.new(60*60) ),
+  %( label => "> 15 min ago", date => DateTime.now() - Duration.new(60*15) ),
+  %( label => "> 10 min ago", date => DateTime.now() - Duration.new(60*10) ),
+  %( label => "> 5 min ago", date => DateTime.now() - Duration.new(60*5) ),
+  %( label => "> 1 min ago", date => DateTime.now() - Duration.new(60) ),
+
+ ];
+
+  for (0 .. @int.elems - 1) -> $i {
+    return @int[$i]<label> if $date < @int[$i]<date>;
+  }
+  
+  return "few secs ago";  
 }
+
+
 
 sub touch-project ($project, %event) is export {
 

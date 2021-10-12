@@ -41,7 +41,7 @@ my $application = route {
 
       }
 
-      %meta<date-str> = project-date-str(%meta);
+      %meta<date-str> = date-to-x-ago(%meta<update-date>.DateTime);
 
       push @projects, %meta;
 

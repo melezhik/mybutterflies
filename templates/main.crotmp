@@ -46,7 +46,9 @@
             <$i.points>
           </td>
           <td>
-            <small><$i.date-str></small>
+            <span class="tag">
+              <$i.date-str>
+            </span>
           </td>
           <td>
             <?{$i.voted == True}>
