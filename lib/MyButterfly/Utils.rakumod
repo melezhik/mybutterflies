@@ -1,5 +1,8 @@
 unit module MyButterfly::Utils;
 
+use MyButterfly::Conf;
+use JSON::Tiny;
+
 sub review-from-file ($path) is export {
 
   if ( $path ~~ /^^ (\S+) '_' (\d+) $$/ ) {
@@ -21,6 +24,14 @@ sub review-from-file ($path) is export {
   }
 }
 
+
+sub touch-project ($project, %event) is export {
+
+  "{cache-root()}/projects/$project/state.json".IO.spurt(
+    to-json(%event)
+  );
+
+}
 
 sub validate-project-data (%data) is export {
 

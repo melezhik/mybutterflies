@@ -3,10 +3,11 @@ use Cro::HTTP::Router;
 use Cro::WebApp::Template;
 use Cro::HTTP::Client;
 
+use MyButterfly::Conf;
 use MyButterfly::HTML;
 use MyButterfly::Utils;
-use JSON::Tiny;
 
+use JSON::Tiny;
 
 my $application = route { 
 
@@ -29,6 +30,16 @@ my $application = route {
       }
 
       %meta<date> = "$p/meta.json".IO.modified;
+
+      if "$p/state.json".IO ~~ :e {
+
+        %meta<update-date> = "$p/state.json".IO.modified;
+
+      } else {
+
+        %meta<update-date> = %meta<date>;
+
+      }
 
       push @projects, %meta;
 
@@ -56,7 +67,8 @@ my $application = route {
 
     } else {
 
-      @selected-projects = @projects.sort({ .<points>, .<reviews-cnt>, .<date> }).reverse
+      #@selected-projects = @projects.sort({ .<points>, .<reviews-cnt>, .<update-date> }).reverse
+      @selected-projects = @projects.sort({ .<update-date> }).reverse
 
     } 
 
@@ -226,8 +238,6 @@ my $application = route {
 
       my %rd = review-from-file($r);
 
-      %meta<review-id> = %rd<basename>;
-
       %meta<author> = %rd<author>;
 
       %meta<date> = %rd<date>;
@@ -253,18 +263,19 @@ my $application = route {
 
         for dir("{cache-root()}/projects/$project/reviews/replies/{%rd<basename>}") -> $rp {
 
+          my %rd = review-from-file($rp);
+          
           my %reply;
 
           %reply<data> = $rp.IO.slurp;
 
-          %reply<author> = $rp.IO.basename;
+          %reply<author> = %rd<author>;
 
-          %reply<date> = $rp.IO.modified;
+          %reply<date> = %rd<date>;
 
-          %reply<date-str> = DateTime.new(
-            $rp.IO.modified,
-            formatter => { sprintf "%02d:%02d %02d/%02d/%02d", .hour, .minute, .day, .month, .year }
-          );
+          %reply<date-str> = "{%rd<date>}";
+
+          %reply<id> = %rd<id>;
 
           if check-user($user, $token) and $user eq %reply<author> {
             %reply<edit> = True;
@@ -359,6 +370,8 @@ my $application = route {
 
          created "/project/$project/edit-review/{$review-id}";
 
+         touch-project($project, %( action => "review create") );
+
          %review<data> = $data;
          
          template 'templates/edit-review.crotmp', {
@@ -382,15 +395,15 @@ my $application = route {
     }
   }
 
-  get -> 'project', $project, 'edit-reply', $review-author, :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
+  get -> 'project', $project, 'edit-reply', $review-author, $review-id, $reply-id = time, :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
 
     if check-user($user, $token) {
 
       my %reply; 
 
-      if "{cache-root()}/projects/$project/reviews/replies/$review-author/$user".IO ~~ :e {
-        %reply<data> = "{cache-root()}/projects/$project/reviews/replies/$review-author/$user".IO.slurp;
-        say "read data from {cache-root()}/projects/$project/reviews/replies/$review-author/$user";
+      if "{cache-root()}/projects/$project/reviews/replies/{$review-author}_{$review-id}/{$user}_{$reply-id}".IO ~~ :e {
+        %reply<data> = "{cache-root()}/projects/$project/reviews/replies/{$review-author}_{$review-id}/{$user}_{$reply-id}".IO.slurp;
+        say "read data from {cache-root()}/projects/$project/reviews/replies/{$review-author}_{$review-id}/{$user}_{$reply-id}";
       } else {
         %reply<data> = ""
       }
@@ -402,6 +415,8 @@ my $application = route {
         css => css($theme), 
         navbar => navbar($user, $token, $theme),
         review-author => $review-author,
+        review-id => $review-id,
+        reply-id => $reply-id,
         project => $project,
         reply => %reply
       }
@@ -413,7 +428,7 @@ my $application = route {
     }
   }
 
-  post -> 'project', $project, 'edit-reply', $review-author, :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
+  post -> 'project', $project, 'edit-reply', $review-author, $review-id, $reply-id, :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
 
     if check-user($user, $token) {
 
@@ -421,13 +436,15 @@ my $application = route {
 
         mkdir "{cache-root()}/projects/$project/reviews/replies/";
 
-        mkdir "{cache-root()}/projects/$project/reviews/replies/$review-author";
+        mkdir "{cache-root()}/projects/$project/reviews/replies/{$review-author}_{$review-id}";
 
-        "{cache-root()}/projects/$project/reviews/replies/$review-author/$user".IO.spurt($data);
+        "{cache-root()}/projects/$project/reviews/replies/{$review-author}_{$review-id}/{$user}_{$reply-id}".IO.spurt($data);
 
         my %reply =  %( data => $data ) ; 
 
         created "/project/$project/edit-reply";
+
+        touch-project($project, %( action => "reply create") );
 
         template 'templates/edit-reply.crotmp', {
           title => title(),
@@ -437,6 +454,8 @@ my $application = route {
           navbar => navbar($user, $token, $theme),
           project => $project,
           review-author => $review-author,
+          review-id => $review-id,
+          reply-id => $reply-id,
           message => "reply updated", 
           reply => %reply
 
@@ -506,8 +525,9 @@ my $application = route {
               $msg = "project already exists";
             } else {
               "{cache-root}/projects/$project/meta.json".IO.spurt(to-json(%project-data));
-              $msg = "project added"
-          }
+              $msg = "project added";
+              touch-project($project, %( action => "project create") );
+        }
         } else {
           $msg = %status<message>
         }
@@ -726,6 +746,8 @@ my $application = route {
       unless "{cache-root()}/projects/$project/ups/$user".IO ~~ :e {
         say "up {cache-root()}/projects/$project/ups/$user";
         "{cache-root()}/projects/$project/ups/$user".IO.spurt("");
+         touch-project($project, %( action => "project upvote") );
+
       }
     
       redirect :see-other, "{http-root()}/?message=project upvoted";
@@ -744,6 +766,7 @@ my $application = route {
 
       if "{cache-root()}/projects/$project/ups/$user".IO ~~ :e {
         say "down {cache-root()}/projects/$project/ups/$user";
+        touch-project($project, %( action => "project downvote") );
         unlink "{cache-root()}/projects/$project/ups/$user";
       }
     

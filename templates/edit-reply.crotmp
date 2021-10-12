@@ -18,7 +18,7 @@
       </?>
       <div class="panel-block">
         <div class="control">
-          <form action="<.http-root>/project/<.project>/edit-reply/<.review-author>" method="post">
+          <form action="<.http-root>/project/<.project>/edit-reply/<.review-author>/<.review-id>/<.reply-id>" method="post">
             <textarea class="textarea" name="data" placeholder="Textarea" cols="60"><.reply.data></textarea>
             <hr>
             <button class="button is-link">Submit</button>

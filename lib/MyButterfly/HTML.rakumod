@@ -1,6 +1,6 @@
 unit module MyButterfly::HTML;
 
-use YAMLish;
+use MyButterfly::Conf;
 
 sub gen-token is export {
 
@@ -25,31 +25,9 @@ sub check-user (Mu $user, Mu $token) is export {
 
 }
 
-sub get-web-conf is export {
-
-  my $conf-file = %*ENV<HOME> ~ '/mbf.yaml';
-
-  my %conf = $conf-file.IO ~~ :f ?? load-yaml($conf-file.IO.slurp) !! Hash.new;
-
-  %conf;
-
-}
-
 sub title is export { 
 
   "My Butterflies - Independent Reviews of Sortware Projects"
-
-}
-
-sub cache-root is export {
-
-  "{%*ENV<HOME>}/.mbf/";
-
-}
-
-sub http-root is export {
-
-  %*ENV<MBF_HTTP_ROOT> || "";
 
 }
 

@@ -57,15 +57,13 @@
               <?$r.edit>
                 <a href="<.http-root>/project/<.project>/edit-review/<$r.id>">edit review</a>
               </?>
-              <!$r.replied>
               <hr>
-              <a href="<.http-root>/project/<.project>/edit-reply/<$r.review-id>">reply</a>
-              </!>
+              <a href="<.http-root>/project/<.project>/edit-reply/<$r.author>/<$r.id>">reply</a>
               <@$r.replies: $rp>
                 <hr>
                 reply by @<$rp.author> at <$rp.date-str><pre><$rp.data></pre>
                 <?$rp.edit>
-                <a href="<.http-root>/project/<.project>/edit-reply/<$r.review-id>">edit reply</a>
+                <a href="<.http-root>/project/<.project>/edit-reply/<$r.author>/<$r.id>/<$rp.id>">edit reply</a>
                 </?>
               </@>
             </div>

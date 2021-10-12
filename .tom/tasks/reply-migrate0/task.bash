@@ -6,20 +6,16 @@ for i in $(find ~/.mbf/projects/ | grep 'reviews/replies/'); do
 
     #say '$i';
 
-    exit unless '$i' ~~ /.* \\S+ '_' \\d+ '/' (\\S+) \$\$/;
+    #exit;
 
-    say '\$0';
+    exit unless '$i' ~~ /.* \\S+ '_' \\d+ '/' (\\S+) \$\$/;
 
     my \$u = '$i'.IO.basename;
     my @f = '$i'.split('/').grep({\$_});
     my \$p = @f[4];
     my \$t = '$i'.IO.modified.Int;
-    my \$new-name = \$u ~ '_' ~ \$t;
-    say 'mv -v ~/.mbf/projects/',\$p, '/reviews/data/',\$u, 
-        ' ~/.mbf/projects/', \$p, '/reviews/data/', \$new-name;
-
-
-  ";
+    say 'mv -v $i $i', '_' ~ \$t;
+  " | bash;
 
 done;
 
