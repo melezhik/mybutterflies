@@ -45,7 +45,7 @@
       </div>
       <div class="panel-block">
         <p class="control">
-          share via: <a href="http://twitter.com/share?text=Mybfio reviews. <.project> - <.project-meta.description>&url=https://mybf.io/project/<.project>/reviews&hashtags=mybfio,<.project-meta.language>" target="_blank">twitter</a>
+          share via: <a href="http://twitter.com/share?text=<.project> - <.project-meta.description>&url=https://mybf.io/project/<.project>/reviews&hashtags=mybfio,<.project-meta.language>" target="_blank">twitter</a>
         </p>
       </div>
       <@reviews: $r>
