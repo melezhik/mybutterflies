@@ -35,9 +35,17 @@ my $application = route {
 
         %meta<update-date> = "$p/state.json".IO.modified;
 
+        %meta<event> = from-json("$p/state.json".IO.slurp);
+
+        %meta<event><event-str> = event-to-label(%meta<event><action>);
+
       } else {
 
         %meta<update-date> = %meta<date>;
+
+        %meta<event> = %( action => "project added" );
+
+        %meta<event><event-str> = event-to-label(%meta<event><action>);
 
       }
 
@@ -256,7 +264,7 @@ my $application = route {
 
       if "{cache-root()}/projects/$project/reviews/points/{%rd<basename>}".IO ~~ :e {
         %meta<points> = "{cache-root()}/projects/$project/reviews/points/{%rd<basename>}".IO.slurp;
-        %meta<points-str> = %meta<points> == 0 ?? "comment" !! "{uniparse 'BUTTERFLY'}" x %meta<points>;
+        %meta<points-str> = score-to-label(%meta<points>);
       }
 
       %meta<replies> = [];
@@ -372,7 +380,16 @@ my $application = route {
 
          created "/project/$project/edit-review/{$review-id}";
 
-         touch-project($project, %( action => "review create") );
+         if $points and $points == -1 {
+            touch-project($project, %( action => "release create") );
+         } elsif $points == 0 {
+            touch-project($project, %( action => "comment create") );
+         } elsif $points >= 1 {
+            touch-project($project, %( action => "review create") );
+         } else {
+            touch-project($project, %( action => "review create") );
+         }
+        
 
          %review<data> = $data;
          

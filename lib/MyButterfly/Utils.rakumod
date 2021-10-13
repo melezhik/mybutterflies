@@ -131,3 +131,28 @@ sub validate-project-data (%data) is export {
 
   return %( status => True );
 }
+
+
+sub score-to-label ($points) is export {
+
+  if $points == 0 {
+    return "comment"
+  }
+
+  if $points == -1 {
+    return "release"
+  }
+
+  return "{uniparse 'BUTTERFLY'}" x $points
+
+}
+
+sub event-to-label ($event) is export {
+
+  if $event eq "release create" { return uniparse "PACKAGE" };
+  if $event eq "project added" { return uniparse "SQUARED NEW" };
+  if $event eq "review create" { return uniparse "Eyeglasses" };
+  if $event eq "comment create" { return uniparse "OPEN BOOK" };
+  if $event eq "reply create" { return uniparse "OPEN BOOK" };
+
+}

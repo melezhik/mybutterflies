@@ -26,6 +26,12 @@
                <!{.review.points == 0}>
                <option value=0>comment</option>
                </!> 
+               <?{.review.points == -1}>
+               <option value=-1 selected>release</option>
+               </?> 
+               <!{.review.points == -1}>
+               <option value=-1>release</option>
+               </!> 
                <?{.review.points == 5}>
                <option value=5 selected>5 butterflies</option>
                </?> 

@@ -47,6 +47,7 @@
           </td>
           <td>
             <span class="tag">
+              <$i.event.event-str> | 
               <$i.date-str>
             </span>
           </td>
