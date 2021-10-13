@@ -115,7 +115,7 @@ my $application = route {
 
         %meta<points> = $ups;
 
-        %meta<points-str> = %meta<points> == 0 ?? "comment" !! "{uniparse 'TWO HEARTS'}: {%meta<points>}";
+        %meta<points-str> = "{uniparse 'TWO HEARTS'} : {%meta<points>}";
 
         push @articles, %meta;
 
