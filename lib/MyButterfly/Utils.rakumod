@@ -153,6 +153,7 @@ sub event-to-label ($event) is export {
   if $event eq "project added" { return uniparse "SQUARED NEW" };
   if $event eq "review create" { return uniparse "Eyeglasses" };
   if $event eq "comment create" { return uniparse "OPEN BOOK" };
-  if $event eq "reply create" { return uniparse "OPEN BOOK" };
+  if $event eq "project upvote" { return uniparse "RIGHT ARROW" };
+  if $event eq "project downvote" { return uniparse "RIGHT ARROW" };
 
 }
