@@ -1,3 +1,12 @@
+task-run ".tom/tasks/add-article", %(
+  "id" => "Principles",
+  "author" => "melezhik",
+  "title" => "mybf.io - platform for software reviews with social network aspect",
+  "short" => "In other words, #mybfio is a mini social network helping authors to get feedback on software they write as well assist users in finding proper software",
+  "tags" => "Principles, mybfio",
+);
+
+=begin comment
 
 task-run ".tom/tasks/add-article", %(
   id => "Mage",
@@ -6,9 +15,6 @@ task-run ".tom/tasks/add-article", %(
   short => "The author aims to make it with minimal dependencies ( pure go ) and concise and clear syntax",
   tags => "Cli, make, tools, golang, task-runner",
 );
-
-
-=begin comment
 
 task-run ".tom/tasks/add-article", %(
   id => "Ain",
