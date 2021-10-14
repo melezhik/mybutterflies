@@ -1,0 +1,61 @@
+<&HTML-AND-JAVASCRIPT(.css)>
+
+    <head>
+      <title><.title></title>
+    </head>
+    <nav class="panel container is-fluid is-primary">
+      <p class="panel-heading">Customize settings</p>
+      <&HTML-AND-JAVASCRIPT(.navbar)>
+      <?.message>
+        <div class="panel-block">
+          <p class="control">
+            <span class="icon has-text-info">
+              <i class="fas fa-info-circle"></i>
+            </span> 
+            <span><.message></span>
+          </p>
+        </div>
+      </?>
+      <div class="panel-block">
+        <div class="control">
+          <form action="<.http-root>/" method="get">
+            <span class="tag">language</span><br>
+            <div class="select">
+             <select name="language" multiple">
+               <option value=Raku>Raku</option>
+               <option value=Perl>Perl</option>
+               <option value="C++">C++</option>
+               <option value=Python>Python</option>
+               <option value=Golang>Golang</option>
+               <option value=Ruby>Ruby</option>
+               <option value=Rust>Rust</option>
+               <option value=Lua>Lua</option>
+               <option value=Java>Java</option>
+               <option value=Powershell>Powershell</option>
+               <option value=Shell>Shell</option>
+               <option value=Javascript>Javascript</option>
+               <option value=Typescript>Typescript</option>
+               <option value=Design>Design</option>
+               <option value=Unknown>Unknown</option>
+               <option value=NotApplicable>NotApplicable</option>
+             </select>
+            </div>
+          </div>
+        </div>
+        <div class="panel-block">
+          <div class="control">
+            <button class="button is-link">Submit</button>
+            </form>
+          </div>
+        </div>
+        <div class="panel-block">
+          <p class="control">
+          <span class="icon">
+            <i class="fas fa-arrow-right"></i>
+          </span>
+          <a href="<.http-root>/">go to ratings</a>
+          </p>
+        </div>
+    </div>
+   </nav>
+
