@@ -150,10 +150,10 @@ sub score-to-label ($points) is export {
 sub event-to-label ($event) is export {
 
   if $event eq "release create" { return uniparse "PACKAGE" };
-  if $event eq "project added" { return uniparse "SQUARED NEW" };
+  if $event eq "project added" { return uniparse "Heavy Asterisk" };
   if $event eq "review create" { return uniparse "Eyeglasses" };
-  if $event eq "comment create" { return uniparse "OPEN BOOK" };
-  if $event eq "project upvote" { return uniparse "RIGHT ARROW" };
-  if $event eq "project downvote" { return uniparse "RIGHT ARROW" };
+  if $event eq "comment create" { return uniparse "Upper Right Pencil" };
+  if $event eq "project upvote" { return uniparse "Rightwards Arrow Over Leftwards Arrow" };
+  if $event eq "project downvote" { return uniparse "Rightwards Arrow Over Leftwards Arrow" };
 
 }
