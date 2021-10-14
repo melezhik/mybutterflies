@@ -53,7 +53,7 @@
           <span class="icon">
             <i class="fas fa-arrow-right"></i>
           </span>
-          <a href="<.http-root>/">go to ratings</a>
+          <a href="<.http-root>/">go to rating</a>
           </p>
         </div>
     </div>
