@@ -27,7 +27,11 @@
             <span class="icon">
               <.recent>
             </span>
-              <a href="<.http-root>/?filter=new">recently added</a>
+              <a href="<.http-root>/?filter=new">recently added</a> |
+            <span class="icon">
+              <.settings>
+            </span>
+              <a href="<.http-root>/customize">customize search</a>
         </p>
       </div>
 

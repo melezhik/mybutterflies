@@ -11,13 +11,26 @@ use JSON::Tiny;
 
 my $application = route { 
 
-  get -> :$message, :$filter?, :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
+  get -> :$message, :$filter?, :$language?, :$user is cookie, :$token is cookie, :$lang is cookie,  :$theme is cookie = "light" {
 
     my @projects;
+
+    if $language {
+
+      my $date = DateTime.now.later(years => 100);
+      set-cookie 'lang', $language, http-only => True, expires => $date;
+
+    }
+
+    my $lang-filter = $language || $lang;
 
     for dir("{cache-root()}/projects/") -> $p {
 
       my %meta = from-json("$p/meta.json".IO.slurp);
+
+      if $lang-filter {
+        next unless %meta<language> eq $lang-filter
+      }
 
       %meta<points> = dir("$p/ups/").elems;
 
@@ -92,6 +105,7 @@ my $application = route {
       projects => @selected-projects,
       top => "{uniparse 'ROCKET' }",
       recent => "{uniparse 'HOURGLASS'}",
+      settings => "{uniparse 'GEAR'}",
     }
 
   }
@@ -488,6 +502,18 @@ my $application = route {
 
       redirect :see-other, "{http-root()}/login-page?message=you need to sign in to create or edit replies";
 
+    }
+
+  }
+
+  get -> 'customize', :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
+
+    template 'templates/customize.crotmp', {
+      title => title(),
+      http-root => http-root(),
+      user => $user,
+      css => css($theme), 
+      navbar => navbar($user, $token, $theme),
     }
 
   }
