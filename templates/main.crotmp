@@ -23,7 +23,7 @@
             <span class="icon">
               <.top>
             </span>
-              <a href="<.http-root>/?filter=top">recently upvoted</a> | 
+              <a href="<.http-root>/?filter=top">recently updated</a> | 
             <span class="icon">
               <.recent>
             </span>

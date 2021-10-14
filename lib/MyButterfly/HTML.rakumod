@@ -106,7 +106,7 @@ sub navbar (Mu $user, Mu $token, Mu $theme) is export {
   qq:to /HERE/
       <div class="panel-block">
         <p class="control">
-            {uniparse 'BUTTERFLY'} <a href="{http-root()}/">Ratings</a> |
+            {uniparse 'BUTTERFLY'} <a href="{http-root()}/">Rating</a> |
             <a href="{http-root()}/add-project"> Add Project </a> |
             <a href="{http-root()}/about">About</a> |
             <a href="{http-root()}/contest-list">Contest</a> |

@@ -85,7 +85,7 @@ my $application = route {
       my $week-ago = DateTime.now() - Duration.new(86400*7);
 
       @selected-projects = @projects.grep({
-        .<date>.DateTime >= $week-ago and .<points> >= 1
+        .<update-date>.DateTime >= $week-ago
       }).sort({ .<date> }).reverse
 
     } else {
