@@ -15,11 +15,15 @@ my $application = route {
 
     my @projects;
 
-    if $language {
+    if $language and $language ne 'Any' {
 
       my $date = DateTime.now.later(years => 100);
       set-cookie 'lang', $language, http-only => True, expires => $date;
 
+    }
+
+    if $language and $language eq 'Any' {
+      set-cookie 'lang', Nil
     }
 
     my $lang-filter = $language || $lang;
@@ -28,7 +32,7 @@ my $application = route {
 
       my %meta = from-json("$p/meta.json".IO.slurp);
 
-      if $lang-filter {
+      if $lang-filter and $lang-filter ne "Any" {
         next unless %meta<language> eq $lang-filter
       }
 
