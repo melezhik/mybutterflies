@@ -244,6 +244,10 @@ my $application = route {
 
     %project-meta<add_by> ||= "melezhik";
 
+    if %project-meta<owners> {
+        %project-meta<owners-str> = %project-meta<owners><>.join(" ");
+    }
+
     %project-meta<points> = dir("{cache-root()}/projects/$project/ups/").elems;
 
     %project-meta<reviews-cnt> = dir("{cache-root()}/projects/$project/reviews/data").elems;
