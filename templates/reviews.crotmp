@@ -48,6 +48,14 @@
           share via: <a href="http://twitter.com/share?text=<.project> - <.project-meta.description>&url=https://mybf.io/project/<.project>/reviews&hashtags=mybfio,<.project-meta.language>" target="_blank">twitter</a>
         </p>
       </div>
+      <div class="panel-block">
+        <p class="control">
+          maintainer:
+          <a href="https://github.com/melezhik/mybfio/issues/new?assignees=&labels=ownership&template=claim-ownership.md&title=Claim+project+ownership" target="_blank">
+            claim ownership 
+          </a>
+        </p>
+      </div>
       <@reviews: $r>
       <div class="panel-block">
         <div class="card">
