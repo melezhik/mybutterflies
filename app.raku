@@ -687,7 +687,9 @@ my $application = route {
 
   get -> 'set-theme', :$message, :$theme, :$user is cookie, :$token is cookie {
 
-    set-cookie 'theme', $theme, http-only => True;
+    my $date = DateTime.now.later(days => 1000);
+
+    set-cookie 'theme', $theme, http-only => True, expires => $date;
 
     redirect :see-other, "{http-root()}/?message=theme set to {$theme}";
 
