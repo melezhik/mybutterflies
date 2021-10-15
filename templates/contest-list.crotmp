@@ -23,6 +23,7 @@
               <table class="table panel-block">
                 <tr>
                   <td>Project</td>
+                  <td>Score</td>
                   <td>Category</td>
                   <td>Description</td>
                   <td>Added by</td>
@@ -31,6 +32,9 @@
                 <tr>
                   <td>
                     <a href=<.http-root>/project/<$i.id>/reviews><$i.id></a>
+                  </td>
+                  <td>
+                    upvotes: <$i.meta.points-delta> | reviews: <$i.meta.reviews-delta>
                   </td>
                   <td>
                     <$i.meta.category>

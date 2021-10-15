@@ -632,11 +632,25 @@ my $application = route {
     my %list = from-json("{cache-root()}/contest/list.json".IO.slurp);
 
     for %list.keys -> $cnt {
+
       for %list{$cnt}<> -> $p {
+
           my %meta = from-json("{cache-root()}/projects/{$p<id>}/meta.json".IO.slurp);
+
           $p<meta> = %meta;
+
           $p<meta><add_by> ||= "melezhik";
+
+          $p<meta><points> = dir("{cache-root()}/projects/{$p<id>}/ups/").elems;
+
+          $p<meta><reviews-cnt> = dir("{cache-root()}/projects/{$p<id>}/reviews/data").elems;
+
+          $p<meta><points-delta> = $p<meta><points> - $p<score><points>;
+
+          $p<meta><reviews-delta> = $p<meta><reviews-cnt> - $p<score><reviews>;
+
       }
+
     }
 
     template 'templates/contest-list.crotmp', {
