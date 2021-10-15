@@ -33,7 +33,7 @@ my $application = route {
       my %meta = from-json("$p/meta.json".IO.slurp);
 
       if $lang-filter and $lang-filter ne "Any" {
-        next unless %meta<language> eq $lang-filter
+        next unless $lang-filter ~~ any %meta<language><>
       }
 
       %meta<points> = dir("$p/ups/").elems;
