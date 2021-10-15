@@ -248,6 +248,8 @@ my $application = route {
 
     %project-meta<add_by> ||= "melezhik";
 
+    %project-meta<twitter-hash-tag> = join ",", %project-meta<language><>;
+
     if %project-meta<owners> {
         %project-meta<owners-str> = %project-meta<owners><>.join(" ");
     }
