@@ -39,7 +39,7 @@
 
       Authors self-reviews and self-comments are skipped as well. 
 
-      Only reviews from unique users are counted. So if the same user did more
+      Only reviews from unique users are counted. So if the same user has posted more
       then reviews they all counted as one review.
 
   [Winners]
