@@ -21,15 +21,25 @@
 
     [Idea]
 
-    #mybfio is a place where people write reviews 
-    on software they like (or dislike). 
-
-    No marketing stuff, just users honest opinions.
+    #mybfio is a place where people write reviews on software 
+    they use. No marketing stuff, just real users opinions.
     
-    Found an interesting project? - <strong><a href="<.http-root>/add-project">add it</a></strong>,
-    upvote and write your review. 
+    Do you want people share your opinion on software 
+    you have experience with?
 
-    The recently upvoted will appear in the <a href="<.http-root>/?filter=top">top list</a>!
+    <a href="<.http-root>/add-project">Add</a> the one to the #mbfio listing, upvote if you like
+    and/or write your review or just a comment.
+
+    Are you an author of a software project and want to
+    get a real and quick feedback on the project you develop?
+  
+    Add it to the #mbfio listing and then add #mbfio badge with a link
+    on a project README page, so that you users can find it on #mbfio
+    and their feedback. Project owners can also announce software releases
+    and ask users to give a feedback on certain version release.
+
+    It that easy! #mbfio is service is beneficial both for software
+    authors and software users.
 
     [Reviews]
 
@@ -51,7 +61,7 @@
       "Comment" - means you only want to express your opinion without
       rating a project.
 
-    [Reviews/Comment Rules]
+    [Reviews/Comments Rules]
 
     There is no formal code of conduct for site users, however we expect that 
     everyone is being respectful when they express opinions and write reviews.
@@ -59,8 +69,8 @@
     Honest opinions are OK, personal attacks and offensive language
     is not allowed.
 
-    Service administration preserves right to disable user's account 
-    and remove entries for those who don't follow this simple rule.
+    The service administration preserves right to disable user's accounts 
+    and remove entries of those who don't follow this simple rule.
 
 
     [Projects]
