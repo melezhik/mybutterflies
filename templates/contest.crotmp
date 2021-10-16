@@ -35,7 +35,12 @@
       * Number of reviews ( we only count the number of reviews, not an average review score )
 
       <strong>Scores are counted within a period of contest time</strong>, so upvotes and reviews 
-      made before a contest has started or after a contest has ended are not counted
+      made before a contest has started or after a contest has ended are not counted.
+
+      Authors self-reviews and self-comments are skipped as well. 
+
+      Only reviews from unique users are counted. So if the same user did more
+      then reviews they all counted as one review.
 
   [Winners]
 
