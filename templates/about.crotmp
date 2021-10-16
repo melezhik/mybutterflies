@@ -78,7 +78,7 @@
     Ideally we assume that author or maintainer of a project
     <a href="<.http-root>/add-project">adds</a> the one to the listing.
 
-    Technically any authenticated used of the site could add a project.
+    Technically any authenticated user of the site could add a project.
     Just bear in mind that the person who adds the project is not
     necessarily a project author, owner or maintainer. 
 
