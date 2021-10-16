@@ -63,6 +63,34 @@
     and remove entries for those who don't follow this simple rule.
 
 
+    [Projects]
+
+    Adding projects
+
+    We sometimes randomly pick software projects we like and add them to
+    the #mbfio listing.
+
+    If you find a project you are an author or maintainer you can
+    request a project ownership using "claim ownership" link on a
+    project badge. Owner will gives some privileges. The features is
+    still in progress.
+
+    Ideally we assume that author or maintainer of a project
+    <a href="<.http-root>/add-project">adds</a> the one to the listing.
+
+    Technically any authenticated used of the site could add a project.
+    Just bear in mind that the person who adds the project is not
+    necessarily a project author, owner or maintainer. 
+
+    To become the one please use the mentioned "claim ownership"  
+    mechanism.
+    
+    Removing projects from the listing.
+
+    We understand the sensitivity of questions and without hesitation
+    remove projects from the #mbfio listing upon owners requests.
+
+  
     [Articles]
 
     Sometimes we pick interesting projects and write detailed reviews on them,
