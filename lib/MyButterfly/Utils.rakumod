@@ -83,10 +83,10 @@ sub validate-project-data (%data) is export {
       message => q{project can't be empty}
     );
 
-  %data<description> ~~ /^^ <[ \w \. \s \d \/ \\ \, \- \# ~ \' \) \( & : !]>+ $$/
+  %data<description> ~~ /^^ <[ \w \. \s \d \/ \\ \, \- \# ~ \' \) \( & : ! \+]>+ $$/
     or return %(
       status => False,
-      message => q{description should only consist of: [\w . spaces digits / \ , ~ # ' ) ( & : !]}
+      message => q{description should only consist of: [\w . spaces digits / \ , ~ # ' ) ( & : ! +]}
     );
 
   %data<description> ~~ /\S/
