@@ -1,0 +1,21 @@
+Hi r/opensource mods!
+
+I am a maintainer of https://mybf.io - independent software reviews site.
+
+I want to build an independent software reviews system across many programming languages. The idea is that real users ( preferably dev background or at least real users, not market guys ) who would write realistic reviews on projects they like ( or dislike ? ) or project they have used.
+
+I would like to ask opensource community to add (any language opensource ) projects they like to the mybf.io listing and (optional) write small reviews for projects being added. People can also upvote their favorite projects.
+
+Is it ok if I announce this in r/opensource reddit?
+
+In the long run it could be a win win as I could publish weekly/monthly reports for https://mybf.io/?language=Any trends to r/opensource reddit so people could see recently upvoted/reviewed projects and this would spur discussion up for the subreddit.
+
+Please let me know if you have more questions about mybf.io
+
+Mybfio concepts/policies are described here - https://mybf.io/about
+
+If you turn this down, this is ok, no worries ))
+
+Best regards
+
+Aleksei
