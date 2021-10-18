@@ -65,6 +65,7 @@ sub categories is export {
     "job queue",
     "service",
     "programming language",
+    "operating system",
     "design",
   )
 }
