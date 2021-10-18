@@ -28,47 +28,14 @@
             <span class="tag">language</span><br>
             <div class="select">
              <select name="language">
-               <option value=Raku>Raku</option>
-               <option value=Perl>Perl</option>
-               <option value="C++">C++</option>
-               <option value=Python>Python</option>
-               <option value=Golang>Golang</option>
-               <option value=Ruby>Ruby</option>
-               <option value=Rust>Rust</option>
-               <option value=Lua>Lua</option>
-               <option value=Java>Java</option>
-               <option value=Powershell>Powershell</option>
-               <option value=Shell>Shell</option>
-               <option value=Javascript>Javascript</option>
-               <option value=Typescript>Typescript</option>
-               <option value=Design>Design</option>
-               <option value=Unknown>Unknown</option>
-               <option value=NotApplicable>NotApplicable</option>
+              <&HTML(.languages)>
              </select>
             </div>
             <br>
             <span class="tag">category</span><br>
             <div class="select">
              <select name="category">
-               <option value="package manager">package manager</option>
-               <option value="libraries">libraries</option>
-               <option value="cicd">cicd</option>
-               <option value="data engineering">data engineering</option>
-               <option value="cloud">cloud</option>
-               <option value="tools">tools</option>
-               <option value="databases">databases</option>
-               <option value="web">web</option>
-               <option value="automation">automation</option>
-               <option value="testing">testing</option>
-               <option value="infrastructure as a code">infrastructure as code</option>
-               <option value="configuration management">configuration management</option>
-               <option value="task runner">task runner</option>
-               <option value="build tool">build tool</option>
-               <option value="applications">applications</option>
-               <option value="job queue">job queue</option>
-               <option value="service">service</option>
-               <option value="programming language">programming language</option>
-               <option value="design">design</option>
+              <&HTML(.categories)>
              </select>
             </div>
             <br><br>

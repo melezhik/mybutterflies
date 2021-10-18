@@ -540,6 +540,8 @@ my $application = route {
         user => $user,
         css => css($theme), 
         navbar => navbar($user, $token, $theme),
+        languages => array-to-html-option("",languages()),
+        categories => array-to-html-option("",categories()),
       }
 
     } else {
@@ -559,11 +561,11 @@ my $application = route {
         request-body -> (:$project, :$description, :$url, :$language, :$category) {
 
           %project-data =  %(           
-              project => $project,
-              description => $description,
-              url => $url,
-              language => $language,
-              category => $category
+            project => $project,
+            description => $description,
+            url => $url,
+            language => $language,
+            category => $category,
           );
 
           my %status = validate-project-data %project-data;
@@ -605,6 +607,8 @@ my $application = route {
       css => css($theme), 
       navbar => navbar($user, $token, $theme),
       %project-data,
+      languages => array-to-html-option(%project-data<language>||"",languages()),
+      categories => array-to-html-option(%project-data<category>||"",categories()),
     }
   }
 

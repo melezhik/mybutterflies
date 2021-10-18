@@ -71,6 +71,8 @@ sub touch-project ($project, %event) is export {
 
 sub validate-project-data (%data) is export {
 
+ say "validate project data: {%data.perl}";
+
  %data<project> ~~ /^^ <[ \w \. \d : \- ]>+ $$/ 
   or return %(
     status => False,
