@@ -107,6 +107,7 @@ my $application = route {
       css => css($theme), 
       navbar => navbar($user, $token, $theme),
       projects => @selected-projects,
+      all => "{uniparse 'Cookie'}",
       top => "{uniparse 'ROCKET' }",
       recent => "{uniparse 'HOURGLASS'}",
       settings => "{uniparse 'GEAR'}",

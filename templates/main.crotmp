@@ -21,6 +21,10 @@
       <div class="panel-block">
         <p class="control">
             <span class="icon">
+              <.all>
+            </span>
+            <a href="<.http-root>/?language=Any">all</a> |
+            <span class="icon">
               <.top>
             </span>
               <a href="<.http-root>/?filter=top">recently updated</a> | 
