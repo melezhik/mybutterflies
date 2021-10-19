@@ -74,7 +74,7 @@
           </header>
           <div class="card-content">
             <div class="content">
-              <pre><$r.data></pre>
+              <pre><&HTML($r.data-html)></pre>
               <?$r.edit>
                 <a href="<.http-root>/project/<.project>/edit-review/<$r.id>">edit review</a>
               </?>
