@@ -35,7 +35,8 @@
             <span class="icon">
               <.settings>
             </span>
-              <a href="<.http-root>/customize">customize search</a>
+              <a href="<.http-root>/customize">customize search</a> |
+            <.cnt-users> users 
         </p>
       </div>
 

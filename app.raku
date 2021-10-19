@@ -113,6 +113,7 @@ my $application = route {
       top => "{uniparse 'ROCKET' }",
       recent => "{uniparse 'HOURGLASS'}",
       settings => "{uniparse 'GEAR'}",
+      cnt-users => "{cache-root()}/users.cnt".IO.slurp,
     }
 
   }
