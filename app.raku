@@ -259,6 +259,24 @@ my $application = route {
         %project-meta<owners-str> = %project-meta<owners><>.join(" ");
     }
 
+    if "{cache-root()}/projects/$project/state.json".IO ~~ :e {
+
+        %project-meta<update-date> = "{cache-root()}/projects/$project/state.json".IO.modified;
+
+        %project-meta<event> = from-json("{cache-root()}/projects/$project/state.json".IO.slurp);
+
+        %project-meta<event><event-str> = event-to-label(%project-meta<event><action>);
+
+    } else {
+
+        %project-meta<update-date> = %project-meta<date>;
+
+        %project-meta<event> = %( action => "project added" );
+
+        %project-meta<event><event-str> = event-to-label(%project-meta<event><action>);
+
+    }
+
     %project-meta<points> = dir("{cache-root()}/projects/$project/ups/").elems;
 
     %project-meta<reviews-cnt> = dir("{cache-root()}/projects/$project/reviews/data").elems;

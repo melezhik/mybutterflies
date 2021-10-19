@@ -48,7 +48,12 @@
       </div>
       <div class="panel-block">
         <p class="control">
-          share via: <a href="http://twitter.com/share?text=<.project> - <.project-meta.description>&url=https://mybf.io/project/<.project>/reviews&hashtags=<.project-meta.twitter-hash-tag>" target="_blank">twitter</a>
+          <?{.project-meta.event.action eq 'release create'}>
+          share via: <a href="http://twitter.com/share?text=New Release of <.project> - <.project-meta.description>&url=https://mybf.io/project/<.project>/reviews&hashtags=<.project-meta.twitter-hash-tag>" target="_blank">twitter</a>
+          </?>
+          <?{.project-meta.event.action ne 'release create'}>
+          share via: <a href="http://twitter.com/share?text=Users reviews on <.project> - <.project-meta.description>&url=https://mybf.io/project/<.project>/reviews&hashtags=<.project-meta.twitter-hash-tag>" target="_blank">twitter</a>
+          </?>
         </p>
       </div>
       <div class="panel-block">
