@@ -28,6 +28,7 @@ sub languages is export {
  qw { 
       Raku
       Perl
+      C
       C++
       Python
       Golang
