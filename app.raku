@@ -256,7 +256,7 @@ my $application = route {
     %project-meta<twitter-hash-tag> = join ",", (
       "mybfio", 
       "SoftwareProjectsReviews",
-      %project-meta<language><>.map({ .subst('+','PLUS',:g) }),
+      %project-meta<language><>.map({ .subst('+','PLUS',:g).subst('Raku','Rakulang',:g) }),
     );
 
     if %project-meta<owners> {
