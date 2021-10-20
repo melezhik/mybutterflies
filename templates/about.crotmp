@@ -100,7 +100,7 @@
     Removing projects from the listing.
 
     We understand the sensitivity of the question and without hesitation
-    remove projects from the #mbfio listing upon owners requests.
+    remove projects from the #mbfio listing upon owner <a href="https://github.com/melezhik/mybfio/issues/new?assignees=melezhik&labels=remove-from-listing&template=remove-from-listing.md&title=Remove+project+from+the+listing" target="_blank">request</a>.
 
   
     [Articles]
@@ -108,7 +108,7 @@
     Sometimes we pick interesting projects and write detailed reviews on them,
     check out the <a href="<.http-root>/articles" >editor's reviews</a> section.
 
-    For reasonable reward we can write an article about your project.
+    For reasonable reward we can <a href="https://github.com/melezhik/mybfio/issues/new?assignees=melezhik&labels=article-request&template=article-request.md&title=Request+an+article+for+the+project" target="_blank">write</a> an article about your project.
 
     <.butterfly><.butterfly><.butterfly>
 

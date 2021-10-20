@@ -21,10 +21,13 @@
   Hi! I am @Alexey - editor and maintainer of "My Butterflies". 
   I randomly pick software projects I like and express my opinion.
 
-  Don't judge me strictly, I am just a devops guy with some experience, 
-  which I hope makes a sense.
+  All opinions are mine. 
 
   Please, upvote articles if you like them.
+
+  If you want #mybfi write an article about your project - feel free 
+  to <a href="https://github.com/melezhik/mybfio/issues/new?assignees=melezhik&labels=article-request&template=article-request.md&title=Request+an+article+for+the+project" target="_blank">reach</a> the team and we could do this for a reasonable award. 
+
         </pre>
       </div>
       <@articles: $i>

@@ -10,6 +10,7 @@ use MyButterfly::Utils;
 use JSON::Tiny;
 
 use Text::Markdown;
+use HTML::Escape;
 
 my $application = route { 
 
@@ -296,7 +297,7 @@ my $application = route {
 
       %meta<data> = $r.IO.slurp;
         
-      %meta<data-html> = parse-markdown(%meta<data>).to_html;
+      %meta<data-html> = parse-markdown(escape-html(%meta<data>)).to_html;
     
       my %rd = review-from-file($r);
 
