@@ -82,7 +82,9 @@
               <a href="<.http-root>/project/<.project>/edit-reply/<$r.author>/<$r.id>">reply</a>
               <@$r.replies: $rp>
                 <hr>
-                reply by @<$rp.author> at <$rp.date-str><pre><$rp.data></pre>
+                reply by @<$rp.author> at <$rp.date-str>
+                <pre><&HTML($rp.data-html)></pre>
+                <br>
                 <?$rp.edit>
                 <a href="<.http-root>/project/<.project>/edit-reply/<$r.author>/<$r.id>/<$rp.id>">edit reply</a>
                 </?>

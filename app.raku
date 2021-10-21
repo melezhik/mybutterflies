@@ -9,9 +9,6 @@ use MyButterfly::Utils;
 
 use JSON::Tiny;
 
-use Text::Markdown;
-use HTML::Strip;
-
 my $application = route { 
 
   get -> :$message, :$filter?, :$language?, :$user is cookie, :$token is cookie, :$lang is cookie,  :$theme is cookie = "light" {
@@ -297,7 +294,7 @@ my $application = route {
 
       %meta<data> = $r.IO.slurp;
         
-      %meta<data-html> = parse-markdown(strip_html(%meta<data>)).to_html;
+      %meta<data-html> = mini-parser(%meta<data>);
     
       my %rd = review-from-file($r);
 
@@ -331,6 +328,8 @@ my $application = route {
           my %reply;
 
           %reply<data> = $rp.IO.slurp;
+
+          %reply<data-html> = mini-parser(%reply<data>);
 
           %reply<author> = %rd<author>;
 

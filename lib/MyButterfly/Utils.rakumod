@@ -2,6 +2,7 @@ unit module MyButterfly::Utils;
 
 use MyButterfly::Conf;
 use JSON::Tiny;
+use HTML::Strip;
 
 sub review-from-file ($path) is export {
 
@@ -163,3 +164,18 @@ sub event-to-label ($event) is export {
   if $event eq "project downvote" { return uniparse "Rightwards Arrow Over Leftwards Arrow" };
 
 }
+
+sub mini-parser ($text) is export {
+
+  my $res = strip_html($text);
+
+  $res ~~ s:g!(http || https) '://' (\S+) !<a href="$0://$1" target="_blank">{$1}</a>!;
+
+  #$res ~~ s:g!\n!<br>\n!;
+
+  say $res;
+
+  return $res;
+
+}
+
