@@ -66,7 +66,7 @@ output:
 So, mage works fine, it's listing our only target called `build` which is _just_ a
 go function.
 
-To execute a target we should run `mage <target name>`. For example:
+To execute a target we should run `mage <target_name>`. For example:
 
 ```bash
 mage build
@@ -148,8 +148,8 @@ not significant and could be easily overcome.
 
 If I wrote in go I would definitely give it a try. 
 
-4 solid butterflies from me. ( I would give it a 5 if I could run a task with named 
-named parameters, see my first review on mybfio).
+4 solid butterflies from me. (I would give it a 5 if I could run a task with named 
+named parameters, see my [first review](/project/mage/reviews) on mybfio).
 
 Decent work!
 

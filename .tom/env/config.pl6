@@ -1,3 +1,4 @@
 {
-  mbf-root => "{%*ENV<HOME>}/.mbf"
+  mbf-root => "{%*ENV<HOME>}/.mbf",
+  art-id => "Mage",
 }
