@@ -29,7 +29,7 @@ After rereading the docs I see this:
 
 > There is no restriction about what Python version your project is using, but installing PDM itself needs Python 3.7+.
 
-Oh, bummer, I wish I could install using any Python3* version, 
+Oh, bummer, I wish I could install using any `Python3*` version, 
 now I need to upgrade my python first:
 
 ```
@@ -204,7 +204,9 @@ in their [documentation](https://pdm.fming.dev/usage/dependency/).
 # Conclusion
 
 I would like to stop here. Of course `pdm` has a lot of other cool feature not mentioned here.
-It'd a lot of time to cover all them. However I intentionally used a very simple
+It'd a lot of time to cover all them. 
+
+However I intentionally used a very simple
 scenario to show pdm fundamental principles:
 
 * Dependencies get installed into local folders
