@@ -18,7 +18,7 @@ Home icon - :home:
 Fire icon - :fire:
 ```
 
-For icon names follow [fontawesome web site](https://fontawesome.com/v6.0/icons?m=free&s=solid%2Cbrands)
+For icon names follow [fontawesome web site](https://fontawesome.com/v6.0/icons?m=free&s=solid%2Cbrands).
 
 ## HTTP links
 
