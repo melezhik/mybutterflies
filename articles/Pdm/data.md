@@ -99,7 +99,7 @@ It's really cool to see that pdm picks up all my Python interpreters and offer m
 to configure using a specific one.
 
 
-Now let's install some dependencies:
+Now let's install some dependencies, for example `requests` pip module:
 
 ```
 pdm add requests
@@ -149,7 +149,7 @@ Great!
 
 # Using dependencies
 
-Now let's check that installed dependency is accessible for our python.
+Now let's check that the installed dependency is accessible for our python.
 
 First let's ensure we don't have `requests` installed system wide:
 
