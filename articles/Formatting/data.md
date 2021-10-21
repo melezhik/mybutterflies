@@ -2,7 +2,7 @@
 
 ## Italic, designated color
 
-Use ``text`` construction, to have a text in italic style with a designated color, 
+Use back quote symbols, to have a text in italic style with a designated color, 
 for example:
 
 ```
