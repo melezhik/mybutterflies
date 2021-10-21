@@ -1,4 +1,14 @@
 task-run ".tom/tasks/add-article", %(
+  "id" => "Pdm",
+  "author" => "melezhik",
+  "title" => "PDM - modern Python package manager",
+  "short" => "PDM is a new (few month ago first commit) package manager for Python implementing local folders approach",
+  "tags" => "Python, package manager",
+);
+
+=begin comment
+
+task-run ".tom/tasks/add-article", %(
   "id" => "Principles",
   "author" => "melezhik",
   "title" => "mybf.io - platform for software reviews with social network aspect",
@@ -6,7 +16,6 @@ task-run ".tom/tasks/add-article", %(
   "tags" => "Principles, mybfio",
 );
 
-=begin comment
 
 task-run ".tom/tasks/add-article", %(
   id => "Mage",
