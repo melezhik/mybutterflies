@@ -175,7 +175,11 @@ sub mini-parser ($text) is export {
 
   $res ~~ s:g! '`' (.*?) '`' !<span class="is-italic has-text-warning">{$0}</span>!;
   $res ~~ s:g! \s ':' (\S+?) ':' \s ! <span class="icon"><i class="fas fa-{$0}"></i></span> !;
+
   $res ~~ s:g! ^^ ':' (\S+?) ':' \s !<span class="icon"><i class="fas fa-{$0}"></i></span> !;
+  $res ~~ s:g! \s ':' (\S+?) ':' $$ ! <span class="icon"><i class="fas fa-{$0}"></i></span>!;
+
+  $res ~~ s:g! ^^ ':' (\S+?) ':' $$ !<span class="icon"><i class="fas fa-{$0}"></i></span>!;
 
   say $res;
 

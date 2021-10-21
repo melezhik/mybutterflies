@@ -17,6 +17,11 @@
         </div>
       </?>
       <div class="panel-block">
+        <p class="control">
+          <a href="<.http-root>/article/Formatting">Formatting rules</a>
+        </p>
+      </div>
+      <div class="panel-block">
         <div class="control">
           <form action="<.http-root>/project/<.project>/edit-reply/<.review-author>/<.review-id>/<.reply-id>" method="post">
             <textarea class="textarea" name="data" placeholder="Textarea" cols="80" rows="20" wrap="soft"><.reply.data></textarea>

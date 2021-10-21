@@ -1,4 +1,4 @@
 {
   mbf-root => "{%*ENV<HOME>}/.mbf",
-  art-id => "Mage",
+  art-id => "Formatting",
 }
