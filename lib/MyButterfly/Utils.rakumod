@@ -173,6 +173,8 @@ sub mini-parser ($text) is export {
 
   #$res ~~ s:g!\n!<br>\n!;
 
+  $res ~~ s:g! '`' (.*?) '`' !<span class="is-italic has-text-warning">{$0}</span>!;
+
   say $res;
 
   return $res;
