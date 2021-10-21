@@ -11,7 +11,11 @@ At least the approach reminds me package managers from other languages:
 Js - npm, Perl - carton and Ruby - bundler.
 
 
-Installation
+# Installation issue
+
+According the documentation all user has to do is to `curl` installation
+script and pipe it to `python` what I did:
+
 
 ```
 curl -sSL https://raw.githubusercontent.com/pdm-project/pdm/main/install-pdm.py | python3 -
