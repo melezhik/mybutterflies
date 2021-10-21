@@ -82,7 +82,7 @@ my $application = route {
 
       @selected-projects = @projects.grep({
         .<date>.DateTime >= $week-ago
-      }).sort({ .<date> }).reverse
+      }).sort({ .<update-date> }).reverse
 
     } elsif $filter and $filter eq "top" {
 
@@ -90,7 +90,7 @@ my $application = route {
 
       @selected-projects = @projects.grep({
         .<update-date>.DateTime >= $week-ago
-      }).sort({ .<date> }).reverse
+      }).sort({ .<update-date> }).reverse
 
     } else {
 
