@@ -46,7 +46,7 @@ my $application = route {
         %meta<voted> = False
       }
 
-      %meta<date> = $p.IO.modified;
+      %meta<date> = "$p/meta.json".IO.modified;
 
       if "$p/state.json".IO ~~ :e {
 
