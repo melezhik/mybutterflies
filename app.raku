@@ -78,7 +78,7 @@ my $application = route {
 
       # week ago
 
-      my $week-ago = DateTime.now() - Duration.new(86400*7);
+      my $week-ago = DateTime.now() - Duration.new(86400*3);
 
       @selected-projects = @projects.grep({
         .<date>.DateTime >= $week-ago
