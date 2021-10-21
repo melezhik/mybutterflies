@@ -76,9 +76,9 @@ my $application = route {
 
     if $filter and $filter eq "new" {
 
-      # week ago
+      # 3 days ago
 
-      my $week-ago = DateTime.now() - Duration.new(86400*3);
+      my $week-ago = DateTime.now() - Duration.new(60*60*24*3);
 
       @selected-projects = @projects.grep({
         .<date>.DateTime >= $week-ago
@@ -86,7 +86,9 @@ my $application = route {
 
     } elsif $filter and $filter eq "top" {
 
-      my $week-ago = DateTime.now() - Duration.new(86400*7);
+      # week ago
+
+      my $week-ago = DateTime.now() - Duration.new(60*60*24*7);
 
       @selected-projects = @projects.grep({
         .<update-date>.DateTime >= $week-ago

@@ -41,6 +41,7 @@ sub date-to-x-ago ($date) is export {
   %( label => "> 1 year ago", date => DateTime.now() - Duration.new(60*60*24*7*30*12) ),
   %( label => "> 1 month ago", date => DateTime.now() - Duration.new(60*60*24*7*30) ),
   %( label => "> 1 week ago", date => DateTime.now() - Duration.new(60*60*24*7) ),
+  %( label => "> 3 day ago", date => DateTime.now() - Duration.new(60*60*24*3) ),
   %( label => "> 1 day ago", date => DateTime.now() - Duration.new(60*60*24) ),
   %( label => "> 10 hour ago", date => DateTime.now() - Duration.new(60*60*10) ),
   %( label => "> 6 hour ago", date => DateTime.now() - Duration.new(60*60*6) ),
