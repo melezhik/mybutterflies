@@ -207,6 +207,46 @@ my $application = route {
   }
 
 
+  get -> 'review', $project, $author, $review-id, 'up', :$user is cookie, :$token is cookie  {
+
+    if check-user($user, $token) == True {
+
+      unless "{cache-root()}/projects/$project/reviews/ups/{$author}_{$review-id}/$user".IO ~~ :e {
+        mkdir "{cache-root()}/projects/$project/reviews/ups/";
+        mkdir "{cache-root()}/projects/$project/reviews/ups/{$author}_{$review-id}";
+        say "up {cache-root()}/projects/$project/reviews/ups/{$author}_{$review-id}/$user";
+        "{cache-root()}/projects/$project/reviews/ups/{$author}_{$review-id}/$user".IO.spurt("");
+      }
+    
+      redirect :see-other, "{http-root()}/project/$project/reviews?message=review upvoted";
+
+    } else {
+
+      redirect :see-other, "{http-root()}/login-page?message=you need to sign in to upvote reviews";
+
+    }
+      
+  }
+
+get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$token is cookie  {
+
+    if check-user($user, $token) == True {
+
+      if "{cache-root()}/projects/$project/reviews/ups/{$author}_{$review-id}/$user".IO ~~ :e {
+        say "downvote {cache-root()}/projects/$project/reviews/ups/{$author}_{$review-id}/$user";
+        unlink "{cache-root()}/projects/$project/reviews/ups/{$author}_{$review-id}/$user";
+      }
+    
+      redirect :see-other, "{http-root()}/project/$project/reviews?message=review downvoted";
+
+    } else {
+
+      redirect :see-other, "{http-root()}/login-page?message=you need to sign in to downvote reviews";
+
+    }
+      
+  }
+
   get -> 'article', $article-id, 'up', :$user is cookie, :$token is cookie  {
 
     if check-user($user, $token) == True {
@@ -244,7 +284,7 @@ my $application = route {
     }
       
   }
-  get -> 'project', $project, 'reviews', :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
+  get -> 'project', $project, 'reviews', :$message?, :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
 
     my @reviews;
 
@@ -319,6 +359,20 @@ my $application = route {
         %meta<points-str> = score-to-label(%meta<points>);
       }
 
+      if "{cache-root()}/projects/$project/reviews/ups/{%meta<author>}_{%meta<id>}".IO ~~ :d {
+        %meta<ups> = dir("{cache-root()}/projects/$project/reviews/ups/{%meta<author>}_{%meta<id>}").elems;
+        if check-user($user, $token) and "{cache-root()}/projects/$project/reviews/ups/{%meta<author>}_{%meta<id>}/{$user}".IO ~~ :e {
+          %meta<voted> = True;
+        } else {
+          %meta<voted> = False;
+        }
+      } else {
+        %meta<ups> = 0;
+        %meta<voted> = False;
+      }
+
+      %meta<ups-str> = "{uniparse 'TWO HEARTS'} : {%meta<ups>}";
+
       %meta<replies> = [];
 
       if "{cache-root()}/projects/$project/reviews/replies/{%rd<basename>}".IO ~~ :d {
@@ -368,7 +422,8 @@ my $application = route {
       navbar => navbar($user, $token, $theme),
       project => $project,
       project-meta => %project-meta,
-      reviews => @reviews.sort({ .<date> }).reverse
+      reviews => @reviews.sort({ .<date> }).reverse,
+      message => $message, 
     }
   }
 

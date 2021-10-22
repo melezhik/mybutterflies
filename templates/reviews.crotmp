@@ -6,6 +6,16 @@
     <nav class="panel container is-fluid is-primary">
       <p class="panel-heading"><.project> Reviews</p>
       <&HTML-AND-JAVASCRIPT(.navbar)>
+      <?.message>
+        <div class="panel-block">
+          <p class="control">
+            <span class="icon has-text-info">
+              <i class="fas fa-info-circle"></i>
+            </span> 
+            <span><.message></span>
+          </p>
+        </div>
+      </?>
       <div class="panel-block">
         <p class="control">
             <span class="icon">
@@ -69,7 +79,21 @@
         <div class="card">
           <header class="card-header">
             <p class="card-header-title">
-              <$r.points-str> | by @<$r.author> at <$r.date-str>
+              <$r.points-str> | by @<$r.author> at <$r.date-str> | <$r.ups-str>
+                <?{$r.voted == True}>
+                <a href="<.http-root>/review/<.project>/<$r.author>/<$r.id>/down?q=123">
+                  <span class="icon has-text-success">
+                    <i class="fas fa-arrow-up"></i>
+                  </span>
+                </a>
+                </?>
+                <?{$r.voted == False}>
+                <a href="<.http-root>/review/<.project>/<$r.author>/<$r.id>/up?q=123">
+                <span class="icon">
+                  <i class="fas fa-arrow-up"></i>
+                </span>
+                </a>
+              </?>
             </p>
           </header>
           <div class="card-content">
