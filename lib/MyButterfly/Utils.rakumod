@@ -170,7 +170,7 @@ sub mini-parser ($text) is export {
 
   my $res = strip_html($text);
 
-  $res ~~ s:g!(http || https) '://' (\S+) !<a href="$0://$1" target="_blank">{$1}</a>!;
+  $res ~~ s:g!(http || https) '://' (\S+) !<a href="$0://$1">{$1}</a>!;
 
   #$res ~~ s:g!\n!<br>\n!;
 
