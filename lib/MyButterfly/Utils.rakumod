@@ -182,6 +182,8 @@ sub mini-parser ($text) is export {
 
   $res ~~ s:g! ^^ ':' (\S+?) ':' $$ !<span class="icon"><i class="fas fa-{$0}"></i></span>!;
 
+  $res ~~ s:g! ^^ '|' (.*?) $$ !<blockquote>"{$0}"</blockquote>!;
+
   say $res;
 
   return $res;

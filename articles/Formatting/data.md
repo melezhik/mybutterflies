@@ -9,6 +9,18 @@ for example:
 Such languages as `Raku`, `Perl` and `C++`
 ```
 
+## Block quotes
+
+Use `|` symbols to designate blocks of quotes. For example:
+
+```
+The raku.org says:
+
+| Hi, my name is Camelia. 
+| I'm the spokesbug for the Raku Programming Language.
+
+```
+
 ## Icons
 
 Use `:icon name:` construction to insert an icon, for example:

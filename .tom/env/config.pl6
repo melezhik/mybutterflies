@@ -1,4 +1,4 @@
 {
   mbf-root => "{%*ENV<HOME>}/.mbf",
-  art-id => "Pdm",
+  art-id => "Formatting",
 }
