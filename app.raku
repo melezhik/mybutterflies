@@ -418,9 +418,14 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
 
          created "/project/$project/edit-review/{$review-id}";
 
+         if $points and $points != -1 { 
+          unlink "{cache-root()}/projects/$project/releases/{$review-id}.json"
+          if "{cache-root()}/projects/$project/releases/{$review-id}.json".IO ~~ :f;
+         }
+ 
          if $points and $points == -1 {
             touch-project($project, %( action => "release create") );
-            create-release($project, %( data => $data ) );
+            create-release($project, $review-id, %( data => $data ) );
          } elsif $points == 0 {
             touch-project($project, %( action => "comment create") );
          } elsif $points >= 1 {

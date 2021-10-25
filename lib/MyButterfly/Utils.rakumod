@@ -142,11 +142,11 @@ sub review-from-file ($path) is export {
   }
 }
 
-sub create-release ($project, %data ) is export {
+sub create-release ($project, $review-id, %data ) is export {
 
   mkdir "{cache-root()}/projects/$project/releases";
 
-  my $release-id = time;
+  my $release-id = $review-id;
 
   "{cache-root()}/projects/$project/releases/$release-id.json".IO.spurt(to-json(%data));
 
