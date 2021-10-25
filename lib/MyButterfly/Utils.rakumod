@@ -20,7 +20,7 @@ sub check-user (Mu $user, Mu $token) is export {
 
 }
 
-sub project-from-file ($p,$user,$token) is export {
+sub project-from-file ($p, Mu $user, Mu $token) is export {
 
       my %meta = from-json("$p/meta.json".IO.slurp);
 
