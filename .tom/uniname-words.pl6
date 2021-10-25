@@ -1,6 +1,6 @@
 use uniname-words;
 
-#say uniname-words.elems;  # 1092494
+#say uniname-words.perl;
 
-say .uniname, " ", uniparse(.uniname) for uniname-words<Eyeglasses>;
+say .uniname, " ", uniparse(.uniname) for uniname-words<love>;
 

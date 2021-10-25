@@ -9,3 +9,4 @@ ignore:
   - conf
   - cro.log
   - js
+  - test.raku
