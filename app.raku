@@ -577,6 +577,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
             url => $url,
             language => $language,
             category => $category,
+            creation-date => "{DateTime.now}",
           );
 
           my %status = validate-project-data %project-data;
