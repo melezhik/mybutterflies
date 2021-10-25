@@ -30,43 +30,11 @@ my $application = route {
 
     for dir("{cache-root()}/projects/") -> $p {
 
-      my %meta = from-json("$p/meta.json".IO.slurp);
+      my %meta = project-from-file($p, $user, $token);
 
       if $lang-filter and $lang-filter ne "Any" {
         next unless $lang-filter ~~ any %meta<language><>
       }
-
-      %meta<points> = dir("$p/ups/").elems;
-
-      %meta<reviews-cnt> = dir("$p/reviews/data").elems;
-
-      if check-user($user, $token) and "$p/ups/$user".IO ~~ :e {
-        %meta<voted> = True
-      } else {
-        %meta<voted> = False
-      }
-
-      %meta<date> = "$p/meta.json".IO.modified;
-
-      if "$p/state.json".IO ~~ :e {
-
-        %meta<update-date> = "$p/state.json".IO.modified;
-
-        %meta<event> = from-json("$p/state.json".IO.slurp);
-
-        %meta<event><event-str> = event-to-label(%meta<event><action>);
-
-      } else {
-
-        %meta<update-date> = %meta<date>;
-
-        %meta<event> = %( action => "project added" );
-
-        %meta<event><event-str> = event-to-label(%meta<event><action>);
-
-      }
-
-      %meta<date-str> = date-to-x-ago(%meta<update-date>.DateTime);
 
       push @projects, %meta;
 
@@ -288,47 +256,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
 
     my @reviews;
 
-    my %project-meta = from-json("{cache-root()}/projects/$project/meta.json".IO.slurp);
-
-    %project-meta<add_by> ||= "melezhik";
-
-    %project-meta<twitter-hash-tag> = join ",", (
-      "mybfio", 
-      "SoftwareProjectsReviews",
-      %project-meta<language><>.map({ .subst('+','PLUS',:g).subst('Raku','Rakulang',:g) }),
-    );
-
-    if %project-meta<owners> {
-        %project-meta<owners-str> = %project-meta<owners><>.join(" ");
-    }
-
-    if "{cache-root()}/projects/$project/state.json".IO ~~ :e {
-
-        %project-meta<update-date> = "{cache-root()}/projects/$project/state.json".IO.modified;
-
-        %project-meta<event> = from-json("{cache-root()}/projects/$project/state.json".IO.slurp);
-
-        %project-meta<event><event-str> = event-to-label(%project-meta<event><action>);
-
-    } else {
-
-        %project-meta<update-date> = %project-meta<date>;
-
-        %project-meta<event> = %( action => "project added" );
-
-        %project-meta<event><event-str> = event-to-label(%project-meta<event><action>);
-
-    }
-
-    %project-meta<points> = dir("{cache-root()}/projects/$project/ups/").elems;
-
-    %project-meta<reviews-cnt> = dir("{cache-root()}/projects/$project/reviews/data").elems;
-
-    if check-user($user, $token) and "{cache-root()}/projects/$project/ups/$user".IO ~~ :e {
-      %project-meta<voted> = True
-    } else {
-      %project-meta<voted> = False
-    }
+    my %project-meta = project-from-file("{cache-root()}/projects/$project".IO, $user, $token);
 
     for dir("{cache-root()}/projects/$project/reviews/data") -> $r {
 

@@ -4,6 +4,100 @@ use MyButterfly::Conf;
 use JSON::Tiny;
 use HTML::Strip;
 
+sub check-user (Mu $user, Mu $token) is export {
+
+  return False unless $user;
+
+  return False unless $token;
+
+  if "{cache-root()}/users/{$user}/tokens/{$token}".IO ~ :f {
+    #say "user $user, token - $token - validation passed";
+    return True
+  } else {
+    say "user $user, token - $token - validation failed";
+    return False
+  }
+
+}
+
+sub project-from-file ($p,$user,$token) is export {
+
+      my %meta = from-json("$p/meta.json".IO.slurp);
+
+      %meta<points> = dir("$p/ups/").elems;
+
+      %meta<reviews-cnt> = dir("$p/reviews/data").elems;
+
+      if check-user($user, $token) and "$p/ups/$user".IO ~~ :e {
+        %meta<voted> = True
+      } else {
+        %meta<voted> = False
+      }
+
+      %meta<date> = %meta<creation-date>; # just an alias
+
+      %meta<creation-date-str> = DateTime.new(
+        %meta<creation-date>,
+        formatter => {
+          sprintf '%02d.%02d.%04d, %02d:%02d', 
+          .day, .month, .year, .hour, .minute
+        }
+      );
+
+      if "$p/state.json".IO ~~ :e {
+
+        %meta<update-date> = "$p/state.json".IO.modified;
+
+        %meta<event> = from-json("$p/state.json".IO.slurp);
+
+        %meta<event><event-str> = event-to-label(%meta<event><action>);
+
+      } else {
+
+        %meta<update-date> = %meta<date>;
+
+        %meta<event> = %( action => "project added" );
+
+        %meta<event><event-str> = event-to-label(%meta<event><action>);
+
+      }
+
+      %meta<date-str> = date-to-x-ago(%meta<update-date>.DateTime);
+
+      %meta<add_by> ||= "melezhik";
+
+      %meta<twitter-hash-tag> = join ",", (
+        "mybfio", 
+        "SoftwareProjectsReviews",
+        %meta<language><>.map({ .subst('+','PLUS',:g).subst('Raku','Rakulang',:g) }),
+    );
+
+      if %meta<owners> {
+          %meta<owners-str> = %meta<owners><>.join(" ");
+      }
+
+    if "$p/state.json".IO ~~ :e {
+
+        %meta<update-date> = "$p/state.json".IO.modified;
+
+        %meta<event> = from-json("$p/state.json".IO.slurp);
+
+        %meta<event><event-str> = event-to-label(%meta<event><action>);
+
+     } else {
+
+        %meta<update-date> = %meta<date>;
+
+        %meta<event> = %( action => "project added" );
+
+        %meta<event><event-str> = event-to-label(%meta<event><action>);
+
+     }
+
+      return %meta;
+
+}
+
 sub review-from-file ($path) is export {
 
   if ( $path ~~ /^^ (\S+) '_' (\d+) $$/ ) {
