@@ -107,8 +107,14 @@ sub project-from-file ($p, Mu $user, Mu $token) is export {
 
           push %meta<releases>, %data;
 
+          my $r-id; $r.IO.basename ~~ /(\d+) '.'/;
+
+          $r-id = "$0";
+
+          say $r-id;
+
           if DateTime.new( 
-              Instant.from-posix($r.IO.modified)
+              Instant.from-posix($r-id)
             ) >= $week-ago {
               %meta<has-recent-release> = True
           }
