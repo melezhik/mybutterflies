@@ -36,6 +36,7 @@
           url: <a href="<.project-meta.url>" target="_blank"><.project-meta.url></a><br>
           added by: <.project-meta.add_by><br>
           added on: <.project-meta.creation-date-str><br>
+          recent release: <.project-meta.has-recent-release><br>
           <?.project-meta.owners>
           owners: <.project-meta.owners-str><br>
           </?>

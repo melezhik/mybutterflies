@@ -94,7 +94,30 @@ sub project-from-file ($p, Mu $user, Mu $token) is export {
 
      }
 
-      return %meta;
+     %meta<releases> = [];
+     %meta<has-recent-release> = False;
+ 
+     if "{$p}/releases".IO ~~ :d {
+
+       my $week-ago = DateTime.now() - Duration.new(60*60*24*7);
+
+       for dir("{$p}/releases/") -> $r {
+
+          my %data = from-json($r.IO.slurp());
+
+          push %meta<releases>, %data;
+
+          if DateTime.new( 
+              Instant.from-posix($r.IO.modified)
+            ) >= $week-ago {
+              %meta<has-recent-release> = True
+          }
+
+       }
+
+     }
+
+     return %meta;
 
 }
 
@@ -117,6 +140,16 @@ sub review-from-file ($path) is export {
   } else {
     die "wrong path: $path";
   }
+}
+
+sub create-release ($project, %data ) is export {
+
+  mkdir "{cache-root()}/projects/$project/releases";
+
+  my $release-id = time;
+
+  "{cache-root()}/projects/$project/releases/$release-id.json".IO.spurt(to-json(%data));
+
 }
 
 sub date-to-x-ago ($date) is export {
@@ -250,7 +283,7 @@ sub score-to-label ($points) is export {
 
 sub event-to-label ($event) is export {
 
-  if $event eq "release create" { return uniparse "PACKAGE" };
+  if $event eq "release create" { return uniparse "Upper Right Pencil" };
   if $event eq "project added" { return uniparse "Heavy Asterisk" }; # deprecated
   if $event eq "project create" { return uniparse "Heavy Asterisk" }; # should use this one
   if $event eq "review create" { return uniparse "Eyeglasses" };

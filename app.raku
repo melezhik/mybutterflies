@@ -46,10 +46,10 @@ my $application = route {
 
       # 3 days ago
 
-      my $week-ago = DateTime.now() - Duration.new(60*60*24*3);
+      my $time-ago = DateTime.now() - Duration.new(60*60*24*3);
 
       @selected-projects = @projects.grep({
-        .<date>.DateTime >= $week-ago
+        .<date>.DateTime >= $time-ago
       }).sort({ .<update-date> }).reverse
 
     } elsif $filter and $filter eq "top" {
@@ -80,6 +80,7 @@ my $application = route {
       all => "{uniparse 'Cookie'}",
       top => "{uniparse 'ROCKET' }",
       recent => "{uniparse 'HOURGLASS'}",
+      release => "{uniparse 'PACKAGE'}",
       settings => "{uniparse 'GEAR'}",
       cnt-users => "{cache-root()}/users.cnt".IO.slurp,
     }
@@ -419,6 +420,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
 
          if $points and $points == -1 {
             touch-project($project, %( action => "release create") );
+            create-release($project, %( data => $data ) );
          } elsif $points == 0 {
             touch-project($project, %( action => "comment create") );
          } elsif $points >= 1 {
