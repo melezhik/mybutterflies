@@ -433,7 +433,7 @@ sub mini-parser ($text) is export {
 
   $res ~~ s:g! ^^ '|' (.*?) $$ !<blockquote>"{$0}"</blockquote>!;
 
-  say $res;
+  #say $res;
 
   return $res;
 
