@@ -255,93 +255,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
   }
   get -> 'project', $project, 'reviews', :$message?, :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
 
-    my @reviews;
-
     my %project-meta = project-from-file("{cache-root()}/projects/$project".IO, $user, $token);
-
-    for dir("{cache-root()}/projects/$project/reviews/data") -> $r {
-
-      my %meta;
-
-      %meta<data> = $r.IO.slurp;
-        
-      %meta<data-html> = mini-parser(%meta<data>);
-    
-      my %rd = review-from-file($r);
-
-      %meta<author> = %rd<author>;
-
-      %meta<date> = %rd<date>;
-
-      %meta<id> = %rd<id>;
-
-      %meta<date-str> = "{%rd<date>}";
-
-      if check-user($user, $token) and $user eq %meta<author> {
-        %meta<edit> = True;
-      } else {
-        %meta<edit> = False
-      }
-
-      if "{cache-root()}/projects/$project/reviews/points/{%rd<basename>}".IO ~~ :e {
-        %meta<points> = "{cache-root()}/projects/$project/reviews/points/{%rd<basename>}".IO.slurp;
-        %meta<points-str> = score-to-label(%meta<points>);
-      }
-
-      if "{cache-root()}/projects/$project/reviews/ups/{%meta<author>}_{%meta<id>}".IO ~~ :d {
-        %meta<ups> = dir("{cache-root()}/projects/$project/reviews/ups/{%meta<author>}_{%meta<id>}").elems;
-        if check-user($user, $token) and "{cache-root()}/projects/$project/reviews/ups/{%meta<author>}_{%meta<id>}/{$user}".IO ~~ :e {
-          %meta<voted> = True;
-        } else {
-          %meta<voted> = False;
-        }
-      } else {
-        %meta<ups> = 0;
-        %meta<voted> = False;
-      }
-
-      %meta<ups-str> = "{uniparse 'TWO HEARTS'} : {%meta<ups>}";
-
-      %meta<replies> = [];
-
-      if "{cache-root()}/projects/$project/reviews/replies/{%rd<basename>}".IO ~~ :d {
-
-        for dir("{cache-root()}/projects/$project/reviews/replies/{%rd<basename>}") -> $rp {
-
-          my %rd = review-from-file($rp);
-          
-          my %reply;
-
-          %reply<data> = $rp.IO.slurp;
-
-          %reply<data-html> = mini-parser(%reply<data>);
-
-          %reply<author> = %rd<author>;
-
-          %reply<date> = %rd<date>;
-
-          %reply<date-str> = "{%rd<date>}";
-
-          %reply<id> = %rd<id>;
-
-          if check-user($user, $token) and $user eq %reply<author> {
-            %reply<edit> = True;
-            %meta<replied> = True;
-          } else {
-            %reply<edit> = False
-          }
-
-          push %meta<replies>, %reply;
-
-        }
-
-        %meta<replies> = %meta<replies>.sort({.<date>}).reverse;
-
-      }
-
-      push @reviews, %meta;
-
-    }
 
     template 'templates/reviews.crotmp', {
       title => title(),
@@ -351,7 +265,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
       navbar => navbar($user, $token, $theme),
       project => $project,
       project-meta => %project-meta,
-      reviews => @reviews.sort({ .<date> }).reverse,
+      reviews => %project-meta<reviews>.sort({ .<date> }).reverse,
       message => $message, 
     }
   }
