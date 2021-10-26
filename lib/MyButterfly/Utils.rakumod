@@ -22,6 +22,10 @@ sub check-user (Mu $user, Mu $token) is export {
 
 sub project-from-file ($p, Mu $user, Mu $token) is export {
 
+      my $help-wanted = False;
+
+      my $has-recent-release = False;
+
       my %meta = from-json("$p/meta.json".IO.slurp);
 
       %meta<points> = dir("$p/ups/").elems;
@@ -95,8 +99,7 @@ sub project-from-file ($p, Mu $user, Mu $token) is export {
      }
 
      %meta<releases> = [];
-     %meta<has-recent-release> = False;
- 
+
      if "{$p}/releases".IO ~~ :d {
 
        my $week-ago = DateTime.now() - Duration.new(60*60*24*7);
@@ -116,7 +119,7 @@ sub project-from-file ($p, Mu $user, Mu $token) is export {
           if DateTime.new( 
               Instant.from-posix($r-id)
             ) >= $week-ago {
-              %meta<has-recent-release> = True
+              $has-recent-release = True
           }
 
        }
@@ -124,6 +127,8 @@ sub project-from-file ($p, Mu $user, Mu $token) is export {
      }
 
     my @reviews;
+
+    my $month-ago = DateTime.now() - Duration.new(60*60*24*30);
 
     for dir("{$p}/reviews/data") -> $r {
 
@@ -152,6 +157,11 @@ sub project-from-file ($p, Mu $user, Mu $token) is export {
       if "{$p}/reviews/points/{%rd<basename>}".IO ~~ :e {
         %meta<points> = "{$p}/reviews/points/{%rd<basename>}".IO.slurp;
         %meta<points-str> = score-to-label(%meta<points>);
+
+        if %meta<points> == -2 and %meta<date> >= $month-ago {
+            $help-wanted = True
+        }
+
       }
 
       if "{$p}/reviews/ups/{%meta<author>}_{%meta<id>}".IO ~~ :d {
@@ -210,6 +220,22 @@ sub project-from-file ($p, Mu $user, Mu $token) is export {
     }
 
     %meta<reviews> = @reviews;
+
+    %meta<has-recent-release> = $has-recent-release;
+    %meta<help-wanted> = $help-wanted;
+
+    %meta<attributes> = []; # this one is reserved for the future
+    %meta<attributes-str> = [];
+
+    if $help-wanted {
+      push %meta<attributes>, "help-wanted";
+      push %meta<attributes-str>, uniparse "Raised Hand";
+    }
+
+    if $has-recent-release {
+      push %meta<attributes>, "has-recent-release";   
+      push %meta<attributes-str>, uniparse "Package";
+    }
 
     return %meta;
 
@@ -361,7 +387,7 @@ sub validate-project-data (%data) is export {
 }
 
 
-sub score-to-label ($points) is export {
+sub score-to-label ($points) {
 
   if $points == 0 {
     return "comment"
@@ -369,6 +395,10 @@ sub score-to-label ($points) is export {
 
   if $points == -1 {
     return "release"
+  }
+
+  if $points == -2 {
+    return "help wanted"
   }
 
   return "{uniparse 'BUTTERFLY'}" x $points
@@ -383,6 +413,7 @@ sub event-to-label ($event) is export {
   if $event eq "review create" { return uniparse "Eyeglasses" };
   if $event eq "reply create" { return uniparse "Upper Right Pencil" };
   if $event eq "comment create" { return uniparse "Upper Right Pencil" };
+  if $event eq "help wanted create" { return uniparse "Upper Right Pencil" };
   if $event eq "project upvote" { return uniparse "Rightwards Arrow Over Leftwards Arrow" };
   if $event eq "project downvote" { return uniparse "Rightwards Arrow Over Leftwards Arrow" };
 

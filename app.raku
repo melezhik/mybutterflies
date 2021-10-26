@@ -81,6 +81,7 @@ my $application = route {
       top => "{uniparse 'ROCKET' }",
       recent => "{uniparse 'HOURGLASS'}",
       release => "{uniparse 'PACKAGE'}",
+      help-wanted => "{uniparse 'Raised Hand'}",
       settings => "{uniparse 'GEAR'}",
       cnt-users => "{cache-root()}/users.cnt".IO.slurp,
     }
@@ -340,6 +341,8 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
          if $points and $points == -1 {
             touch-project($project, %( action => "release create") );
             create-release($project, $review-id, %( data => $data ) );
+         } elsif $points == -2 {
+            touch-project($project, %( action => "help wanted create") );
          } elsif $points == 0 {
             touch-project($project, %( action => "comment create") );
          } elsif $points >= 1 {

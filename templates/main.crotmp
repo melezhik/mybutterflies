@@ -59,6 +59,9 @@
               <?$i.has-recent-release>
               <.release> |
               </?>
+              <?$i.help-wanted>
+              <.help-wanted> |
+              </?>
               <$i.event.event-str> |
               <$i.date-str>
             </span>
