@@ -7,15 +7,9 @@ class MyButterfly::Data {
 
   has Hash $.project-cache;
 
-  method !cache-in-sync ($p) {
+  method cache-in-sync ($p) {
 
-  # right caching does not work
-  # so just unconditionally
-  # sync always
-
-  return False;
-
-  # cache does not exist
+  # if a cache does not exist
   # we need to build the one
 
   return False unless $!project-cache{$p.basename}:exists;
@@ -24,8 +18,8 @@ class MyButterfly::Data {
 
     my @updates = dir "{$p}/updates";
 
-    # updates found, clean queue
-    # and notify to update cache
+    # updates found, clean updates queue
+    # and notify that we need to update cache
 
     if @updates.elems > 0 {
 
@@ -46,11 +40,7 @@ class MyButterfly::Data {
   }
 
 
-method sync-cache ($p, Mu $user, Mu $token) {
-
-      return if self!cache-in-sync($p);
-
-      #say "update cache, project: $p";
+method project-from-file ($p, Mu $user, Mu $token) {
 
       my $help-wanted = False;
 
@@ -269,8 +259,17 @@ method sync-cache ($p, Mu $user, Mu $token) {
 
     $!project-cache{$p.basename} = %meta; # update cache
 
-    return;
+    return %meta;
 
 }
+
+method update-cache ($p, %meta) {
+
+    say "project $p - sync cache";
+
+    $!project-cache{$p} = %meta; # update cache
+
+}
+
 
 } # end of class

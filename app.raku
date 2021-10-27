@@ -33,13 +33,20 @@ my $application = route {
 
     for dir("{cache-root()}/projects/") -> $p {
 
-      $project-data.sync-cache($p, $user, $token);
+      my %meta;
 
+      if $project-data.cache-in-sync($p) {
+        %meta = $project-data.project-cache(){$p.basename};
+      } else {
+        %meta = $project-data.project-from-file($p,$user,$token);
+        $project-data.update-cache($p.basename,%meta);
+      }
+      
       if $lang-filter and $lang-filter ne "Any" {
-        next unless $lang-filter ~~ any $project-data.project-cache(){$p.basename}<language><>
+        next unless $lang-filter ~~ any %meta<language><>
       }
 
-      push @projects, $project-data.project-cache(){$p.basename};
+      push @projects, %meta;
 
     }
 
@@ -259,7 +266,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
   }
   get -> 'project', $project, 'reviews', :$message?, :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
 
-    $project-data.sync-cache("{cache-root()}/projects/$project".IO, $user, $token);
+    my %meta = $project-data.project-from-file("{cache-root()}/projects/$project".IO,$user,$token);
 
     template 'templates/reviews.crotmp', {
       title => title(),
@@ -268,8 +275,8 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
       css => css($theme), 
       navbar => navbar($user, $token, $theme),
       project => $project,
-      project-meta => $project-data.project-cache(){$project},
-      reviews => $project-data.project-cache(){$project}<reviews>.sort({ .<date> }).reverse,
+      project-meta => %meta,
+      reviews => %meta<reviews>.sort({ .<date> }).reverse,
       message => $message, 
     }
   }
