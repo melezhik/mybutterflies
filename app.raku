@@ -35,12 +35,12 @@ my $application = route {
 
       my %meta;
 
-      if $project-data.cache-in-sync($p) {
-        %meta = $project-data.project-cache(){$p.basename};
-      } else {
+      #if $project-data.cache-in-sync($p) {
+      #  %meta = $project-data.project-cache(){$p.basename};
+      #} else {
         %meta = $project-data.project-from-file($p,$user,$token);
-        $project-data.update-cache($p.basename,%meta);
-      }
+      #  $project-data.update-cache($p.basename,%meta);
+      #}
       
       if $lang-filter and $lang-filter ne "Any" {
         next unless $lang-filter ~~ any %meta<language><>
