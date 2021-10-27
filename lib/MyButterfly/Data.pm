@@ -9,6 +9,12 @@ class MyButterfly::Data {
 
   method !cache-in-sync ($p) {
 
+  # right caching does not work
+  # so just unconditionally
+  # sync always
+
+  return False;
+
   # cache does not exist
   # we need to build the one
 
@@ -44,7 +50,7 @@ method sync-cache ($p, Mu $user, Mu $token) {
 
       return if self!cache-in-sync($p);
 
-      say "update cache, project: $p";
+      #say "update cache, project: $p";
 
       my $help-wanted = False;
 
