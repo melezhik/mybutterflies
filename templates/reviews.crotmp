@@ -78,7 +78,7 @@
           </a>
         </p>
       </div>
-      <@reviews: $r>
+      <@reviews.cache: $r>
       <div class="panel-block">
         <div class="card">
           <header class="card-header">
@@ -108,7 +108,7 @@
               </?>
               <hr>
               <a href="<.http-root>/project/<.project>/edit-reply/<$r.author>/<$r.id>">reply</a>
-              <@$r.replies: $rp>
+              <@$r.replies.cache: $rp>
                 <hr>
                 reply by @<$rp.author> at <$rp.date-str>
                 <pre><&HTML($rp.data-html)></pre>

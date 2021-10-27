@@ -6,8 +6,11 @@ use Cro::HTTP::Client;
 use MyButterfly::Conf;
 use MyButterfly::HTML;
 use MyButterfly::Utils;
+use MyButterfly::Data;
 
 use JSON::Tiny;
+
+my $project-data = MyButterfly::Data.new();
 
 my $application = route { 
 
@@ -30,13 +33,13 @@ my $application = route {
 
     for dir("{cache-root()}/projects/") -> $p {
 
-      my %meta = project-from-file($p, $user, $token);
+      $project-data.sync-cache($p, $user, $token);
 
       if $lang-filter and $lang-filter ne "Any" {
-        next unless $lang-filter ~~ any %meta<language><>
+        next unless $lang-filter ~~ any $project-data.project-cache(){$p.basename}<language><>
       }
 
-      push @projects, %meta;
+      push @projects, $project-data.project-cache(){$p.basename};
 
     }
 
@@ -256,7 +259,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
   }
   get -> 'project', $project, 'reviews', :$message?, :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
 
-    my %project-meta = project-from-file("{cache-root()}/projects/$project".IO, $user, $token);
+    $project-data.sync-cache("{cache-root()}/projects/$project".IO, $user, $token);
 
     template 'templates/reviews.crotmp', {
       title => title(),
@@ -265,8 +268,8 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
       css => css($theme), 
       navbar => navbar($user, $token, $theme),
       project => $project,
-      project-meta => %project-meta,
-      reviews => %project-meta<reviews>.sort({ .<date> }).reverse,
+      project-meta => $project-data.project-cache(){$project},
+      reviews => $project-data.project-cache(){$project}<reviews>.sort({ .<date> }).reverse,
       message => $message, 
     }
   }
@@ -339,16 +342,16 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
          }
  
          if $points and $points == -1 {
-            touch-project($project, %( action => "release create") );
+            touch-project($project, $user, %( action => "release create") );
             create-release($project, $review-id, %( data => $data ) );
          } elsif $points == -2 {
-            touch-project($project, %( action => "help wanted create") );
+            touch-project($project, $user, %( action => "help wanted create") );
          } elsif $points == 0 {
-            touch-project($project, %( action => "comment create") );
+            touch-project($project, $user, %( action => "comment create") );
          } elsif $points >= 1 {
-            touch-project($project, %( action => "review create") );
+            touch-project($project, $user, %( action => "review create") );
          } else {
-            touch-project($project, %( action => "review create") );
+            touch-project($project, $user, %( action => "review create") );
          }
         
 
@@ -424,7 +427,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
 
         created "/project/$project/edit-reply";
 
-        touch-project($project, %( action => "reply create") );
+        touch-project($project, $user, %( action => "reply create") );
 
         template 'templates/edit-reply.crotmp', {
           title => title(),
@@ -521,7 +524,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
             } else {
               "{cache-root}/projects/$project/meta.json".IO.spurt(to-json(%project-data));
               $msg = "project added";
-              touch-project($project, %( action => "project create") );
+              touch-project($project, $user, %( action => "project create") );
         }
         } else {
           $msg = %status<message>
@@ -759,7 +762,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
       unless "{cache-root()}/projects/$project/ups/$user".IO ~~ :e {
         say "up {cache-root()}/projects/$project/ups/$user";
         "{cache-root()}/projects/$project/ups/$user".IO.spurt("");
-         touch-project($project, %( action => "project upvote") );
+         touch-project($project, $user, %( action => "project upvote") );
 
       }
     
@@ -779,7 +782,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
 
       if "{cache-root()}/projects/$project/ups/$user".IO ~~ :e {
         say "down {cache-root()}/projects/$project/ups/$user";
-        touch-project($project, %( action => "project downvote") );
+        touch-project($project, $user, %( action => "project downvote") );
         unlink "{cache-root()}/projects/$project/ups/$user";
       }
     
