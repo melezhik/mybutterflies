@@ -257,6 +257,8 @@ sub message-from-file ($path) is export {
     %meta<link> = "project/{%meta<project>}/reviews#{%meta<author>}_{%meta<reply-id>}";
   }
 
+  %meta<creation-date> = DateTime.new(%meta<date>);
+
   %meta<date-str> = DateTime.new(
     %meta<date>,
       formatter => {

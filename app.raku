@@ -840,7 +840,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
         user => $user, 
         css => css($theme), 
         navbar => navbar($user, $token, $theme),
-        messages => @messages,
+        messages => @messages.sort({ .<creation-date> }).reverse,
         messages-cnt => @messages.elems,
       }
 
