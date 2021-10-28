@@ -35,7 +35,7 @@ sub css (Mu $theme) is export {
     if %conf<ui> && %conf<ui><theme><light> {
       $bulma-theme = %conf<ui><theme><light>
     } else {
-      $bulma-theme = "cerulean";
+      $bulma-theme = "flatly";
     }
 
   } else {

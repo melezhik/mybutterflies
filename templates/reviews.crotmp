@@ -45,14 +45,14 @@
           points: <.project-meta.points>
           <?{.project-meta.voted == True}>
           <a href="<.http-root>/project/<.project>/down?q=123">
-            <span class="icon has-text-success">
+            <span class="icon has-text-info">
               <i class="fas fa-arrow-up"></i>
             </span>
           </a>
           </?>
           <?{.project-meta.voted == False}>
           <a href="<.http-root>/project/<.project>/up?q=123">
-            <span class="icon">
+            <span class="icon has-text-success">
               <i class="fas fa-arrow-up"></i>
             </span>
           </a>
@@ -86,14 +86,14 @@
               <$r.points-str> | by @<$r.author> at <$r.date-str> | <$r.ups-str>
                 <?{$r.voted == True}>
                 <a href="<.http-root>/review/<.project>/<$r.author>/<$r.id>/down?q=123">
-                  <span class="icon has-text-success">
+                  <span class="icon has-text-info">
                     <i class="fas fa-arrow-up"></i>
                   </span>
                 </a>
                 </?>
                 <?{$r.voted == False}>
                 <a href="<.http-root>/review/<.project>/<$r.author>/<$r.id>/up?q=123">
-                <span class="icon">
+                <span class="icon has-text-success">
                   <i class="fas fa-arrow-up"></i>
                 </span>
                 </a>

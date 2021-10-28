@@ -28,14 +28,14 @@
               [<.article.title>] by @<.article.author> | <.article.date-str> | <.article.points-str>
             <?{.article.voted == True}>
             <a href="<.http-root>/article/<.article.id>/down?q=123">
-              <span class="icon has-text-success">
+              <span class="icon has-text-info">
                 <i class="fas fa-arrow-up"></i>
               </span>
             </a>
             </?>
             <?{.article.voted == False}>
             <a href="<.http-root>/article/<.article.id>/up?q=123">
-              <span class="icon">
+              <span class="icon has-text-success">
                 <i class="fas fa-arrow-up"></i>
               </span>
             </a>
