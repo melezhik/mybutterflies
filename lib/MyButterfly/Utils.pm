@@ -2,6 +2,7 @@ unit module MyButterfly::Utils;
 
 use MyButterfly::Conf;
 use HTML::Strip;
+use JSON::Fast;
 
 sub check-user (Mu $user, Mu $token) is export {
 
@@ -222,3 +223,49 @@ sub mini-parser ($text) is export {
 
 }
 
+sub add-notification (Mu $user, $path, %data) is export {
+
+  say "user $user - add notification {$path}.json";
+
+  mkdir "{cache-root()}/users/{$user}/notifications";
+
+  mkdir "{cache-root()}/users/{$user}/notifications/inbox";
+
+  "{cache-root()}/users/{$user}/notifications/inbox/{$path}.json".IO.spurt(to-json(%data));
+
+}
+
+
+sub user-messages (Mu $user) is export {
+  
+  if "{cache-root()}/users/{$user}/notifications/inbox".IO ~~ :d { 
+    return dir("{cache-root()}/users/{$user}/notifications/inbox").elems;
+  } else {
+    return 0
+  }
+  
+
+}
+
+sub message-from-file ($path) is export {
+
+  my %meta = from-json($path.IO.slurp);
+
+  if %meta<type> eq "review-reply" {
+    %meta<from> = "\@{%meta<author>}";
+    %meta<path> = $path.IO.basename;
+    %meta<link> = "project/{%meta<project>}/reviews#{%meta<author>}_{%meta<reply-id>}";
+  }
+
+  %meta<date-str> = DateTime.new(
+    %meta<date>,
+      formatter => {
+        sprintf 
+          '%02d.%02d.%04d, %02d:%02d',
+          .day, .month, .year, .hour, .minute
+      }
+  );
+
+  return %meta;
+
+}

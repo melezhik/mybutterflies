@@ -14,7 +14,7 @@ my $project-data = MyButterfly::Data.new();
 
 my $application = route { 
 
-  get -> :$message, :$filter?, :$language?, :$user is cookie, :$token is cookie, :$lang is cookie,  :$theme is cookie = "light" {
+  get -> :$message, :$filter?, :$language?, :$user is cookie, :$token is cookie, :$lang is cookie,  :$theme is cookie = "dark" {
 
     my @projects;
 
@@ -94,12 +94,11 @@ my $application = route {
       help-wanted => "{uniparse 'Raised Hand'}",
       settings => "{uniparse 'GEAR'}",
       cnt-users => "{cache-root()}/users.cnt".IO.slurp,
-      title => title(),
     }
 
   }
 
-  get -> 'articles', :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
+  get -> 'articles', :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
 
       my @articles;
 
@@ -142,7 +141,7 @@ my $application = route {
     }
   }
 
-  get -> 'article', $article-id, :$message, :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
+  get -> 'article', $article-id, :$message, :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
 
     my %meta = from-json("{cache-root()}/articles/{$article-id}/meta.json".IO.slurp);
 
@@ -226,7 +225,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
 
     }
       
-  }
+ }
 
   get -> 'article', $article-id, 'up', :$user is cookie, :$token is cookie  {
 
@@ -265,7 +264,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
     }
       
   }
-  get -> 'project', $project, 'reviews', :$message?, :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
+  get -> 'project', $project, 'reviews', :$message?, :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
 
     my %meta = $project-data.project-from-file("{cache-root()}/projects/$project".IO,$user,$token);
 
@@ -279,11 +278,12 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
       project-meta => %meta,
       reviews => %meta<reviews>.sort({ .<date> }).reverse,
       message => $message, 
+      link => uniparse("Link Symbol"),  
     }
   }
 
 
-  get -> 'project', $project, 'edit-review', $review-id = time, :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
+  get -> 'project', $project, 'edit-review', $review-id = time, :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
 
     if check-user($user, $token) {
 
@@ -319,7 +319,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
     }
   }
 
-  post -> 'project', $project, 'edit-review', $review-id, :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
+  post -> 'project', $project, 'edit-review', $review-id, :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
 
     if check-user($user, $token) {
 
@@ -386,7 +386,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
     }
   }
 
-  get -> 'project', $project, 'edit-reply', $review-author, $review-id, $reply-id = time, :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
+  get -> 'project', $project, 'edit-reply', $review-author, $review-id, $reply-id = time, :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
 
     if check-user($user, $token) {
 
@@ -419,7 +419,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
     }
   }
 
-  post -> 'project', $project, 'edit-reply', $review-author, $review-id, $reply-id, :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
+  post -> 'project', $project, 'edit-reply', $review-author, $review-id, $reply-id, :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
 
     if check-user($user, $token) {
 
@@ -428,6 +428,22 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
         mkdir "{cache-root()}/projects/$project/reviews/replies/";
 
         mkdir "{cache-root()}/projects/$project/reviews/replies/{$review-author}_{$review-id}";
+
+        unless "{cache-root()}/projects/$project/reviews/replies/{$review-author}_{$review-id}/{$user}_{$reply-id}".IO ~~ :e {
+          add-notification(
+            $review-author,
+            "review_reply_{$review-id}_{$reply-id}",
+            %( 
+              project => $project,
+              author => $user, 
+              type => "review-reply", 
+              date => "{DateTime.now}",
+              review-id => $review-id,
+              reply-id => $reply-id,
+              review-author => $review-author,
+            )
+          );
+        }
 
         "{cache-root()}/projects/$project/reviews/replies/{$review-author}_{$review-id}/{$user}_{$reply-id}".IO.spurt($data);
 
@@ -464,7 +480,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
 
   }
 
-  get -> 'customize', :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
+  get -> 'customize', :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
 
     template 'templates/customize.crotmp', {
       title => title(),
@@ -476,7 +492,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
 
   }
 
-  get -> 'add-project', :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
+  get -> 'add-project', :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
 
     if check-user($user, $token) {
 
@@ -498,7 +514,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
 
   }
 
-  post -> 'add-project', :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
+  post -> 'add-project', :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
 
       my $msg; my %project-data;
 
@@ -559,7 +575,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
     }
   }
 
-  get -> 'about', :$message?, :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
+  get -> 'about', :$message?, :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
 
     template 'templates/about.crotmp', {
       title => title(),
@@ -571,7 +587,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
     }
   }
 
-  get -> 'contest', :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
+  get -> 'contest', :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
 
     template 'templates/contest.crotmp', {
       title => title(),
@@ -582,7 +598,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
     }
   }
 
-  get -> 'contest-list', :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
+  get -> 'contest-list', :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
 
     my %list = from-json("{cache-root()}/contest/list.json".IO.slurp);
 
@@ -698,7 +714,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
 
   }
 
-  get -> 'login-page', :$message, :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
+  get -> 'login-page', :$message, :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
 
     template 'templates/login-page.crotmp', {
       title => title(),
@@ -763,7 +779,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
     redirect :see-other, "{http-root()}/?message=user logged out";
   }
 
-  get -> 'project', $project, 'up', :$user is cookie, :$token is cookie, :$theme is cookie = "light" {
+  get -> 'project', $project, 'up', :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
 
     if check-user($user, $token) == True {
 
@@ -804,6 +820,60 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
       
   }
 
+  get -> 'user', 'messages', :$message?, :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
+
+    if check-user($user, $token) {
+
+      my @messages;
+
+      if "{cache-root()}/users/$user/notifications/inbox".IO ~~ :d {
+        for dir("{cache-root()}/users/$user/notifications/inbox") -> $m {
+          my %meta = message-from-file($m);
+          push @messages, %meta;
+        }
+      }
+    
+      template 'templates/messages.crotmp', {
+        title => title(),
+        message => $message,
+        http-root => http-root(),
+        user => $user, 
+        css => css($theme), 
+        navbar => navbar($user, $token, $theme),
+        messages => @messages,
+        messages-cnt => @messages.elems,
+      }
+
+
+    } else {
+
+      redirect :see-other, "{http-root()}/login-page?message=you need to sign in to see your messages";
+
+    }
+
+  }
+
+  get -> 'user', 'message', 'mark-as-read', :$path, :$user is cookie, :$token is cookie  {
+
+    if check-user($user, $token) == True {
+
+      if "{cache-root()}/users/$user/notifications/inbox/$path".IO ~~ :f {
+        say "mark {cache-root()}/users/$user/notifications/inbox/$path as read";
+        mkdir "{cache-root()}/users/$user/notifications/old";
+        move 
+          "{cache-root()}/users/$user/notifications/inbox/$path",
+          "{cache-root()}/users/$user/notifications/old/$path"
+      }
+
+      redirect :see-other, "{http-root()}/user/messages?message=message marked as read";
+
+    } else {
+
+      redirect :see-other, "{http-root()}/login-page?message=you need to sign to manage messages";
+
+    }
+      
+  }
   get -> 'icons', *@path {
 
     cache-control :public, :max-age(3000);

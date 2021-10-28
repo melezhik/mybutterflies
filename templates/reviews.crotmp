@@ -98,6 +98,7 @@
                 </span>
                 </a>
               </?>
+               | &nbsp; <a id="<$r.author>_<$r.id>" href=#<$r.author>_<$r.id>><.link></a>
             </p>
           </header>
           <div class="card-content">
@@ -111,6 +112,7 @@
               <@$r.replies.cache: $rp>
                 <hr>
                 reply by @<$rp.author> at <$rp.date-str>
+               | <a id="<$rp.author>_<$rp.id>" href=#<$rp.author>_<$rp.id>><.link></a>
                 <pre><&HTML($rp.data-html)></pre>
                 <br>
                 <?$rp.edit>

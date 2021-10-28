@@ -1,0 +1,67 @@
+<&HTML-AND-JAVASCRIPT(.css)>
+
+    <head>
+      <title><.title></title>
+    </head>
+    <nav class="panel container is-fluid is-primary">
+      <p class="panel-heading">Messages</p>
+      <&HTML-AND-JAVASCRIPT(.navbar)>
+      <?.message>
+        <div class="panel-block">
+          <p class="control">
+            <span class="icon has-text-info">
+              <i class="fas fa-info-circle"></i>
+            </span>
+            <span><.message></span>
+          </p>
+        </div>
+      </?>
+      <div class="panel-block">
+        <div class="card">
+          <header class="card-header">
+            <p class="card-header-title">
+               Inbox <br>
+            </p>
+          </header>
+          <div class="card-content">
+            <div class="content">
+              <table class="table panel-block">
+                <tr>
+                  <td>Date</td>
+                  <td>From</td>
+                  <td>Project</td>
+                  <td>Message Type</td>
+                  <td>Read</td>
+                  <td>Mark as read</td>
+                </tr>
+                <@.messages: $i>
+                <tr>
+                  <td>
+                    <$i.date-str>
+                  </td>
+                  <td>
+                    <$i.from>
+                  </td>
+                  <td>
+                    <$i.project>
+                  </td>
+                  <td>
+                    <$i.type>
+                  </td>
+                  <td>
+                    <a href="<.http-root>/<$i.link>">read</a>
+                  </td>
+                  <td>
+                    <a href="<.http-root>/user/message/mark-as-read?path=<$i.path>">mark</a>
+                  </td>
+                </tr>
+                </@>
+              </table>
+            </div>
+          <div>
+        </div>
+      </div>
+
+      </div>
+   </nav>
+

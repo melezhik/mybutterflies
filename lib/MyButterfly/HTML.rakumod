@@ -70,6 +70,17 @@ sub login-logout (Mu $user, Mu $token) {
 
 }
 
+sub messages (Mu $user, Mu $token ){
+
+  if check-user($user,$token) == True and user-messages($user) {
+
+    "<a href=\"{http-root()}/user/messages\">({user-messages($user)}) msg</a> |"
+
+  }
+
+}
+
+
 sub theme-link (Mu $theme) {
 
   if $theme eq "light" {
@@ -97,9 +108,10 @@ sub navbar (Mu $user, Mu $token, Mu $theme) is export {
             <a href="{http-root()}/contest-list">Contest</a> |
             <a href="{http-root()}/contest">Contest Rules</a> |
             <a href="{http-root()}/articles">Articles</a> |
-            {login-logout($user, $token)} |
             {theme-link($theme)} |
             <a href="https://github.com/melezhik/mybfio/issues/new/choose" target="_blank">Support</a> |
+            {messages($user,$token)}
+            {login-logout($user, $token)}
         </p>
       </div>
   HERE
