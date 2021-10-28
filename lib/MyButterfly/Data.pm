@@ -92,7 +92,7 @@ method project-from-file ($p, Mu $user, Mu $token) {
 
       %meta<twitter-hash-tag> = join ",", (
         "mybfio", 
-        "SoftwareProjectsReviews",
+        "FriendlySoftwareReviews",
         %meta<language><>.map({ .subst('+','PLUS',:g).subst('Raku','Rakulang',:g) }),
     );
 

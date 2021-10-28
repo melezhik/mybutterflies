@@ -4,7 +4,7 @@
       <title><.title></title>
     </head>
     <nav class="panel container is-fluid is-primary">
-      <p class="panel-heading">Welcome to My Butterflies</p>
+      <p class="panel-heading">About My Butterflies</p>
       <&HTML-AND-JAVASCRIPT(.navbar)>
       <?.message>
         <div class="panel-block">
@@ -19,60 +19,48 @@
       <div class="panel-block">
           <pre class="control">
 
-    [Idea]
+    [What is #mybfio]
 
-    #mybfio is a place where people write reviews on software 
-    they use. No marketing stuff, just real users opinions.
+    #Mybfio is a friendly software reviews network,it helps 
+    software developers to build up community around products 
+    they build and get real feedback from users. That's easy! 
     
-    Do you want to share with others your opinion on software 
-    you have used?
+    Software projects get listed on the rating page are split 
+    by categories and programming languages.
 
-    <a href="<.http-root>/add-project">Add</a> the one to the #mbfio listing, upvote if you like
-    and/or write your review or just a comment.
+    Software developers might announce releases, ask for contribution 
+    or help. Software users might write comments and make reviews.   
 
-    Are you an author of a software project and want to
-    get a real and quick feedback on the project you develop?
-  
-    Add your project to the #mbfio listing and then insert #mbfio badge 
-    into a project README page, so that users can find your project on #mbfio
-    and read reviews and write feedback. 
+    [Reviews and Comments]
 
-    Project owners can also announce software releases
-    and ask users to give a feedback on certain version releases.
+    - Review is just a user opinion about a certain software 
+      at a _certain time_
 
-    It is that easy! #mbfio is a service that beneficial both for software
-    authors and software users.
-
-    [Reviews]
-
-    - Review is just your opinion about a project at a _certain time_
-
-    - You might reconsider your view and write _another_ review later on. 
+    - User might reconsider a view and write _another_ review later on. 
       The site allows multiple reviews with different scores. 
       It's ok - software could get better or worse based 
-      on your own experience.
+      on users own experience.
 
-    - You don't have to _use_ a software to write a review about it,
+    - You don't have to _use_ a software to write a review,
       you can make a review based on your impression, a quality of
       documentation or clarity of an idea, etc. However try not criticize 
       just because you feel like that, try to be specific and constructive
       in your statements.
 
-    - Reviews without scores. Not ready to set a score for your review? 
-      Only want to make a comment? Not a problem - choose "comment" option.
-      "Comment" - means you only want to express your opinion without
-      rating a project.
+    - Reviews without scores. Don't want to make any review, just
+      want to make a comment or ask a question? Not a problem - 
+      choose "comment" option.
 
     [Reviews And Comments Rules]
 
     There is no formal code of conduct for site users, however we expect that 
-    everyone is being respectful when they express opinions and write reviews.
+    everyone is being respectful when they express their thoughts.
 
     Honest opinions are OK, personal attacks and offensive language
     is not allowed.
 
-    The service administration preserves right to disable user's accounts 
-    and remove entries of those who don't follow this simple rule.
+    The service administration preserves right to ban accounts and 
+    remove entries of those who don't follow these rules.
 
 
     [Projects]
@@ -90,11 +78,11 @@
     Ideally we assume that author or maintainer of a project
     <a href="<.http-root>/add-project">adds</a> the one to the listing.
 
-    Technically any authenticated user of the site could add a project.
-    Just bear in mind that the person who adds the project is not
+    Any authenticated user of the site could add a project.
+    Just bear in mind that a person who adds the project is not
     necessarily a project author, owner or maintainer. 
 
-    To become the one please use the mentioned "claim ownership"  
+    To become the one please use the mentioned "claim ownership" 
     mechanism.
     
     Removing projects from the listing.

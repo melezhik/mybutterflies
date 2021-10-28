@@ -94,6 +94,7 @@ my $application = route {
       help-wanted => "{uniparse 'Raised Hand'}",
       settings => "{uniparse 'GEAR'}",
       cnt-users => "{cache-root()}/users.cnt".IO.slurp,
+      title => title(),
     }
 
   }

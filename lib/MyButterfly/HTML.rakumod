@@ -12,7 +12,7 @@ sub gen-token is export {
 
 sub title is export { 
 
-  "My Butterflies - Independent Reviews of Sortware Projects"
+  "My Butterflies - Friendly Software Reviews Network"
 
 }
 
