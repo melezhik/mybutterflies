@@ -74,7 +74,7 @@ sub messages (Mu $user, Mu $token ){
 
   if check-user($user,$token) == True and user-messages($user) {
 
-    "<a href=\"{http-root()}/user/messages\">({user-messages($user)}) msg</a> |"
+    "<a href=\"{http-root()}/user/messages\">{uniparse('Bell')}</a> |"
 
   }
 

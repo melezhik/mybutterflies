@@ -14,7 +14,7 @@ my $project-data = MyButterfly::Data.new();
 
 my $application = route { 
 
-  get -> :$message, :$filter?, :$language?, :$user is cookie, :$token is cookie, :$lang is cookie,  :$theme is cookie = "dark" {
+  get -> :$message, :$filter?, :$language?, :$user is cookie, :$token is cookie, :$lang is cookie,  :$theme is cookie = default-theme() {
 
     my @projects;
 
@@ -98,7 +98,7 @@ my $application = route {
 
   }
 
-  get -> 'articles', :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
+  get -> 'articles', :$user is cookie, :$token is cookie, :$theme is cookie = default-theme() {
 
       my @articles;
 
@@ -141,7 +141,7 @@ my $application = route {
     }
   }
 
-  get -> 'article', $article-id, :$message, :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
+  get -> 'article', $article-id, :$message, :$user is cookie, :$token is cookie, :$theme is cookie = default-theme() {
 
     my %meta = from-json("{cache-root()}/articles/{$article-id}/meta.json".IO.slurp);
 
@@ -264,7 +264,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
     }
       
   }
-  get -> 'project', $project, 'reviews', :$message?, :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
+  get -> 'project', $project, 'reviews', :$message?, :$user is cookie, :$token is cookie, :$theme is cookie = default-theme() {
 
     my %meta = $project-data.project-from-file("{cache-root()}/projects/$project".IO,$user,$token);
 
@@ -283,7 +283,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
   }
 
 
-  get -> 'project', $project, 'edit-review', $review-id = time, :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
+  get -> 'project', $project, 'edit-review', $review-id = time, :$user is cookie, :$token is cookie, :$theme is cookie = default-theme() {
 
     if check-user($user, $token) {
 
@@ -319,7 +319,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
     }
   }
 
-  post -> 'project', $project, 'edit-review', $review-id, :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
+  post -> 'project', $project, 'edit-review', $review-id, :$user is cookie, :$token is cookie, :$theme is cookie = default-theme() {
 
     if check-user($user, $token) {
 
@@ -386,7 +386,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
     }
   }
 
-  get -> 'project', $project, 'edit-reply', $review-author, $review-id, $reply-id = time, :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
+  get -> 'project', $project, 'edit-reply', $review-author, $review-id, $reply-id = time, :$user is cookie, :$token is cookie, :$theme is cookie = default-theme() {
 
     if check-user($user, $token) {
 
@@ -419,7 +419,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
     }
   }
 
-  post -> 'project', $project, 'edit-reply', $review-author, $review-id, $reply-id, :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
+  post -> 'project', $project, 'edit-reply', $review-author, $review-id, $reply-id, :$user is cookie, :$token is cookie, :$theme is cookie = default-theme() {
 
     if check-user($user, $token) {
 
@@ -480,7 +480,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
 
   }
 
-  get -> 'customize', :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
+  get -> 'customize', :$user is cookie, :$token is cookie, :$theme is cookie = default-theme() {
 
     template 'templates/customize.crotmp', {
       title => title(),
@@ -492,7 +492,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
 
   }
 
-  get -> 'add-project', :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
+  get -> 'add-project', :$user is cookie, :$token is cookie, :$theme is cookie = default-theme() {
 
     if check-user($user, $token) {
 
@@ -514,7 +514,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
 
   }
 
-  post -> 'add-project', :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
+  post -> 'add-project', :$user is cookie, :$token is cookie, :$theme is cookie = default-theme() {
 
       my $msg; my %project-data;
 
@@ -575,7 +575,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
     }
   }
 
-  get -> 'about', :$message?, :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
+  get -> 'about', :$message?, :$user is cookie, :$token is cookie, :$theme is cookie = default-theme() {
 
     template 'templates/about.crotmp', {
       title => title(),
@@ -587,7 +587,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
     }
   }
 
-  get -> 'contest', :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
+  get -> 'contest', :$user is cookie, :$token is cookie, :$theme is cookie = default-theme() {
 
     template 'templates/contest.crotmp', {
       title => title(),
@@ -598,7 +598,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
     }
   }
 
-  get -> 'contest-list', :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
+  get -> 'contest-list', :$user is cookie, :$token is cookie, :$theme is cookie = default-theme() {
 
     my %list = from-json("{cache-root()}/contest/list.json".IO.slurp);
 
@@ -714,7 +714,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
 
   }
 
-  get -> 'login-page', :$message, :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
+  get -> 'login-page', :$message, :$user is cookie, :$token is cookie, :$theme is cookie = default-theme() {
 
     template 'templates/login-page.crotmp', {
       title => title(),
@@ -779,7 +779,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
     redirect :see-other, "{http-root()}/?message=user logged out";
   }
 
-  get -> 'project', $project, 'up', :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
+  get -> 'project', $project, 'up', :$user is cookie, :$token is cookie, :$theme is cookie = default-theme() {
 
     if check-user($user, $token) == True {
 
@@ -820,7 +820,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
       
   }
 
-  get -> 'user', 'messages', :$message?, :$user is cookie, :$token is cookie, :$theme is cookie = "dark" {
+  get -> 'user', 'messages', :$message?, :$user is cookie, :$token is cookie, :$theme is cookie = default-theme() {
 
     if check-user($user, $token) {
 

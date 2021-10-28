@@ -71,6 +71,10 @@ sub categories is export {
   )
 }
 
+sub default-theme is export {
+  "light"
+}
+
 sub array-to-html-option ($active, @list) is export {
 
     @list.map({
