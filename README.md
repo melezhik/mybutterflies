@@ -2,7 +2,7 @@
 
 🦋 🦋 🦋 
 
-Engineers reviews about software they write 
+My Butterflies - Friendly Software Reviews Network
 
 # Author
 
