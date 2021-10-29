@@ -362,7 +362,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
         
          %review<data> = $data;
 
-         for ($data ~~ m:g/(\s || ^^)  "@" (<[ \w \d '_' \- \. ]>+) (\s || $$) /).map({ "{$_[1]}" }).unique -> $i { 
+         for ($data ~~ m:g/(\s || ^^)  "@" (<[ \w \d '_' \- \. ]>+) (\s || $$ || ':' || '!' || '?' || ',') /).map({ "{$_[1]}" }).unique -> $i { 
           unless "{cache-root()}/users/{$i}/notifications/mentions/reviews/{$user}_{$review-id}".IO ~~ :f {
             mkdir "{cache-root()}/users/{$i}/notifications/mentions/";
             mkdir "{cache-root()}/users/{$i}/notifications/mentions/reviews/";
@@ -462,7 +462,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
           );
         }
 
-        for ($data ~~ m:g/(\s || ^^)  "@" (<[ \w \d '_' \- \. ]>+) (\s || $$) /).map({ "{$_[1]}" }).unique -> $i { 
+        for ($data ~~ m:g/(\s || ^^)  "@" (<[ \w \d '_' \- \. ]>+) (\s || $$ || ':' || '!' || '?' || ',' ) /).map({ "{$_[1]}" }).unique -> $i { 
           unless "{cache-root()}/users/{$i}/notifications/mentions/reviews/replies/{$review-author}_{$review-id}/{$user}_{$reply-id}/{$i}".IO ~~ :f {
           mkdir "{cache-root()}/users/{$i}/notifications/mentions/";
           mkdir "{cache-root()}/users/{$i}/notifications/mentions/reviews/";
