@@ -9,6 +9,7 @@ use MyButterfly::Utils;
 use MyButterfly::Data;
 
 use JSON::Tiny;
+use Text::Markdown;
 
 my $project-data = MyButterfly::Data.new();
 
@@ -35,12 +36,7 @@ my $application = route {
 
       my %meta;
 
-      #if $project-data.cache-in-sync($p) {
-      #  %meta = $project-data.project-cache(){$p.basename};
-      #} else {
-        %meta = $project-data.project-from-file($p,$user,$token);
-      #  $project-data.update-cache($p.basename,%meta);
-      #}
+      %meta = $project-data.project-from-file($p,$user,$token);
       
       if $lang-filter and $lang-filter ne "Any" {
         next unless $lang-filter ~~ any %meta<language><>
@@ -147,7 +143,9 @@ my $application = route {
 
     %meta<id> = $article-id;
 
-    %meta<data> = "{cache-root()}/articles/{$article-id}/data.html".IO.slurp;
+    my $md = parse-markdown-from-file("{cache-root()}/articles/{$article-id}/data.md");
+
+    %meta<data> = $md.to_html;
 
     %meta<data-short> = %meta<data>.split("\n")[0..5];
 
@@ -362,9 +360,28 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
             touch-project($project, $user, %( action => "review create") );
          }
         
-
          %review<data> = $data;
-         
+
+         for ($data ~~ m:g/(\s || ^^)  "@" (\S+) (\s || $$) /).map({ "{$_[1]}" }).unique -> $i { 
+          unless "{cache-root()}/users/{$i}/notifications/mentions/reviews/{$user}_{$review-id}".IO ~~ :f {
+            mkdir "{cache-root()}/users/{$i}/notifications/mentions/";
+            mkdir "{cache-root()}/users/{$i}/notifications/mentions/reviews/";
+            "{cache-root()}/users/{$i}/notifications/mentions/reviews/{$user}_{$review-id}".IO.spurt("");
+            add-notification(
+              $i,
+              "review_mention_{$user}_{$review-id}",
+              %( 
+                project => $project,
+                author => $user, 
+                type => "review-mention", 
+                date => "{DateTime.now}",
+                review-id => $review-id,
+                review-author => $user,
+              )
+            );          
+          }
+         }         
+        
          template 'templates/edit-review.crotmp', {
            title => title(),
            http-root => http-root(),
@@ -443,6 +460,30 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
               review-author => $review-author,
             )
           );
+        }
+
+        for ($data ~~ m:g/(\s || ^^)  "@" (\S+) (\s || $$) /).map({ "{$_[1]}" }).unique -> $i { 
+          unless "{cache-root()}/users/{$i}/notifications/mentions/reviews/replies/{$review-author}_{$review-id}/{$user}_{$reply-id}/{$i}".IO ~~ :f {
+          mkdir "{cache-root()}/users/{$i}/notifications/mentions/";
+          mkdir "{cache-root()}/users/{$i}/notifications/mentions/reviews/";
+          mkdir "{cache-root()}/users/{$i}/notifications/mentions/reviews/replies";
+          mkdir "{cache-root()}/users/{$i}/notifications/mentions/reviews/replies/{$review-author}_{$review-id}";
+          mkdir "{cache-root()}/users/{$i}/notifications/mentions/reviews/replies/{$review-author}_{$review-id}/{$user}_{$reply-id}";
+          "{cache-root()}/users/{$i}/notifications/mentions/reviews/replies/{$review-author}_{$review-id}/{$user}_{$reply-id}/{$i}".IO.spurt("");
+            add-notification(
+              $i,
+              "review_reply_mention_{$review-author}_{$review-id}_{$user}_{$reply-id}",
+              %( 
+                project => $project,
+                author => $user, 
+                type => "review-reply-mention", 
+                date => "{DateTime.now}",
+                review-id => $review-id,
+                reply-id => $reply-id,
+                review-author => $review-author,
+              )
+            );          
+          }
         }
 
         "{cache-root()}/projects/$project/reviews/replies/{$review-author}_{$review-id}/{$user}_{$reply-id}".IO.spurt($data);

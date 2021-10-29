@@ -95,9 +95,16 @@ sub touch-project ($project, Mu $user, %event) is export {
 
   "{cache-root()}/projects/$project/state.json".IO.spurt(to-json(%event));
 
-  mkdir "{cache-root()}/projects/$project/updates";
+  # we don't neeed next 2 lines, right now 
+  # I will uncomment them
+  # if I decide to cache project data.
+  # And I don't see now how to do this
+  # without any bugs, because caching
+  # is not easy thing to do 
 
-  "{cache-root()}/projects/$project/updates/{$user}".IO.spurt("");
+  # mkdir "{cache-root()}/projects/$project/updates";
+
+  # "{cache-root()}/projects/$project/updates/{$user}".IO.spurt("");
 
 
 }
@@ -255,6 +262,21 @@ sub message-from-file ($path) is export {
     %meta<from> = "\@{%meta<author>}";
     %meta<path> = $path.IO.basename;
     %meta<link> = "project/{%meta<project>}/reviews#{%meta<author>}_{%meta<reply-id>}";
+    %meta<type-str> = "your review has reply";
+  }
+
+  if %meta<type> eq "review-reply-mention" {
+    %meta<from> = "\@{%meta<author>}";
+    %meta<path> = $path.IO.basename;
+    %meta<link> = "project/{%meta<project>}/reviews#{%meta<author>}_{%meta<reply-id>}";
+    %meta<type-str> = "you've been mentioned in reply";
+  }
+
+  if %meta<type> eq "review-mention" {
+    %meta<from> = "\@{%meta<author>}";
+    %meta<path> = $path.IO.basename;
+    %meta<link> = "project/{%meta<project>}/reviews#{%meta<author>}_{%meta<review-id>}";
+    %meta<type-str> = "you've been mentioned in review";
   }
 
   %meta<creation-date> = DateTime.new(%meta<date>);

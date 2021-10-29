@@ -1,5 +1,13 @@
 # mybfio reviews formatting rules
 
+## Mentioning users
+
+Simply use `@user`:
+
+```
+Hello @user ! An interesting review ...
+```
+
 ## Italic, designated color
 
 Use back quote symbols, to have a text in italic style with a designated color, 

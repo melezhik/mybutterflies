@@ -46,7 +46,7 @@
                     <$i.project>
                   </td>
                   <td>
-                    <$i.type>
+                    <$i.type-str>
                   </td>
                   <td>
                     <a href="<.http-root>/<$i.link>">read</a>
