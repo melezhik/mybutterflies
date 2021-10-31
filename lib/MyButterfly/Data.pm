@@ -42,12 +42,21 @@ class MyButterfly::Data {
 
 method project-from-file ($p, Mu $user, Mu $token) {
 
+      # default values for attributes, 
+      # to be calculated using project data
+
       my $help-wanted = False;
 
       my $has-recent-release = False;
 
+      my $recently-created = False;
+
       my %meta = from-json("$p/meta.json".IO.slurp);
 
+      my $week-ago = DateTime.now() - Duration.new(60*60*24*7);
+
+      my $month-ago = DateTime.now() - Duration.new(60*60*24*30);
+  
       %meta<points> = dir("$p/ups/").elems;
 
       %meta<reviews-cnt> = dir("$p/reviews/data").elems;
@@ -59,6 +68,10 @@ method project-from-file ($p, Mu $user, Mu $token) {
       }
 
       %meta<date> = %meta<creation-date>; # just an alias
+
+      if DateTime.new(%meta<creation-date>) >= $week-ago {
+        $recently-created = True
+      }
 
       %meta<creation-date-str> = DateTime.new(
         %meta<creation-date>,
@@ -122,8 +135,6 @@ method project-from-file ($p, Mu $user, Mu $token) {
 
      if "{$p}/releases".IO ~~ :d {
 
-       my $week-ago = DateTime.now() - Duration.new(60*60*24*7);
-
        for dir("{$p}/releases/") -> $r {
 
           my %data = from-json($r.IO.slurp());
@@ -147,8 +158,6 @@ method project-from-file ($p, Mu $user, Mu $token) {
      }
 
     my @reviews;
-
-    my $month-ago = DateTime.now() - Duration.new(60*60*24*30);
 
     for dir("{$p}/reviews/data") -> $r {
 
@@ -243,9 +252,15 @@ method project-from-file ($p, Mu $user, Mu $token) {
 
     %meta<has-recent-release> = $has-recent-release;
     %meta<help-wanted> = $help-wanted;
+    %meta<recently-created> = $recently-created;
 
     %meta<attributes> = []; # this one is reserved for the future
     %meta<attributes-str> = [];
+
+    if $recently-created {
+      push %meta<attributes>, "recently-created";
+      push %meta<attributes-str>, uniparse "Heavy Asterisk";
+    }
 
     if $help-wanted {
       push %meta<attributes>, "help-wanted";
