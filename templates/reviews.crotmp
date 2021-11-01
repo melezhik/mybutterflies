@@ -39,6 +39,9 @@
           <?{.project-meta.attributes.elems > 0}>
           attributes: <.project-meta.attributes-str><br>
           </?>
+          <?{.project-meta.tags}>
+          tags: <.project-meta.tags><br>
+          </?>
           <?.project-meta.owners>
           owners: <.project-meta.owners-str><br>
           </?>

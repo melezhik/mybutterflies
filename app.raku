@@ -15,7 +15,7 @@ my $project-data = MyButterfly::Data.new();
 
 my $application = route { 
 
-  get -> :$message, :$filter?, :$language?, :$user is cookie, :$token is cookie, :$lang is cookie,  :$theme is cookie = default-theme() {
+  get -> :$message, :$filter?, :$language?, :$tag?, :$user is cookie, :$token is cookie, :$lang is cookie,  :$theme is cookie = default-theme() {
 
     my @projects;
 
@@ -74,6 +74,10 @@ my $application = route {
       @selected-projects = @projects.sort({ .<update-date> }).reverse
 
     } 
+
+    if $tag {
+      @selected-projects = @selected-projects.grep({ .<tags> && grep $tag, .<tags><>   });
+    }
 
     template 'templates/main.crotmp', {
       title => title(),
