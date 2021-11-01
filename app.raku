@@ -465,25 +465,25 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
 
         for ($data ~~ m:g/(\s || ^^)  "@" (<[ \w \d \_ \- \. ]>+) (\s || $$ || ':' || '!' || '?' || ',' ) /).map({ "{$_[1]}" }).unique -> $i { 
           unless "{cache-root()}/users/{$i}/notifications/mentions/reviews/replies/{$review-author}_{$review-id}/{$user}_{$reply-id}/{$i}".IO ~~ :f {
-          mkdir "{cache-root()}/users/{$i}/notifications/mentions/";
-          mkdir "{cache-root()}/users/{$i}/notifications/mentions/reviews/";
-          mkdir "{cache-root()}/users/{$i}/notifications/mentions/reviews/replies";
-          mkdir "{cache-root()}/users/{$i}/notifications/mentions/reviews/replies/{$review-author}_{$review-id}";
-          mkdir "{cache-root()}/users/{$i}/notifications/mentions/reviews/replies/{$review-author}_{$review-id}/{$user}_{$reply-id}";
-          "{cache-root()}/users/{$i}/notifications/mentions/reviews/replies/{$review-author}_{$review-id}/{$user}_{$reply-id}/{$i}".IO.spurt("");
-            add-notification(
-              $i,
-              "review_reply_mention_{$review-author}_{$review-id}_{$user}_{$reply-id}",
-              %( 
-                project => $project,
-                author => $user, 
-                type => "review-reply-mention", 
-                date => "{DateTime.now}",
-                review-id => $review-id,
-                reply-id => $reply-id,
-                review-author => $review-author,
-              )
-            );          
+            mkdir "{cache-root()}/users/{$i}/notifications/mentions/";
+            mkdir "{cache-root()}/users/{$i}/notifications/mentions/reviews/";
+            mkdir "{cache-root()}/users/{$i}/notifications/mentions/reviews/replies";
+            mkdir "{cache-root()}/users/{$i}/notifications/mentions/reviews/replies/{$review-author}_{$review-id}";
+            mkdir "{cache-root()}/users/{$i}/notifications/mentions/reviews/replies/{$review-author}_{$review-id}/{$user}_{$reply-id}";
+            "{cache-root()}/users/{$i}/notifications/mentions/reviews/replies/{$review-author}_{$review-id}/{$user}_{$reply-id}/{$i}".IO.spurt("");
+              add-notification(
+                $i,
+                "review_reply_mention_{$review-author}_{$review-id}_{$user}_{$reply-id}",
+                %( 
+                  project => $project,
+                  author => $user, 
+                  type => "review-reply-mention", 
+                  date => "{DateTime.now}",
+                  review-id => $review-id,
+                  reply-id => $reply-id,
+                  review-author => $review-author,
+                )
+              );          
           }
         }
 
