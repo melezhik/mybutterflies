@@ -15,7 +15,7 @@ my $project-data = MyButterfly::Data.new();
 
 my $application = route { 
 
-  get -> :$message, :$filter?, :$language?, :$tag?, :$user is cookie, :$token is cookie, :$lang is cookie,  :$theme is cookie = default-theme() {
+  get -> :$message, :$filter?, :$language?, :$tags?, :$user is cookie, :$token is cookie, :$lang is cookie,  :$theme is cookie = default-theme() {
 
     my @projects;
 
@@ -75,8 +75,18 @@ my $application = route {
 
     } 
 
-    if $tag {
-      @selected-projects = @selected-projects.grep({ .<tags> && grep $tag, .<tags><>   });
+    if $tags {
+      @selected-projects = @selected-projects.grep({ 
+        my @tags = .<tags><>;
+        my $select = False;
+        LINE: for (split ",", $tags)<> -> $t {
+          if grep $t, @tags {
+            $select = True;
+            last LINE;
+          }
+        }
+        $select == True;
+      });
     }
 
     template 'templates/main.crotmp', {
