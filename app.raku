@@ -288,6 +288,25 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
 
       my %review; 
 
+      unless "{cache-root()}/projects/$project/reviews/data/{$user}_{$review-id}".IO ~~ :e {
+
+        my %meta = $project-data.project-from-file("{cache-root()}/projects/$project".IO,$user,$token);
+
+        add-notification(
+          %meta<add_by>,
+          "op_review_{$user}_{$review-id}",
+          %( 
+            project => $project,
+            author => $user, 
+            type => "owner-project-review", 
+            date => "{DateTime.now}",
+            review-id => $review-id,
+            review-author => $user,
+          )
+        );
+
+      }
+
       if $review-id ~~ /^^ \d+ $$/ and "{cache-root()}/projects/$project/reviews/data/{$user}_{$review-id}".IO ~~ :e {
         %review<data> = "{cache-root()}/projects/$project/reviews/data/{$user}_{$review-id}".IO.slurp;
         say "read data from {cache-root()}/projects/$project/reviews/data/{$user}_{$review-id}";
@@ -448,6 +467,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
         mkdir "{cache-root()}/projects/$project/reviews/replies/{$review-author}_{$review-id}";
 
         unless "{cache-root()}/projects/$project/reviews/replies/{$review-author}_{$review-id}/{$user}_{$reply-id}".IO ~~ :e {
+
           add-notification(
             $review-author,
             "review_reply_{$review-id}_{$reply-id}",
@@ -461,6 +481,23 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
               review-author => $review-author,
             )
           );
+
+          my %meta = $project-data.project-from-file("{cache-root()}/projects/$project".IO,$user,$token);
+
+          add-notification(
+            %meta<add_by>,
+            "op_review_reply_{$review-id}_{$reply-id}",
+            %( 
+              project => $project,
+              author => $user, 
+              type => "owner-project-reply", 
+              date => "{DateTime.now}",
+              review-id => $review-id,
+              reply-id => $reply-id,
+              review-author => $review-author,
+            )
+          );
+
         }
 
         for ($data ~~ m:g/(\s || ^^)  "@" (<[ \w \d \_ \- \. ]>+) (\s || $$ || ':' || '!' || '?' || ',' ) /).map({ "{$_[1]}" }).unique -> $i { 

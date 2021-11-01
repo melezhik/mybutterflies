@@ -265,6 +265,19 @@ sub message-from-file ($path) is export {
     %meta<type-str> = "your review has reply";
   }
 
+  if %meta<type> eq "owner-project-reply" {
+    %meta<from> = "\@{%meta<author>}";
+    %meta<path> = $path.IO.basename;
+    %meta<link> = "project/{%meta<project>}/reviews#{%meta<author>}_{%meta<reply-id>}";
+    %meta<type-str> = "your project has reply";
+  }
+
+  if %meta<type> eq "owner-project-review" {
+    %meta<from> = "\@{%meta<author>}";
+    %meta<path> = $path.IO.basename;
+    %meta<link> = "project/{%meta<project>}/reviews#{%meta<author>}_{%meta<reply-id>}";
+    %meta<type-str> = "your project has review";
+  }
   if %meta<type> eq "review-reply-mention" {
     %meta<from> = "\@{%meta<author>}";
     %meta<path> = $path.IO.basename;
