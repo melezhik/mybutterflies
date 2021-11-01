@@ -222,6 +222,8 @@ sub mini-parser ($text) is export {
 
   Nil while $res ~~ s!( ^^ || \s+ ) ':' (<-[\:]>+) ':' ( $$  || \s+ )!{$0}<span class="icon"><i class="fas fa-{$1}"></i></span>{$2}!;
 
+  Nil while $res ~~ s!( ^^ || \s+ ) '#' (<-[\#]>+) ( $$  || \s+ )!{$0}<a href="/project/{$1}/reviews">{$1}</a>{$2}!;
+
   $res ~~ s:g! ^^ '|' (.*?) $$ !<blockquote>"{$0}"</blockquote>!;
 
   #say $res;

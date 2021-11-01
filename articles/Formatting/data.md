@@ -42,11 +42,20 @@ For icon names follow [fontawesome web site](https://fontawesome.com/v6.0/icons?
 
 ## HTTP links
 
-To enable http links, simple use http|https reference, 
-it will be turned into `html` tag link:
+Referencing `#mybfio` projects.
+
+Use `#project-name` to reference mybfio project. For example:
+
+    #teddy-bear 
+
+Referencing external sites.
+
+Use standard URL syntax, which will be rendered as a http link tag.
+
+For example:
 
 ```
-https://mybf.io is a system for independent reviews of software products
+https://mybf.io is a friendly reviews system
 ```
 
 ## Other rules
