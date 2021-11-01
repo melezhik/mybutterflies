@@ -38,6 +38,9 @@
               <&HTML(.categories)>
              </select>
             </div>
+            <br>
+            <span class="tag">tags</span>
+            <input class="input" type="text" name="tags" placeholder="comma separated tags" value="<.tags>">
             <br><br>
             <button class="button is-link">Submit</button>
           </form>

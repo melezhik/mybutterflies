@@ -609,11 +609,13 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
 
   post -> 'add-project', :$user is cookie, :$token is cookie, :$theme is cookie = default-theme() {
 
-      my $msg; my %project-data;
+      my $msg; 
+
+      my %project-data;
 
       if check-user($user, $token) {
 
-        request-body -> (:$project, :$description, :$url, :$language, :$category) {
+        request-body -> (:$project, :$description, :$url, :$language, :$category, :$tags?) {
 
           %project-data =  %(           
             project => $project,
@@ -621,6 +623,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
             url => $url,
             language => $language,
             category => $category,
+            tags => $tags ?? ((split ",", $tags).map({ $_.subst(/\s/, "", :g ) })) !! [],
             creation-date => "{DateTime.now}",
           );
 
@@ -654,6 +657,8 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
       $msg = "you need to sign in to add projects";
 
     }
+
+    %project-data<tags> = join ", ", %project-data<tags><>;
 
     template 'templates/add-project.crotmp', {
       title => title(),

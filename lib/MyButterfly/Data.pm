@@ -56,6 +56,8 @@ method project-from-file ($p, Mu $user, Mu $token) {
       my $week-ago = DateTime.now() - Duration.new(60*60*24*7);
 
       my $month-ago = DateTime.now() - Duration.new(60*60*24*30);
+
+      %meta<tags-str> = %meta<tags>.join(", ");
   
       %meta<points> = dir("$p/ups/").elems;
 
