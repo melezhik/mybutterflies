@@ -1,4 +1,14 @@
 task-run ".tom/tasks/add-article", %(
+  "id" => "CurrentState",
+  "author" => "melezhik",
+  "title" => "CurrentState of #mybfi",
+  "short" => "Some thoughts after one month since the service has started",
+  "tags" => "Question, future, mybfio",
+);
+
+=begin comment
+
+task-run ".tom/tasks/add-article", %(
   "id" => "Pdm",
   "author" => "melezhik",
   "title" => "PDM - modern Python package manager",
@@ -6,7 +16,6 @@ task-run ".tom/tasks/add-article", %(
   "tags" => "Python, package manager",
 );
 
-=begin comment
 
 task-run ".tom/tasks/add-article", %(
   "id" => "Principles",
