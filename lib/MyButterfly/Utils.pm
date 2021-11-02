@@ -244,6 +244,21 @@ sub add-notification (Mu $user, $path, %data) is export {
 
 }
 
+sub add-irc-bot-notification ($bot, $path, %data) is export {
+
+  say "bot $bot - add notification {$path}.json";
+
+  mkdir "{cache-root()}/bots/";
+
+  mkdir "{cache-root()}/bots/{$bot}";
+
+  mkdir "{cache-root()}/bots/{$bot}/notifications";
+
+  mkdir "{cache-root()}/bots/{$bot}/notifications/inbox";
+
+  "{cache-root()}/bots/{$bot}/notifications/inbox/{$path}.json".IO.spurt(to-json(%data));
+
+}
 
 sub user-messages (Mu $user) is export {
   
@@ -260,35 +275,35 @@ sub message-from-file ($path) is export {
 
   my %meta = from-json($path.IO.slurp);
 
+  %meta<file> = $path;
+  %meta<from> = "\@{%meta<author>}";
+  %meta<from-irc-safe> = "{%meta<author>}";
+
   if %meta<type> eq "review-reply" {
-    %meta<from> = "\@{%meta<author>}";
     %meta<path> = $path.IO.basename;
     %meta<link> = "project/{%meta<project>}/reviews#{%meta<author>}_{%meta<reply-id>}";
     %meta<type-str> = "your review has reply";
   }
 
   if %meta<type> eq "owner-project-reply" {
-    %meta<from> = "\@{%meta<author>}";
     %meta<path> = $path.IO.basename;
     %meta<link> = "project/{%meta<project>}/reviews#{%meta<author>}_{%meta<reply-id>}";
     %meta<type-str> = "your project has reply";
   }
 
   if %meta<type> eq "owner-project-review" {
-    %meta<from> = "\@{%meta<author>}";
     %meta<path> = $path.IO.basename;
-    %meta<link> = "project/{%meta<project>}/reviews#{%meta<author>}_{%meta<reply-id>}";
+    %meta<link> = "project/{%meta<project>}/reviews#{%meta<author>}_{%meta<review-id>}";
     %meta<type-str> = "your project has review";
   }
+
   if %meta<type> eq "review-reply-mention" {
-    %meta<from> = "\@{%meta<author>}";
     %meta<path> = $path.IO.basename;
     %meta<link> = "project/{%meta<project>}/reviews#{%meta<author>}_{%meta<reply-id>}";
     %meta<type-str> = "you've been mentioned in reply";
   }
 
   if %meta<type> eq "review-mention" {
-    %meta<from> = "\@{%meta<author>}";
     %meta<path> = $path.IO.basename;
     %meta<link> = "project/{%meta<project>}/reviews#{%meta<author>}_{%meta<review-id>}";
     %meta<type-str> = "you've been mentioned in review";

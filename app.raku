@@ -319,6 +319,20 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
           )
         );
 
+        add-irc-bot-notification(
+          "butterflieble",
+          "op_review_{$user}_{$review-id}",
+          %( 
+            project => $project,
+            project-meta => %meta,
+            author => $user, 
+            type => "owner-project-review", 
+            date => "{DateTime.now}",
+            review-id => $review-id,
+            review-author => $user,
+          )
+        );
+
       }
 
       if $review-id ~~ /^^ \d+ $$/ and "{cache-root()}/projects/$project/reviews/data/{$user}_{$review-id}".IO ~~ :e {
@@ -645,7 +659,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
               "{cache-root}/projects/$project/meta.json".IO.spurt(to-json(%project-data));
               $msg = "project added";
               touch-project($project, $user, %( action => "project create") );
-        }
+            }
         } else {
           $msg = %status<message>
         }

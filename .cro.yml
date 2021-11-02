@@ -10,3 +10,4 @@ ignore:
   - cro.log
   - js
   - test.raku
+  - irc-bots

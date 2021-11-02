@@ -1,10 +1,38 @@
 use IRC::Client;
+use lib "lib";
+use MyButterfly::Conf;
+use MyButterfly::Utils;
 
 class ButterflyBot does IRC::Client::Plugin {
     method irc-connected ($) {
         react {
-            whenever Supply.interval(3) {
-                $.irc.send: :where<#melezhik-test> :text<Test ButterflyBot>;
+          my @messages;
+          for dir("{cache-root()}/bots/butterflieble/notifications/inbox") -> $m {
+            my %meta = message-from-file($m);
+            #unlink $m;
+            say "unlink $m";
+            push @messages, %meta;
+          }
+          whenever self!messages<> -> $m {
+            say "handle message for bot: {$m.perl}";
+            my $text = "message for [{$m<project>}] owner - [{$m<type-str>}], review author - [{$m<from-irc-safe>}], link - [https://mybf.io/{$m<link>}]";
+            say "send message to irc channel: <{$text}> ...";
+            $.irc.send: :where<#melezhik-test> :text($text);
+            say "unlink {$m<file>.basename} ...";
+            unlink $m<file>;
+          }
+        }
+    }
+
+    method !messages {
+        supply {
+            loop {
+                my @messages;
+                for dir("{cache-root()}/bots/butterflieble/notifications/inbox") -> $m {
+                  my %meta = message-from-file($m);
+                  emit %meta if %meta<project-meta><language> eq "Raku";
+                }
+                sleep 10;
             }
         }
     }
@@ -14,5 +42,5 @@ class ButterflyBot does IRC::Client::Plugin {
     :nick<Bitterflieable>
     :host<irc.libera.chat>
     :channels<#melezhik-test>
-    :debug
+    #:debug
     :plugins(ButterflyBot.new)
