@@ -4,8 +4,8 @@ use MyButterfly::Conf;
 use MyButterfly::Utils;
 
 my %stat;
-#my $channel = "raku";
-my $channel = "melezhik-test";
+my $channel = "#raku";
+#my $channel = "melezhik-test";
 
 class ButterflyBot does IRC::Client::Plugin {
     method irc-connected ($) {
