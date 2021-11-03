@@ -302,39 +302,6 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
 
       my %review; 
 
-      unless "{cache-root()}/projects/$project/reviews/data/{$user}_{$review-id}".IO ~~ :e {
-
-        my %meta = $project-data.project-from-file("{cache-root()}/projects/$project".IO,$user,$token);
-
-        add-notification(
-          %meta<add_by>,
-          "op_review_{$user}_{$review-id}",
-          %( 
-            project => $project,
-            author => $user, 
-            type => "owner-project-review", 
-            date => "{DateTime.now}",
-            review-id => $review-id,
-            review-author => $user,
-          )
-        );
-
-        add-irc-bot-notification(
-          "butterflieble",
-          "op_review_{$user}_{$review-id}",
-          %( 
-            project => $project,
-            project-meta => %meta,
-            author => $user, 
-            type => "owner-project-review", 
-            date => "{DateTime.now}",
-            review-id => $review-id,
-            review-author => $user,
-          )
-        );
-
-      }
-
       if $review-id ~~ /^^ \d+ $$/ and "{cache-root()}/projects/$project/reviews/data/{$user}_{$review-id}".IO ~~ :e {
         %review<data> = "{cache-root()}/projects/$project/reviews/data/{$user}_{$review-id}".IO.slurp;
         say "read data from {cache-root()}/projects/$project/reviews/data/{$user}_{$review-id}";
@@ -371,7 +338,44 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
 
       request-body -> (:$data, :$points) {
 
-        "{cache-root()}/projects/$project/reviews/data/{$user}_{$review-id}".IO.spurt($data);
+        if "{cache-root()}/projects/$project/reviews/data/{$user}_{$review-id}".IO ~~ :e {
+
+          "{cache-root()}/projects/$project/reviews/data/{$user}_{$review-id}".IO.spurt($data);
+
+        } else {
+
+            my %meta = $project-data.project-from-file("{cache-root()}/projects/$project".IO,$user,$token);
+
+            "{cache-root()}/projects/$project/reviews/data/{$user}_{$review-id}".IO.spurt($data);
+
+            add-notification(
+              %meta<add_by>,
+              "op_review_{$user}_{$review-id}",
+              %( 
+                project => $project,
+                author => $user, 
+                type => "owner-project-review", 
+                date => "{DateTime.now}",
+                review-id => $review-id,
+                review-author => $user,
+              )
+            );
+
+            add-irc-bot-notification(
+              "butterflieble",
+              "op_review_{$user}_{$review-id}",
+              %( 
+                project => $project,
+                project-meta => %meta,
+                author => $user, 
+                type => "owner-project-review", 
+                date => "{DateTime.now}",
+                review-id => $review-id,
+                review-author => $user,
+              )
+            );
+
+        }
 
         my %review; 
 
