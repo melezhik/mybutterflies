@@ -3,13 +3,14 @@ use lib "lib";
 use MyButterfly::Conf;
 use MyButterfly::Utils;
 
+my %stat;
+
 class ButterflyBot does IRC::Client::Plugin {
     method irc-connected ($) {
         react {
           my @messages;
           for dir("{cache-root()}/bots/butterflieble/notifications/inbox") -> $m {
             my %meta = message-from-file($m);
-            #unlink $m;
             say "unlink $m";
             push @messages, %meta;
           }
@@ -31,7 +32,13 @@ class ButterflyBot does IRC::Client::Plugin {
                 for dir("{cache-root()}/bots/butterflieble/notifications/inbox") -> $m {
                   my %meta = message-from-file($m);
                   if grep "Raku" , %meta<project-meta><language><> {
-                    emit %meta
+                    my $time-lapsed-in-hour = (now - INIT now) < 60*60 ?? 1 !! Int(now - INIT now);
+                    if %stat{%meta<from>} && Int(%stat{%meta<from>} / $time-lapsed-in-hour) >= 5 {
+                      say "throttling user {%meta<from>} ... more then 5 messages per hour";
+                    } else {
+                      %stat{%meta<from>}++;
+                      emit %meta;
+                    }
                   }
                 }
                 sleep 10;
@@ -40,9 +47,12 @@ class ButterflyBot does IRC::Client::Plugin {
     }
 }
 
+#my $channel = "melezhik-test";
+my $channel = "raku";
+
 .run with IRC::Client.new:
-    :nick<Bitterflieable>
+    :nick<MyBitterflieable>
     :host<irc.libera.chat>
-    :channels<#melezhik-test>
+    :channels($channel);
     #:debug
     :plugins(ButterflyBot.new)
