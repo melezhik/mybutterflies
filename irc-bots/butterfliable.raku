@@ -4,6 +4,8 @@ use MyButterfly::Conf;
 use MyButterfly::Utils;
 
 my %stat;
+#my $channel = "raku";
+my $channel = "melezhik-test";
 
 class ButterflyBot does IRC::Client::Plugin {
     method irc-connected ($) {
@@ -18,7 +20,7 @@ class ButterflyBot does IRC::Client::Plugin {
             say "handle message for bot: {$m.perl}";
             my $text = "mybfio: {$m<project>} has a new comment - https://mybf.io/{$m<link>}";
             say "send message to irc channel: <{$text}> ...";
-            $.irc.send: :where<#melezhik-test> :text($text);
+            $.irc.send: :where($channel) :text($text);
             say "unlink {$m<file>.basename} ...";
             unlink $m<file>;
           }
@@ -47,12 +49,9 @@ class ButterflyBot does IRC::Client::Plugin {
     }
 }
 
-#my $channel = "melezhik-test";
-my $channel = "raku";
-
 .run with IRC::Client.new:
-    :nick<MyBitterflieable>
+    :nick<MyButterfliable>
     :host<irc.libera.chat>
-    :channels($channel);
-    #:debug
+    :channels($channel)
+    :debug
     :plugins(ButterflyBot.new)
