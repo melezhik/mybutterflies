@@ -4,9 +4,10 @@ use MyButterfly::Conf;
 use MyButterfly::Utils;
 
 my %stat;
-#my $channel = "#raku";
+my $channel = "#raku";
+
 #my $channel = "#melezhik-test";
-my $channel = "#bottest";
+#my $channel = "#bottest1000";
 
 class ButterflyBot does IRC::Client::Plugin {
     method irc-connected ($) {
@@ -53,14 +54,14 @@ say %*ENV<LIBERA_SASL_PASSWORD>;
 say "=====";
 
 .run with IRC::Client.new:
-    :userhost<mybf.io>
-    :port(7070)
-    :ssl(True)
-    :ca-file("./libera.pem")
-    :nick<MyButterfliable>
-    #:username<MyButterfliable>
-    #:password("{%*ENV<LIBERA_SASL_PASSWORD>}")
-    :host<irc.libera.chat>
-    :channels($channel)
+    #:userhost<mybf.io>
+    :port(5555)
+    #:ssl(True)
+    #:ca-file("./libera.pem")
+    :nick<mybf>
+    :username<znc>
+    :password(%*ENV<ZTC_PASSWORD>)
+    :host<127.0.0.1>
+    #:channels($channel)
     :debug
     :plugins(ButterflyBot.new)
