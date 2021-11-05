@@ -48,6 +48,12 @@ Use `#project-name` to reference mybfio project. For example:
 
     #teddy-bear 
 
+Referencing [raku.land](https://raku.land) projects.
+
+Use `land[author distro-name]` to reference raku.land project. For example:
+
+    land[cpan:JNTHN cro]
+
 Referencing external sites.
 
 Use standard URL syntax, which will be rendered as a http link tag.
