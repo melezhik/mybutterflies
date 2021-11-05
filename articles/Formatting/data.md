@@ -54,6 +54,12 @@ Use `land[author distro-name]` to reference raku.land project. For example:
 
     land[cpan:JNTHN cro]
 
+Referencing [github.com](https://github.com) projects.
+
+Use `hub[author project]` to reference github project. For example:
+
+    hub[melezhik rakudist-teddy-bear]
+
 Referencing external sites.
 
 Use standard URL syntax, which will be rendered as a http link tag.

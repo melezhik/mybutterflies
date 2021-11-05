@@ -214,7 +214,7 @@ sub mini-parser ($text) is export {
 
   my $res = strip_html($text);
 
-  $res ~~ s:g!(http || https) '://' (\S+) !<a href="$0://$1">{$1}</a>!;
+  $res ~~ s:g!(http || https) '://' (<-[\( \) \s \/ \\ \& \` \" \' ]>+)  !<a href="$0://$1">{$1}</a>!;
 
   #$res ~~ s:g!\n!<br>\n!;
 
@@ -223,6 +223,8 @@ sub mini-parser ($text) is export {
   Nil while $res ~~ s!( ^^ || \s+ ) ':' (<-[\:]>+) ':' ( $$  || \s+ )!{$0}<span class="icon"><i class="fas fa-{$1}"></i></span>{$2}!;
 
   Nil while $res ~~ s!( ^^ || \s+ ) 'land[' (\S+) \s+ (\S+?) ']' ( $$  || \s+ )!{$0}<a href="https://raku.land/{$1}/$2">{$2}</a>{$3}!;
+
+  Nil while $res ~~ s!( ^^ || \s+ ) 'hub[' (\S+) \s+ (\S+?) ']' ( $$  || \s+ )!{$0}<a href="https://github.com/{$1}/$2">{$2}</a>{$3}!;
 
   Nil while $res ~~ s!( ^^ || \s+ ) '#' (\S+) ( $$  || \s+ )!{$0}<a href="/project/{$1}/reviews">{$1}</a>{$2}!;
 
