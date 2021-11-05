@@ -4,7 +4,7 @@ use MyButterfly::Conf;
 use MyButterfly::Utils;
 
 my %stat;
-my $channel = "#raku";
+my $channel = "#raku-news";
 
 #my $channel = "#melezhik-test";
 #my $channel = "#bottest1000";
@@ -18,6 +18,18 @@ class ButterflyBot does IRC::Client::Plugin {
             push @messages, %meta;
           }
           whenever self!messages<> -> $m {
+
+            # seems like auto connect does not work as expected
+            # so I am just going to run the script by cron
+            #for $.irc.servers.values -> $s {
+              #say  $s.perl;
+              #unless $s.is-connected {
+               # say "connection is dropped ... try to reconnect";
+               # $.irc.quit;
+               # $.irc.run;
+              #}
+            #}
+  
             say "handle message for bot: {$m.perl}";
             my $text = "mybfio: {$m<project>} has a new comment - https://mybf.io/{$m<link>}";
             say "send message to irc channel: <{$text}> ...";
@@ -29,6 +41,7 @@ class ButterflyBot does IRC::Client::Plugin {
     }
 
     method !messages {
+        my $j = 0;
         supply {
             loop {
                 my @messages;
@@ -40,11 +53,13 @@ class ButterflyBot does IRC::Client::Plugin {
                       say "throttling user {%meta<from>} ... more then 5 messages per hour";
                     } else {
                       %stat{%meta<from>}++;
+                      $j++;     
                       emit %meta;
                     }
                   }
                 }
-                sleep 10;
+                say "handled $j entries, buy-buy!";
+                exit(0);
             }
         }
     }
