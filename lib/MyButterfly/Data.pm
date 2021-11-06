@@ -49,6 +49,8 @@ method project-from-file ($p, Mu $user, Mu $token) {
 
       my $has-recent-release = False;
 
+      my $first-release = False;
+
       my $recently-created = False;
 
       my %meta = from-json("$p/meta.json".IO.slurp);
@@ -155,6 +157,10 @@ method project-from-file ($p, Mu $user, Mu $token) {
               $has-recent-release = True
           }
 
+          if %data<data> ~~ /(^^ || \s) '0.0.1' ($$ || \s)/ {
+            $first-release = True;
+          }
+
        }
 
      }
@@ -252,6 +258,7 @@ method project-from-file ($p, Mu $user, Mu $token) {
 
     %meta<reviews> = @reviews;
 
+    %meta<first-release> = $first-release;
     %meta<has-recent-release> = $has-recent-release;
     %meta<help-wanted> = $help-wanted;
     %meta<recently-created> = $recently-created;
@@ -267,6 +274,11 @@ method project-from-file ($p, Mu $user, Mu $token) {
     if $help-wanted {
       push %meta<attributes>, "help-wanted";
       push %meta<attributes-str>, uniparse "Raised Hand";
+    }
+
+    if $first-release {
+      push %meta<attributes>, "first-release";
+      push %meta<attributes-str>, uniparse "Slice of Pizza";
     }
 
     if $has-recent-release {

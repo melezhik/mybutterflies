@@ -59,6 +59,9 @@
               <?$i.recently-created>
               <.created> |
               </?>
+              <?$i.first-release>
+              <.first-release> |
+              </?>
               <?$i.has-recent-release>
               <.release> |
               </?>

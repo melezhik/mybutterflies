@@ -101,6 +101,7 @@ my $application = route {
       top => "{uniparse 'ROCKET' }",
       created => "{uniparse 'Heavy Asterisk'}",
       recent => "{uniparse 'HOURGLASS'}",
+      first-release => "{uniparse 'Slice of Pizza'}",
       release => "{uniparse 'PACKAGE'}",
       help-wanted => "{uniparse 'Raised Hand'}",
       settings => "{uniparse 'GEAR'}",
