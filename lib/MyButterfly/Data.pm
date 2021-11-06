@@ -151,14 +151,14 @@ method project-from-file ($p, Mu $user, Mu $token) {
 
           #say $r-id;
 
-          if DateTime.new( 
-              Instant.from-posix($r-id)
-            ) >= $week-ago {
-              $has-recent-release = True
+          if DateTime.new(Instant.from-posix($r-id)) >= $week-ago {
+            $has-recent-release = True
           }
 
           if %data<data> ~~ /(^^ || \s) '0.0.1' ($$ || \s)/ {
-            $first-release = True;
+            if DateTime.new(Instant.from-posix($r-id)) >= $week-ago {
+              $first-release = True;
+            }
           }
 
        }
