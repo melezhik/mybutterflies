@@ -15,7 +15,7 @@ my $project-data = MyButterfly::Data.new();
 
 my $application = route { 
 
-  get -> :$message, :$filter?, :$language?, :$tags?, :$user is cookie, :$token is cookie, :$lang is cookie,  :$theme is cookie = default-theme() {
+  get -> :$message, :$filter?, :$language?, :$tags?, :$category?, :$user is cookie, :$token is cookie, :$lang is cookie,  :$theme is cookie = default-theme() {
 
     my @projects;
 
@@ -25,6 +25,7 @@ my $application = route {
       set-cookie 'lang', $language, http-only => True, expires => $date;
 
     }
+
 
     if $language and $language eq 'Any' {
       set-cookie 'lang', Nil
@@ -40,6 +41,10 @@ my $application = route {
       
       if $lang-filter and $lang-filter ne "Any" {
         next unless $lang-filter ~~ any %meta<language><>
+      }
+
+      if $category and $category ne "Any" {
+        next unless $category ~~ any %meta<category><>
       }
 
       push @projects, %meta;
