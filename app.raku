@@ -44,6 +44,7 @@ my $application = route {
         %(
           language => $lang-filter,
           category => $category,
+          tags => $tags, 
         )
       ) or next;
       
@@ -79,20 +80,6 @@ my $application = route {
       @selected-projects = @projects.sort({ .<update-date> }).reverse
 
     } 
-
-    if $tags {
-      @selected-projects = @selected-projects.grep({ 
-        my @tags = .<tags><>;
-        my $select = False;
-        LINE: for (split ",", $tags)<> -> $t {
-          if grep $t, @tags {
-            $select = True;
-            last LINE;
-          }
-        }
-        $select == True;
-      });
-    }
 
     template 'templates/main.crotmp', {
       title => title(),

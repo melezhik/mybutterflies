@@ -63,6 +63,18 @@ method project-from-file ($p, Mu $user, Mu $token, %filter?) {
         return %() unless %filter<category> ~~ any %meta<category><>
       }
 
+      if %filter<tags> {
+          my $select = False;
+          my @tags = %meta<tags><>;
+          LINE: for (split ",", %filter<tags>)<> -> $t {
+            if grep $t, @tags {
+              $select = True;
+              last LINE;
+            }
+          }
+       $select == True or return %();
+      }
+
       my $week-ago = DateTime.now() - Duration.new(60*60*24*7);
 
       my $month-ago = DateTime.now() - Duration.new(60*60*24*30);
