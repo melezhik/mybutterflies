@@ -40,7 +40,7 @@ class MyButterfly::Data {
   }
 
 
-method project-from-file ($p, Mu $user, Mu $token) {
+method project-from-file ($p, Mu $user, Mu $token, %filter?) {
 
       # default values for attributes, 
       # to be calculated using project data
@@ -54,6 +54,14 @@ method project-from-file ($p, Mu $user, Mu $token) {
       my $recently-created = False;
 
       my %meta = from-json("$p/meta.json".IO.slurp);
+
+      if %filter<language> and %filter<language> ne "Any" {
+        return %() unless %filter<language> ~~ any %meta<language><>
+      }
+
+      if %filter<category> and %filter<category> ne "Any" {
+        return %() unless %filter<category> ~~ any %meta<category><>
+      }
 
       my $week-ago = DateTime.now() - Duration.new(60*60*24*7);
 

@@ -37,16 +37,16 @@ my $application = route {
 
       my %meta;
 
-      %meta = $project-data.project-from-file($p,$user,$token);
+      %meta = $project-data.project-from-file(
+        $p,
+        $user,
+        $token,
+        %(
+          language => $lang-filter,
+          category => $category,
+        )
+      ) or next;
       
-      if $lang-filter and $lang-filter ne "Any" {
-        next unless $lang-filter ~~ any %meta<language><>
-      }
-
-      if $category and $category ne "Any" {
-        next unless $category ~~ any %meta<category><>
-      }
-
       push @projects, %meta;
 
     }
