@@ -22,6 +22,7 @@ my $application = route {
     if $language and $language ne 'Any' {
 
       my $date = DateTime.now.later(years => 100);
+
       set-cookie 'lang', $language, http-only => True, expires => $date;
 
     }
@@ -782,7 +783,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
 
         say "set user login to {%data2<login>}";
 
-        my $date = DateTime.now.later(hours => 10);
+        my $date = DateTime.now.later(years => 100);
 
         set-cookie 'user', %data2<login>, http-only => True, expires => $date;
 
@@ -815,7 +816,7 @@ get -> 'review', $project, $author, $review-id, 'down', :$user is cookie, :$toke
 
   get -> 'set-theme', :$message, :$theme, :$user is cookie, :$token is cookie {
 
-    my $date = DateTime.now.later(days => 1000);
+    my $date = DateTime.now.later(years => 100);
 
     set-cookie 'theme', $theme, http-only => True, expires => $date;
 
