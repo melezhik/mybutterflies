@@ -29,24 +29,24 @@ The raku.org says:
 
 ```
 
-## Icons
+## Unicode symbols
 
-Use `:icon name:` construction to insert an icon, for example:
+Use `:unicode name,:` to insert unicode symbols, for example::
 
 ```
-Home icon - :home:
-Fire icon - :fire:
+What a beautiful :Butterfly::
+Use :Fire Extinguisher: to snuff out :Fire:
 ```
 
-For icon names follow [fontawesome web site](https://fontawesome.com/v6.0/icons?m=free&s=solid%2Cbrands).
+For unicode names follow the [unicode-table.com](https://unicode-table.com/) web site.
 
 ## HTTP links
 
 Referencing `#mybfio` projects.
 
-Use `#project-name` to reference mybfio project. For example:
+Use `[project-name]` to reference mybfio project. For example:
 
-    #teddy-bear 
+    [teddy-bear] 
 
 Referencing [raku.land](https://raku.land) projects.
 
